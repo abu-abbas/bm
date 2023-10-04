@@ -1,0 +1,30 @@
+.modal {
+  .modal-dialog {
+    &.modal-white-space {
+      @media (min-width: 576px) {
+        &.modal-sm {
+          min-width: 300px;
+          max-width: 400px;
+        }
+      }
+    }
+    .modal-content {
+      &.white-space {
+        header {
+          &.modal-header {
+            .modal-image-header {
+              background-color: #e3eaef;
+              border-radius: 8px;
+              padding: .825rem 1rem;
+              margin-right: 1rem;
+
+              svg {
+                transform: scale(2);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

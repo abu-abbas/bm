@@ -1,0 +1,49 @@
+// Fonts
+@import '@fontsource/poppins';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Bootstrap-vue
+@import 'bootstrap-vue/dist/bootstrap-vue.css';
+@import 'bootstrap-vue/src/icons.scss';
+
+// override bootstraps style with stisla theme
+@import 'stisla/style.scss';
+
+// custom
+@import 'custom/modal.scss';
+
+$font-family-sans-serif: Poppins, sans-serif;
+$font-size-base: 0.875rem;
+
+body {
+  font-family: $font-family-sans-serif !important;
+  font-size: $font-size-base;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    background-color: rgb(243, 244, 245);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #cecece;
+    border-radius: 2px;
+  }
+}
+
+.fs-lg {
+  font-size: 1rem !important;
+}
+
+.fs-sm {
+  font-size: .725rem;
+}
+
+.fs-nano {
+  font-size: .625rem;
+}
