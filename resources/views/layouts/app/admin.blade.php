@@ -24,11 +24,9 @@
     'resources/js/app/admin.js',
   ])
 </head>
-<body class="mod-bg-1 mod-skin-light pl-0">
+<body>
   <div id="app">
-    <main class="py-4">
-      @yield('content')
-    </main>
+    @yield('content')
   </div>
 
   <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
@@ -51,7 +49,8 @@
       'is_local' => config('app.env') == 'production' ? false : true,
       'current_date' => Str::now('Y-m-d'),
       'home' => route('home'),
-      'validateCaptcha' => config('app.env') === 'production'
+      'validateCaptcha' => config('app.env') === 'production',
+      'user' => auth()->user()
     ]) !!}
   </script>
 </body>
