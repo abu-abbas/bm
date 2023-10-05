@@ -34,8 +34,8 @@ const onHandleHide = () => {
               <hr class="divider sign-in">
               <FormLogin
                 ref="nativeLogin"
-                username-field="email"
-                username-label="Email"
+                username-field="username"
+                username-label="Username"
               />
             </div>
           </div>
@@ -51,7 +51,7 @@ const onHandleHide = () => {
       @hide="onHandleHide"
     >
       <FormLogin
-        username-field="nrk"
+        username-field="username"
         username-label="NRK"
         is-user-etpp
       />

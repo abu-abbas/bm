@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { required, email } from '@vee-validate/rules'
+import { required } from '@vee-validate/rules'
 import id from '@vee-validate/i18n/dist/locale/id.json'
 import { localize, setLocale } from '@vee-validate/i18n'
 import { _, _http, _route, _alert, _settings } from '@/js/utils/common'
@@ -8,7 +8,6 @@ import { Field, Form as VeeForm, defineRule, configure } from 'vee-validate'
 
 configure({ generateMessage: localize({ id }) })
 defineRule('required', required)
-defineRule('email', email)
 setLocale('id')
 
 const props = defineProps({
@@ -77,8 +76,9 @@ const onSubmit = (values) => {
         setTimeout(() => window.location = res.data.redirect, 500)
     })
     .catch(error => {
+      console.log({ error })
       if (error.response.status == '422' && error.response?.data?.errors) {
-        formRef.value.setFieldError(props.usernameField, error.response?.data?.errors[props.usernameField].join(', '))
+        formRef.value.setFieldError(props.usernameField, error.response?.data?.errors[props.usernameField]?.join(', '))
         formRef.value.setFieldError('password', error.response?.data?.errors?.password?.join(', '))
         formRef.value.setFieldError('captcha', error.response?.data?.errors?.captcha?.join(', '))
         return
@@ -112,11 +112,11 @@ defineExpose({ loadCaptcha, setFocus })
         v-slot="{ field, errorMessage }"
         :label="props.usernameLabel"
         :name="props.usernameField"
-        :rules="props.usernameField == 'email' ? 'required|email' : 'required'"
+        rules="required"
       >
         <div class="form-group">
-          <label for="email">{{ props.usernameLabel }}</label>
-          <input :id="props.usernameField" ref="focusInput" v-bind="field" class="form-control" tabindex="1">
+          <label :for="`${props.usernameField}-${componentId}`">{{ props.usernameLabel }}</label>
+          <input :id="`${props.usernameField}-${componentId}`" ref="focusInput" v-bind="field" class="form-control" tabindex="1">
           <small :class="{ 'invalid-feedback': true, 'd-block': errorMessage }">
             {{ errorMessage }}
           </small>
@@ -130,8 +130,8 @@ defineExpose({ loadCaptcha, setFocus })
         rules="required"
       >
         <div class="form-group">
-          <label for="password" class="control-label">Password</label>
-          <input id="password" v-bind="field" type="password" class="form-control" name="password" tabindex="2">
+          <label :for="`password-${componentId}`" class="control-label">Password</label>
+          <input :id="`password-${componentId}`" v-bind="field" type="password" class="form-control" name="password" tabindex="2">
           <small :class="{ 'invalid-feedback': true, 'd-block': errorMessage }">
             {{ errorMessage }}
           </small>
@@ -143,7 +143,7 @@ defineExpose({ loadCaptcha, setFocus })
         <div class="d-flex alig-items-center">
           <div class="d-flex flex-column">
             <b-img
-              id="captcha-img"
+              :id="`captcha-img-${componentId}`"
               ref="captcha-img"
               :blank="!captcha.src || captcha.loading"
               :src="captcha.src"
@@ -169,7 +169,7 @@ defineExpose({ loadCaptcha, setFocus })
               name="captcha"
               :rules="_settings.validateCaptcha ? 'required' : ''"
             >
-              <input id="captcha" v-bind="field" class="form-control" name="captcha" tabindex="3">
+              <input :id="`captcha-${componentId}`" v-bind="field" class="form-control" name="captcha" tabindex="3">
               <small :class="{ 'invalid-feedback': true, 'd-block': errorMessage }">
                 {{ errorMessage }}
               </small>

@@ -3,10 +3,9 @@
 namespace App\Models;
 
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class UserEtpp extends Authenticatable
+class UserEtpp extends Model
 {
   /**
    * The connection name for the model.
@@ -41,25 +40,5 @@ class UserEtpp extends Authenticatable
     parent::__construct($attributes);
 
     $this->setTable('tm_users');
-  }
-
-  /**
-   * Get the password for the user.
-   *
-   * @return string
-   */
-  public function getAuthPassword()
-  {
-    return $this->v_userpass;
-  }
-
-  /**
-   * Get the unique identifier for the user.
-   *
-   * @return mixed
-   */
-  public function getAuthIdentifier()
-  {
-    return $this->v_userid;
   }
 }

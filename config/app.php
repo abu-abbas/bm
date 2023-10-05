@@ -171,6 +171,8 @@ return [
 
         Mews\Captcha\CaptchaServiceProvider::class,
         App\Providers\CustomCaptchaServiceProvider::class,
+
+        App\Providers\RepositoryServiceProvider::class,
     ])->toArray(),
 
     /*

@@ -19,8 +19,9 @@ class User extends Authenticatable
    */
   protected $fillable = [
     'name',
-    'email',
+    'username',
     'password',
+    'is_etpp',
   ];
 
   /**
@@ -41,5 +42,6 @@ class User extends Authenticatable
   protected $casts = [
     'email_verified_at' => 'datetime',
     'password' => 'hashed',
+    'is_etpp' => 'boolean'
   ];
 }

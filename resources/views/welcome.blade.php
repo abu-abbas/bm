@@ -137,10 +137,4 @@
             </div>
         </div>
     </body>
-
-    <script type="application/json" data-settings-selector="settings-json">
-    {!! json_encode([
-      'loggedIn' => auth('etpp')->check() ?? auth()->check()
-    ]) !!}
-  </script>
 </html>

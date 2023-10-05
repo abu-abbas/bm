@@ -22,4 +22,5 @@ use Illuminate\Support\Facades\Route;
 include_route_files(__DIR__ . '/modules/');
 
 Route::get('/{vue_capture?}', [App\Http\Controllers\GuestController::class, 'landing'])
-  ->where('vue_capture', '[\/\w\.-]*');
+  ->where('vue_capture', '[\/\w\.-]*')
+  ->name('home');

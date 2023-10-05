@@ -40,10 +40,6 @@ return [
       'driver' => 'session',
       'provider' => 'users',
     ],
-    'etpp' => [
-      'driver' => 'session',
-      'provider' => 'etpp_users',
-    ],
   ],
 
   /*
@@ -67,10 +63,6 @@ return [
     'users' => [
       'driver' => 'eloquent',
       'model' => App\Models\User::class,
-    ],
-    'etpp_users' => [
-      'driver' => 'eloquent',
-      'model' => App\Models\UserEtpp::class,
     ],
 
     // 'users' => [

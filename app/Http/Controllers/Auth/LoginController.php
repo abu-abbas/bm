@@ -6,6 +6,8 @@ use App\Rules\CheckCaptcha;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Rules\CheckUserEtpp;
 use Illuminate\Http\{JsonResponse, Request};
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -38,13 +40,16 @@ class LoginController extends Controller
    */
   protected $redirectTo = RouteServiceProvider::HOME;
 
+  protected $user;
+
   /**
    * Create a new controller instance.
    *
    * @return void
    */
-  public function __construct()
+  public function __construct(UserRepositoryInterface $user)
   {
+    $this->user = $user;
     $this->username = $this->findUsername();
     $this->middleware('guest')->except('logout');
   }
@@ -56,7 +61,7 @@ class LoginController extends Controller
    */
   public function findUsername()
   {
-    $login = request('user_etpp') ? request('nrk') : request('email');
+    $login = request('username');
     $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
     request()->merge([$fieldType => $login]);
     return $fieldType;
@@ -71,17 +76,10 @@ class LoginController extends Controller
    */
   protected function credentials(Request $request)
   {
-    if ($request->user_etpp) {
-      return [
-        'v_userid' => $request->{$this->username},
-        'password' => $request->password,
-        'e_user_enable' => true
-      ];
-    }
-
     return [
       $this->username => $request->{$this->username},
       'password' => $request->password,
+      'is_etpp' => $request->user_etpp,
     ];
   }
 
@@ -137,6 +135,16 @@ class LoginController extends Controller
   }
 
   /**
+   * Get the login username to be used by the controller.
+   *
+   * @return string
+   */
+  public function username()
+  {
+    return 'username';
+  }
+
+  /**
    * Attempt to log the user into the application.
    *
    * @param  \Illuminate\Http\Request  $request
@@ -167,7 +175,7 @@ class LoginController extends Controller
     }
 
     $data = [
-      'redirect' => $request->user_etpp ? '/' : 'home'
+      'redirect' => $request->user_etpp ? '/' : 'admin'
     ];
 
     return $request->wantsJson()
@@ -186,9 +194,25 @@ class LoginController extends Controller
 
   protected function validateLogin(Request $request)
   {
-    $needValidate = [
-      $this->username => ['required', 'string'],
+    $userEtpp = null;
+    $rules = [
+      'username' => ['required', 'string'],
       'password' => ['required', 'string'],
+    ];
+
+    if ($request->user_etpp) {
+      // validate nrk dulu sebelum check password
+      array_push($rules['username'], 'digits:6');
+      $request->validate($rules, ['username.digits' => 'NRK harus terdiri dari 6 angka.']);
+
+      [$response, $error] = $this->user->retrieveByCredentials($request->{$this->username}, $request->password);
+      $userEtpp = $response;
+      array_push($rules['password'], new CheckUserEtpp($response, $error));
+    }
+
+    $needValidate = [
+      $this->username => $rules['username'],
+      'password' => $rules['password'],
     ];
 
     if (app()->env == 'production') {
@@ -196,16 +220,8 @@ class LoginController extends Controller
     }
 
     $request->validate($needValidate);
-  }
 
-  /**
-   * Get the guard to be used during authentication.
-   *
-   * @return \Illuminate\Contracts\Auth\StatefulGuard
-   */
-  protected function guard()
-  {
-    $guard = request('user_etpp') ? 'etpp' : null;
-    return Auth::guard($guard);
+    if ($request->user_etpp)
+      $this->user->updateOrCreate($userEtpp);
   }
 }
