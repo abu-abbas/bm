@@ -7,7 +7,9 @@ Route::group(
     'middleware' => ['auth', 'admin.only'],
   ],
   function () {
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/{vue_capture?}', [App\Http\Controllers\HomeController::class, 'index'])
+      ->where('vue_capture', '[\/\w\.-]*')
+      ->name('home');
   });
 
 
