@@ -1,6 +1,6 @@
 <script setup>
 import $ from 'jquery'
-import { onMounted } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import { _settings } from '@/js/utils/common'
 
@@ -11,11 +11,18 @@ const sidebarSticky = () => {
   }
 }
 
+const resizeHandler = () => {
+  $('.main-content').css({ minHeight: $(window).outerHeight() - 95 })
+}
+
 onMounted(() => {
   sidebarSticky()
+  resizeHandler()
 
-  $('.main-content').css({ minHeight: $(window).outerHeight() - 95 })
+  window.addEventListener('resize', resizeHandler)
 })
+
+onBeforeUnmount(() => window.removeEventListener('resize', resizeHandler))
 </script>
 
 <template>
