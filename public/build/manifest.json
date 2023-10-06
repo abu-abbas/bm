@@ -1,0 +1,177 @@
+{
+  "_bootstrap-utils-dce0738e.js": {
+    "file": "assets/compiled/js/vendor/bootstrap-utils-dce0738e.js",
+    "imports": [
+      "_jquery-utils-4b2e19e3.js"
+    ]
+  },
+  "_bootstrap-vue-utils-17abc47e.js": {
+    "file": "assets/compiled/js/vendor/bootstrap-vue-utils-17abc47e.js",
+    "imports": [
+      "_vue-utils-19108aca.js"
+    ]
+  },
+  "_common-utils-d99d0b9d.js": {
+    "file": "assets/compiled/js/vendor/common-utils-d99d0b9d.js",
+    "imports": [
+      "_bootstrap-utils-dce0738e.js"
+    ]
+  },
+  "_compat-config-02944a74.js": {
+    "file": "assets/compiled/js/vendor/compat-config-02944a74.js",
+    "imports": [
+      "_common-utils-d99d0b9d.js"
+    ]
+  },
+  "_jquery-utils-4b2e19e3.js": {
+    "file": "assets/compiled/js/vendor/jquery-utils-4b2e19e3.js"
+  },
+  "_vue-plugins-utils-89496aeb.js": {
+    "file": "assets/compiled/js/vendor/vue-plugins-utils-89496aeb.js",
+    "imports": [
+      "_vue-utils-19108aca.js"
+    ]
+  },
+  "_vue-utils-19108aca.js": {
+    "file": "assets/compiled/js/vendor/vue-utils-19108aca.js"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-devanagari-400-normal.woff": {
+    "file": "assets/compiled/fonts/poppins-devanagari-400-normal-aa135e25.woff",
+    "src": "node_modules/@fontsource/poppins/files/poppins-devanagari-400-normal.woff"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-devanagari-400-normal.woff2": {
+    "file": "assets/compiled/fonts/poppins-devanagari-400-normal-478b3ab7.woff2",
+    "src": "node_modules/@fontsource/poppins/files/poppins-devanagari-400-normal.woff2"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-latin-400-normal.woff": {
+    "file": "assets/compiled/fonts/poppins-latin-400-normal-2db0a254.woff",
+    "src": "node_modules/@fontsource/poppins/files/poppins-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-latin-400-normal.woff2": {
+    "file": "assets/compiled/fonts/poppins-latin-400-normal-7d93459d.woff2",
+    "src": "node_modules/@fontsource/poppins/files/poppins-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-latin-ext-400-normal.woff": {
+    "file": "assets/compiled/fonts/poppins-latin-ext-400-normal-8090b590.woff",
+    "src": "node_modules/@fontsource/poppins/files/poppins-latin-ext-400-normal.woff"
+  },
+  "node_modules/@fontsource/poppins/files/poppins-latin-ext-400-normal.woff2": {
+    "file": "assets/compiled/fonts/poppins-latin-ext-400-normal-cb8bdeab.woff2",
+    "src": "node_modules/@fontsource/poppins/files/poppins-latin-ext-400-normal.woff2"
+  },
+  "resources/js/app/admin.js": {
+    "dynamicImports": [
+      "resources/js/modules/admin/Index.vue",
+      "resources/js/modules/dashboard/Admin.vue",
+      "resources/js/modules/settings/tenant/Index.vue",
+      "resources/js/modules/errors/404.vue"
+    ],
+    "file": "assets/compiled/js/modules/app/admin-7e69f6b5.js",
+    "imports": [
+      "_compat-config-02944a74.js",
+      "_vue-utils-19108aca.js",
+      "_common-utils-d99d0b9d.js",
+      "_bootstrap-utils-dce0738e.js",
+      "_jquery-utils-4b2e19e3.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/app/admin.js"
+  },
+  "resources/js/app/auth.css": {
+    "file": "assets/compiled/css/auth-29c0ca3e.css",
+    "src": "resources/js/app/auth.css"
+  },
+  "resources/js/app/auth.js": {
+    "css": [
+      "assets/compiled/css/auth-29c0ca3e.css"
+    ],
+    "file": "assets/compiled/js/modules/app/auth-f94780a3.js",
+    "imports": [
+      "_compat-config-02944a74.js",
+      "_vue-utils-19108aca.js",
+      "_vue-plugins-utils-89496aeb.js",
+      "_bootstrap-vue-utils-17abc47e.js",
+      "_common-utils-d99d0b9d.js",
+      "_bootstrap-utils-dce0738e.js",
+      "_jquery-utils-4b2e19e3.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/app/auth.js"
+  },
+  "resources/js/app/landing.js": {
+    "file": "assets/compiled/js/modules/app/landing-4ed993c7.js",
+    "isEntry": true,
+    "src": "resources/js/app/landing.js"
+  },
+  "resources/js/modules/admin/Index.css": {
+    "file": "assets/compiled/css/Index-1ceb79fb.css",
+    "src": "resources/js/modules/admin/Index.css"
+  },
+  "resources/js/modules/admin/Index.vue": {
+    "assets": [
+      "assets/compiled/images/avatar-1-f00bb589.png"
+    ],
+    "css": [
+      "assets/compiled/css/Index-1ceb79fb.css"
+    ],
+    "file": "assets/compiled/js/modules/chunk/admin/index-ef493f92.js",
+    "imports": [
+      "_vue-utils-19108aca.js",
+      "_bootstrap-utils-dce0738e.js",
+      "_compat-config-02944a74.js",
+      "resources/js/app/admin.js",
+      "_jquery-utils-4b2e19e3.js",
+      "_common-utils-d99d0b9d.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/admin/Index.vue"
+  },
+  "resources/js/modules/dashboard/Admin.vue": {
+    "file": "assets/compiled/js/modules/chunk/dashboard/admin-9f50c49c.js",
+    "imports": [
+      "_vue-utils-19108aca.js",
+      "resources/js/app/admin.js",
+      "_compat-config-02944a74.js",
+      "_common-utils-d99d0b9d.js",
+      "_bootstrap-utils-dce0738e.js",
+      "_jquery-utils-4b2e19e3.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/dashboard/Admin.vue"
+  },
+  "resources/js/modules/errors/404.vue": {
+    "file": "assets/compiled/js/modules/chunk/errors/404-542f4801.js",
+    "imports": [
+      "_vue-utils-19108aca.js",
+      "resources/js/app/admin.js",
+      "_compat-config-02944a74.js",
+      "_common-utils-d99d0b9d.js",
+      "_bootstrap-utils-dce0738e.js",
+      "_jquery-utils-4b2e19e3.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/errors/404.vue"
+  },
+  "resources/js/modules/settings/tenant/Index.vue": {
+    "file": "assets/compiled/js/modules/chunk/tenant/index-a981ad87.js",
+    "imports": [
+      "_vue-utils-19108aca.js",
+      "resources/js/app/admin.js",
+      "_compat-config-02944a74.js",
+      "_common-utils-d99d0b9d.js",
+      "_bootstrap-utils-dce0738e.js",
+      "_jquery-utils-4b2e19e3.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/settings/tenant/Index.vue"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/compiled/css/app-e5e833e9.css",
+    "isEntry": true,
+    "src": "resources/sass/app.scss"
+  },
+  "theme/stisla/assets/img/avatar/avatar-1.png": {
+    "file": "assets/compiled/images/avatar-1-f00bb589.png",
+    "src": "theme/stisla/assets/img/avatar/avatar-1.png"
+  }
+}
