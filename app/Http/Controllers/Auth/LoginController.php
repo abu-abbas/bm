@@ -90,7 +90,7 @@ class LoginController extends Controller
    */
   public function showLogin()
   {
-    return view('layouts.modules.auth');
+    return view('layouts.modules.auth')->with('intended', 'tes');
   }
 
   /**
@@ -174,13 +174,11 @@ class LoginController extends Controller
       return $response;
     }
 
-    $data = [
-      'redirect' => $request->user_etpp ? '/' : 'admin'
-    ];
+    $data = ['redirect' => $request->user_etpp ? '/' : ($request->intended ?? 'admin')];
 
     return $request->wantsJson()
       ? response()->json($data, JsonResponse::HTTP_ACCEPTED)
-      : redirect()->intended($this->redirectPath());
+      : redirect()->intended($request->intended ?? $this->redirectPath());
   }
 
   /**

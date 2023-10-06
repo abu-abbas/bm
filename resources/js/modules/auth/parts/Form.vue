@@ -36,6 +36,7 @@ const captcha = ref({
   hash: null,
   loading: false
 })
+const hasIntended = ref(null)
 
 const setFocus = () => setTimeout(() => focusInput.value.focus(), 250)
 const loadCaptcha = _.debounce(async () => {
@@ -69,6 +70,7 @@ const onSubmit = (values) => {
       password: values.password,
       captcha: values.captcha,
       user_etpp: props.isUserEtpp,
+      intended: hasIntended.value,
     }
   )
     .then(res => {
@@ -94,6 +96,10 @@ const onSubmit = (values) => {
 }
 
 onMounted(() => {
+  const urlSearchParams = new URLSearchParams(window.location.search)
+  const params = Object.fromEntries(urlSearchParams.entries())
+  hasIntended.value = params?.intended
+
   loadCaptcha()
   setFocus()
 })
