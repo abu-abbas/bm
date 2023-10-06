@@ -17,7 +17,7 @@ const { onHandleSidebarToggle } = useStisla()
             class="nav-link nav-link-lg"
             @click="onHandleSidebarToggle"
           >
-            <font-awesome-icon :icon="['fas', 'bars']" />
+            <FontAwesomeIcon :icon="['fas', 'bars']" />
           </a>
         </li>
       </ul>
@@ -30,7 +30,7 @@ const { onHandleSidebarToggle } = useStisla()
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <a href="/" class="dropdown-item has-icon">
-            <font-awesome-icon :icon="['fas', 'house']" class="mr-2" />Beranda
+            <FontAwesomeIcon :icon="['fas', 'house']" class="mr-2" />Beranda
           </a>
           <div class="dropdown-divider"></div>
           <a
@@ -38,7 +38,7 @@ const { onHandleSidebarToggle } = useStisla()
             href="javascript:void(0)"
             onclick="doLogout.apply(this, arguments)"
           >
-            <font-awesome-icon :icon="['fas', 'sign-out-alt']" class="mr-2" />Logout
+            <FontAwesomeIcon :icon="['fas', 'sign-out-alt']" class="mr-2" />Logout
           </a>
         </div>
       </li>

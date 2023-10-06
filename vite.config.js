@@ -35,9 +35,6 @@ export default defineConfig({
         'resources/js/app/landing.js',
         'resources/js/app/admin.js',
         'resources/js/app/auth.js',
-
-        // bawaan
-        'resources/js/app.js',
       ],
       refresh: true,
     }),

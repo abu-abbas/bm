@@ -19,7 +19,7 @@ const {
 configureCompat(Vue)
 
 addLibrary(faBars, faHouse, faHeart, faSquare, faSignOutAlt, faPeopleGroup)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 
 createApp(MainApp)
   .use(router)
