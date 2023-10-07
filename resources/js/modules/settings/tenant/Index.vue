@@ -1,4 +1,10 @@
 <script setup>
+import { ref } from 'vue'
+import ModalAdd from '@/js/modules/settings/tenant/parts/ModalAdd.vue'
+
+const form = ref({
+  show: false
+})
 const items = [
   { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
   { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
@@ -24,7 +30,10 @@ const items = [
           <div class="card-body">
             <div class="action-wrapper d-flex mb-3 flex-wrap align-items-center justify-content-between">
               <div class="left-section">
-                <button class="btn btn-icon icon-left btn-primary">
+                <button
+                  class="btn btn-icon icon-left btn-primary"
+                  @click="form.show = true"
+                >
                   <FontAwesomeIcon :icon="['fas', 'plus']" />
                   Tambah
                 </button>
@@ -57,5 +66,7 @@ const items = [
         </div>
       </div>
     </div>
+
+    <ModalAdd v-model:visible="form.show" />
   </div>
 </template>

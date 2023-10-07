@@ -1,30 +1,35 @@
 import { useFontAwesome } from '@/js/composable/useFontAwesome'
 
-const {
-  addLibrary,
-  FontAwesomeIcon,
+import {
+  faBars,
+  faHeart,
+  faSignOutAlt,
+  faHouse,
+  faPeopleGroup,
   faTimes,
   faCheck,
   faEdit,
   faPlus,
-  faBars,
-  faHouse,
-  faHeart,
   faSearch,
+} from '@fortawesome/free-solid-svg-icons'
+
+import {
   faSquare,
-  faSignOutAlt,
-  faPeopleGroup,
-} = useFontAwesome()
+  faImage
+} from '@fortawesome/free-regular-svg-icons'
+
+const { addLibrary, FontAwesomeIcon } = useFontAwesome()
 
 export function registeredFontAwesome(Vue) {
   addLibrary(
-    faTimes,
-    faCheck,
     faEdit,
     faPlus,
     faBars,
+    faCheck,
     faHouse,
     faHeart,
+    faTimes,
+    faImage,
     faSearch,
     faSquare,
     faSignOutAlt,
