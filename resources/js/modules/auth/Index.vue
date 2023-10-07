@@ -3,15 +3,7 @@ import { ref } from 'vue'
 import FormLogin from './parts/Form.vue'
 
 const nativeLogin = ref(null)
-const modalEtpp = ref({
-  show: false
-})
-
-const onHandleHide = () => {
-  modalEtpp.value.show = false
-  nativeLogin.value.loadCaptcha()
-  setTimeout(nativeLogin.value.setFocus, 100)
-}
+const useEtpp = ref(false)
 </script>
 
 <template>
@@ -19,43 +11,51 @@ const onHandleHide = () => {
     <div class="container">
       <div class="row">
         <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-          <div class="login-brand">
-            <!-- <img src="@theme/stisla/assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle"> -->
-          </div>
+          <div class="login-brand"></div>
           <div class="card card-primary">
-            <div class="card-header"><h4>Login</h4></div>
+            <div class="card-header d-flex">
+              <h4>
+                <Transition name="slide-up">
+                  <a
+                    v-if="useEtpp"
+                    href="javascript:void(0)"
+                    @click="useEtpp = false"
+                  >
+                    <b-icon icon="arrow-left" class="mr-2"></b-icon>
+                  </a>
+                </Transition>
+                <span>Login</span>
+              </h4>
+            </div>
             <div class="card-body">
-              <button
-                class="btn btn-default btn-social-icon btn-lg btn-block rounded-pill text-dark"
-                @click="modalEtpp.show = true"
-              >
-                Login dengan akun e-TPP
-              </button>
-              <hr class="divider sign-in">
-              <FormLogin
-                ref="nativeLogin"
-                username-field="username"
-                username-label="Username"
-              />
+              <TransitionGroup name="slide-fade">
+                <template v-if="!useEtpp">
+                  <button
+                    class="btn btn-default btn-social-icon btn-lg btn-block rounded-pill text-dark"
+                    @click="useEtpp = true"
+                  >
+                    Login dengan akun e-TPP
+                  </button>
+                  <hr class="divider sign-in">
+                  <FormLogin
+                    ref="nativeLogin"
+                    username-field="username"
+                    username-label="Username"
+                  />
+                </template>
+                <template v-else>
+                  <FormLogin
+                    username-field="username"
+                    username-label="NRK"
+                    is-user-etpp
+                  />
+                </template>
+              </TransitionGroup>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <b-modal
-      v-model:visible="modalEtpp.show"
-      size="sm"
-      hide-footer
-      title-class="text-primary"
-      title="Masuk via e-TPP"
-      @hide="onHandleHide"
-    >
-      <FormLogin
-        username-field="username"
-        username-label="NRK"
-        is-user-etpp
-      />
-    </b-modal>
   </div>
 </template>
 
@@ -65,7 +65,11 @@ const onHandleHide = () => {
     background-color: #fdfdff;
     border: 1px solid #e4e6fc;
     color: var(--gray-dark) !important;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition:
+      color 0.15s ease-in-out,
+      background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
 
     &:hover {
       border-color: #d4d6eb !important;
