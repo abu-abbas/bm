@@ -1,25 +1,14 @@
 import '@/js/bootstrap.js'
 import Vue, { createApp } from 'vue'
-import MainApp from '@/js/MainApp.vue'
+import MainApp from '@/js/app/Main.vue'
 import router from '@/js/router/admin-router.js'
 import { configureCompat } from '@/js/compat-config.js'
-import { useFontAwesome } from '@/js/composable/useFontAwesome'
-
-const {
-  addLibrary,
-  FontAwesomeIcon,
-  faBars,
-  faHouse,
-  faHeart,
-  faSquare,
-  faSignOutAlt,
-  faPeopleGroup,
-} = useFontAwesome()
+import RegisteredBootstrapVue from '@/js/app/registered/admin/bootstrap-vue.js'
+import { registeredFontAwesome } from '@/js/app/registered/admin/font-awesome.js'
 
 configureCompat(Vue)
-
-addLibrary(faBars, faHouse, faHeart, faSquare, faSignOutAlt, faPeopleGroup)
-Vue.component('FontAwesomeIcon', FontAwesomeIcon)
+registeredFontAwesome(Vue)
+Vue.use(RegisteredBootstrapVue)
 
 createApp(MainApp)
   .use(router)

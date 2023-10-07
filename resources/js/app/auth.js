@@ -8,6 +8,7 @@ import {
   ImagePlugin,
   ModalPlugin,
   BIconLink45deg,
+  BIconArrowLeft,
   BIconCircleFill,
   BIconCheck2Circle,
 } from 'bootstrap-vue'
@@ -17,6 +18,7 @@ Vue.use(ModalPlugin)
 
 Vue.component('BIcon', BIcon)
 Vue.component('BIconLink45deg', BIconLink45deg)
+Vue.component('BIconArrowLeft', BIconArrowLeft)
 Vue.component('BIconCircleFill', BIconCircleFill)
 Vue.component('BIconCheck2Circle', BIconCheck2Circle)
 

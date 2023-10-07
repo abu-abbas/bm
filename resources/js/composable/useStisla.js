@@ -41,11 +41,11 @@ const toggleLayout = () => {
     $('body').addClass('sidebar-gone')
     $('body').removeClass('layout-2 layout-3 sidebar-mini sidebar-show')
     $('body').off('click').on('click', function (e) {
-      if ($(e.target).hasClass('sidebar-show') || $(e.target).hasClass('search-show')) {
+      // if ($(e.target).hasClass('sidebar-show') || $(e.target).hasClass('search-show')) {
+      if ($(e.target).hasClass('sidebar-show')) {
         $('body').removeClass('sidebar-show')
         $('body').addClass('sidebar-gone')
-        $('body').removeClass('search-show')
-
+        // $('body').removeClass('search-show')
         // update_sidebar_nicescroll();
       }
     });
@@ -132,10 +132,10 @@ const sidebar_dropdown = function () {
 }
 
 const toggle_sidebar_mini = (mini) => {
-  let body = $('body')
+  const body = document.body
 
   if (!mini) {
-    body.removeClass('sidebar-mini')
+    body.classList.remove('sidebar-mini')
     $('.main-sidebar').css({ overflow: 'hidden' })
     // setTimeout(function () {
     //   $('.main-sidebar').niceScroll(sidebar_nicescroll_opts)
@@ -146,8 +146,8 @@ const toggle_sidebar_mini = (mini) => {
     $('.main-sidebar .sidebar-menu > li > a').removeAttr('data-original-title')
     $('.main-sidebar .sidebar-menu > li > a').removeAttr('title')
   } else {
-    body.addClass('sidebar-mini')
-    body.removeClass('sidebar-show')
+    body.classList.add('sidebar-mini')
+    body.classList.remove('sidebar-show')
     // sidebar_nicescroll.remove()
     // sidebar_nicescroll = null
     $('.main-sidebar .sidebar-menu > li').each(function () {

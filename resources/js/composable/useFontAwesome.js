@@ -6,7 +6,12 @@ import {
   faHeart,
   faSignOutAlt,
   faHouse,
-  faPeopleGroup
+  faPeopleGroup,
+  faTimes,
+  faCheck,
+  faEdit,
+  faPlus,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -20,9 +25,14 @@ export function useFontAwesome() {
   return {
     addLibrary,
     FontAwesomeIcon,
+    faEdit,
+    faPlus,
     faBars,
+    faCheck,
     faHouse,
     faHeart,
+    faTimes,
+    faSearch,
     faSquare,
     faSignOutAlt,
     faPeopleGroup,
