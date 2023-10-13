@@ -8,12 +8,16 @@
 @import 'bootstrap-vue/dist/bootstrap-vue.css';
 @import 'bootstrap-vue/src/icons.scss';
 
+// cropperjs
+@import 'cropperjs/dist/cropper.css';
+
 // override bootstraps style with stisla theme
 @import 'stisla/style.scss';
 
 // custom
 @import 'custom/modal.scss';
 @import 'custom/bordered_table.scss';
+@import 'custom/spinner';
 
 @import 'vue_transition';
 
@@ -75,6 +79,13 @@ body {
   &::-webkit-scrollbar-thumb {
     background-color: #cecece;
     border-radius: 2px;
+  }
+
+  img {
+    &.image-on-table {
+      width: 64px;
+      border-radius: 4px;
+    }
   }
 }
 

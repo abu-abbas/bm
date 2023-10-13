@@ -11,17 +11,22 @@ import {
   faEdit,
   faPlus,
   faSearch,
+  faTrashAlt,
+  faCropSimple,
+  faSave,
+  faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
   faSquare,
-  faImage
+  faImage,
 } from '@fortawesome/free-regular-svg-icons'
 
 const { addLibrary, FontAwesomeIcon } = useFontAwesome()
 
 export function registeredFontAwesome(Vue) {
   addLibrary(
+    faSave,
     faEdit,
     faPlus,
     faBars,
@@ -32,8 +37,11 @@ export function registeredFontAwesome(Vue) {
     faImage,
     faSearch,
     faSquare,
+    faTrashAlt,
+    faCropSimple,
     faSignOutAlt,
     faPeopleGroup,
+    faExclamationCircle,
   )
 
   Vue.component('FontAwesomeIcon', FontAwesomeIcon)

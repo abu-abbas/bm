@@ -32,7 +32,7 @@ interface UserRepositoryInterface
   public function fill(Model $eloquentModel, array $attributes): Model;
 
   /**
-   * Create or update a complaint of model and persist them to the database
+   * Create or update a user of model and persist them to the database
    *
    * @param \Illuminate\Database\Eloquent\Model $eloquentModel
    * @return array <response, error>

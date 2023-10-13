@@ -55,18 +55,14 @@ class Tenant extends Model implements HasMedia
   {
     $this
       ->addMediaConversion('thumb')
-      ->fit(Manipulations::FIT_CROP, 100, 100)
-      ->nonQueued;
+      ->fit(Manipulations::FIT_CROP, 100, 100);
   }
 
   /**
-   * Single file collections
-   *
+   * Get the user's max id logo.
    */
-  public function registerMediaCollections(): void
+  public function singleMedia()
   {
-    $this
-      ->addMediaCollection('logo')
-      ->singleFile();
+    return $this->media()->one()->ofMany('id', 'max');
   }
 }

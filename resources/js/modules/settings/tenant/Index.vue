@@ -1,16 +1,78 @@
 <script setup>
 import { ref } from 'vue'
+import { _, _http, _route } from '@/js/utils/common'
+
+import Spinner from '@/js/components/Spinner.vue'
 import ModalAdd from '@/js/modules/settings/tenant/parts/ModalAdd.vue'
 
-const form = ref({
-  show: false
+const refTable = ref(null)
+const modalVisible = ref(false)
+const table = ref({
+  busy: false,
+  fields: [
+    {
+      key: 'action',
+      label: 'Aksi',
+      class: 'text-center',
+      sortable: false,
+      thStyle: { width: '35px' }
+    },
+    {
+      key: 'rownum',
+      label: 'No',
+      thStyle: { width: '35px', textAlign: 'center' }
+    },
+    {
+      key: 'name',
+      label: 'Nama',
+      thStyle: { textAlign: 'center', width: '20%' }
+    },
+    {
+      key: 'description',
+      label: 'Deskripsi',
+      thStyle: { textAlign: 'center' }
+    },
+    {
+      key: 'logo',
+      label: 'Logo',
+      thStyle: { textAlign: 'center', width: '88px' }
+    },
+  ],
+  search: {
+    filter: null,
+    columns: ['name', 'short_location', 'description']
+  },
+  meta: {
+    page: 1,
+    from: 1,
+    limit: 15,
+    total: 0,
+  }
 })
-const items = [
-  { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-  { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-  { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-  { age: 38, first_name: 'Jami', last_name: 'Carney' }
-]
+const loadProvider = _.debounce((ctx, callback) => {
+  table.value.busy = true
+  _http.get(
+    _route(
+      'backend.tenant.get',
+      {
+        search: table.value.search.filter,
+        columns: table.value.search.columns.join(','),
+        page: ctx.currentPage,
+        limit: ctx.perPage,
+      }
+    )
+  )
+    .then(res => {
+      table.value.meta.from = res.data?.meta.from
+      table.value.meta.page = res.data?.meta.current_page
+      table.value.meta.limit = res.data?.meta.per_page
+      table.value.meta.total = res.data?.meta.total
+
+      callback(res.data?.data)
+    })
+    .catch(() => callback([]))
+    .finally(() => setTimeout(() => table.value.busy = false, 500))
+}, 500)
 </script>
 
 <template>
@@ -32,7 +94,7 @@ const items = [
               <div class="left-section">
                 <button
                   class="btn btn-icon icon-left btn-primary"
-                  @click="form.show = true"
+                  @click="modalVisible = true"
                 >
                   <FontAwesomeIcon :icon="['fas', 'plus']" />
                   Tambah
@@ -46,6 +108,7 @@ const items = [
                     </div>
                   </div>
                   <input
+                    v-model="table.search.filter"
                     type="text"
                     class="form-control"
                     placeholder="Pencarian"
@@ -55,18 +118,101 @@ const items = [
             </div>
 
             <b-table
+              ref="refTable"
               table-class="custom-bordered dataTable"
-              :items="items"
+              :fields="table.fields"
+              :items="loadProvider"
+              :filter="table.search.filter"
+              :current-page="table.meta.page"
+              :per-page="table.meta.limit"
+              :busy="table.busy"
+              show-empty
               hover
               striped
               responsive
             >
+              <template #table-busy>
+                <Spinner></Spinner>
+              </template>
+              <template #empty>
+                <div class="text-center">
+                  <FontAwesomeIcon :icon="['fas', 'exclamation-circle']" class="mr-2" />
+                  <span>Belum ada data</span>
+                </div>
+              </template>
+              <template #emptyfiltered>
+                <div class="text-center">
+                  <FontAwesomeIcon :icon="['fas', 'exclamation-circle']" class="mr-2" />
+                  <span>Data tidak ditemukan</span>
+                </div>
+              </template>
+              <template #cell(action)="{ item }">
+                <div class="d-flex align-items-baseline justify-content-center">
+                  <b-button
+                    variant="link"
+                    class="text-info py-0 px-1 outline-none"
+                  >
+                    <FontAwesomeIcon :icon="['fas', 'edit']" />
+                  </b-button>
+                  <b-button
+                    variant="link"
+                    class="text-danger py-0 px-1 outline-none"
+                  >
+                    <FontAwesomeIcon :icon="['fas', 'trash-alt']" />
+                  </b-button>
+                </div>
+              </template>
+              <template #cell(rownum)="{ index }">
+                <div class="text-right">{{ index + 1 }}</div>
+              </template>
+              <template #cell(name)="{ item }">
+                <div class="d-flex flex-column">
+                  {{ item.name }}
+                  <span class="fs-sm text-muted">{{ item.short_location }}</span>
+                </div>
+              </template>
+              <template #cell(logo)="{ value, item }">
+                <span v-if="!value.thumb" ></span>
+                <img v-else :src="value.thumb" :alt="item.name" class="image-on-table" >
+              </template>
             </b-table>
+
+            <div class="footer-wrapper">
+              <div class="d-flex justify-content-between align-items-center">
+                <b-dropdown
+                  variant="light"
+                  class="mr-2 form-control-height-sm perpage"
+                  :text="table.meta.limit.toString()"
+                >
+                  <b-dropdown-item
+                    v-for="item in [5, 10, 15, 25, 50, 100]"
+                    :key="item"
+                    link-class="btn"
+                    @click.prevent="table.meta.limit = item"
+                  >
+                    {{ item }}
+                  </b-dropdown-item>
+                </b-dropdown>
+                <b-pagination
+                  v-model:value="table.meta.page"
+                  :total-rows="table.meta.total"
+                  :per-page="table.meta.limit"
+                  aria-controls="group-table"
+                  first-class="hidden-md-down"
+                  last-class="hidden-md-down"
+                  class="pagination mb-0"
+                  @change="value => table.meta.page = value"
+                ></b-pagination>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <ModalAdd v-model:visible="form.show" />
+    <ModalAdd
+      v-model:visible="modalVisible"
+      @submit="refTable.refresh()"
+    />
   </div>
 </template>

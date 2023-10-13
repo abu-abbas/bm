@@ -78,7 +78,6 @@ const onSubmit = (values) => {
         setTimeout(() => window.location = res.data.redirect, 500)
     })
     .catch(error => {
-      console.log({ error })
       if (error.response.status == '422' && error.response?.data?.errors) {
         formRef.value.setFieldError(props.usernameField, error.response?.data?.errors[props.usernameField]?.join(', '))
         formRef.value.setFieldError('password', error.response?.data?.errors?.password?.join(', '))
