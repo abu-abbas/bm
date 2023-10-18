@@ -24,6 +24,17 @@ class TenantRepository implements TenantRepositoryInterface
   }
 
   /**
+   * Find a model by its url.
+   *
+   * @param mixed $url
+   * @return Model|null
+   */
+  public function findBySlug($url): Model|null
+  {
+    return $this->tenant->byUrl($url)->first();
+  }
+
+  /**
    * Create and return an un-saved model instance
    *
    * @param array $attributes
@@ -169,6 +180,35 @@ class TenantRepository implements TenantRepositoryInterface
     }
 
     return [$response, $error];
+  }
 
+  /**
+   * Drop tenant and persist to database
+   *
+   * @param Model $eloquestModel
+   * @return array [response, error]
+   */
+  public function drop(Model $eloquestModel): array
+  {
+    $error = null;
+    $response = null;
+
+    try {
+      if (!$eloquestModel->delete())
+        throw new \Exception("Error saat menghapus tenant", -99);
+
+      $response = true;
+    } catch (\Throwable $th) {
+      $error = $th->getCode() == -99
+        ? $th->getMessage()
+        : 'Terjadi kesalahan pada server. Silakan hubungi Admin.';
+
+      Log::error($error, [
+        'payload' => $eloquentModel->toArray(),
+        'error' => ['message' => $th->getMessage()]
+      ]);
+    }
+
+    return [$response, $error];
   }
 }

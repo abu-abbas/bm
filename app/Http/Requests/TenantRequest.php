@@ -31,6 +31,10 @@ class TenantRequest extends FormRequest
       'image/webp',
     ];
 
+    if (request('_method') == 'delete') {
+      return ['slug' => 'required'];
+    }
+
     $rules = [
       'name' => ['required', 'min:3', 'max:250'],
       'logo' => ['required', File::types($allowedMimes)->max(5000)],
@@ -49,6 +53,8 @@ class TenantRequest extends FormRequest
   public function messages()
   {
     return [
+      'slug.required' => 'slug diperlukan',
+
       'name.required' => 'Nama tenant diperlukan',
       'name.min' => 'Nama tenant minimal mengandung :min karakter',
       'name.max' => 'Nama tenant maksimal mengandung :max karakter',

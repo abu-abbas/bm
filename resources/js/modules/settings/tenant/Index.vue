@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue'
-import { _, _http, _route } from '@/js/utils/common'
+import { useRouter } from 'vue-router'
+import { _, _http, _route, _confirm, _alert } from '@/js/utils/common'
 
 import Spinner from '@/js/components/Spinner.vue'
 import ModalAdd from '@/js/modules/settings/tenant/parts/ModalAdd.vue'
 
+const router = useRouter()
 const refTable = ref(null)
 const modalVisible = ref(false)
 const table = ref({
@@ -73,17 +75,73 @@ const loadProvider = _.debounce((ctx, callback) => {
     .catch(() => callback([]))
     .finally(() => setTimeout(() => table.value.busy = false, 500))
 }, 500)
+const onHandleDeleted = item => {
+  _confirm(
+    {
+      title: 'Hapus Tenant',
+      text: `Apakah Anda yakin untuk menghapus data tenant an. ${ item.name }?`,
+      icon: 'question'
+    },
+    () => _http.post(
+      _route('backend.tenant.drop'),
+      {
+        '_method': 'delete',
+        slug: item.slug
+      }
+    )
+      .then(result => result)
+      .catch(error => {
+        let code = error.response.status
+        let message = error.response.data.message
+
+        if ([409, 417, 500].includes(code)) {
+          _alert.showValidationMessage(`${message}`)
+          return
+        }
+
+        if (code == '422') {
+          const errors = error.response.data.errors
+          message = Object.keys(errors).map(key => {
+            return Array.isArray(errors[key])
+              ? errors[key].join(', ')
+              : errors[key]
+          }).join(', ')
+
+          _alert.showValidationMessage(`${message}`)
+          return
+        }
+      })
+  )
+    .then(({ value, isConfirmed, isDismissed }) => {
+      // do nothing
+      if (isDismissed) return false
+
+      // show response
+      if (isConfirmed && value)
+        _alert.fire({ title: `Hapus Tenant Berhasil`, text: `Tenant an ${item.name} berhasil dihapus`, 'icon': 'success' })
+
+      // refresh table
+      refTable.value.refresh()
+    })
+}
+
+const onHandleEdit = item => router.push({ name: 'settings.tenant.detail', params: { slug: item.slug } })
 </script>
 
 <template>
   <div class="section-header">
     <h1>Pengaturan Tenant</h1>
+    <div class="section-header-breadcrumb">
+      <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+      <!-- <div class="breadcrumb-item"><a href="#">Bootstrap Components</a></div> -->
+      <div class="breadcrumb-item">Master Tenant</div>
+    </div>
   </div>
 
   <div class="section-body">
     <h2 class="section-title fs-lg">Daftar Tenant</h2>
     <p class="section-lead">
-      Daftar tenant yang akan ditampilkan pada halaman depan
+      Daftar tenant yang akan ditampilkan pada halaman utama
     </p>
 
     <div class="row">
@@ -150,13 +208,15 @@ const loadProvider = _.debounce((ctx, callback) => {
                 <div class="d-flex align-items-baseline justify-content-center">
                   <b-button
                     variant="link"
-                    class="text-info py-0 px-1 outline-none"
+                    class="text-info py-0 px-1 outline-none cursor-pointer"
+                    @click="onHandleEdit(item)"
                   >
                     <FontAwesomeIcon :icon="['fas', 'edit']" />
                   </b-button>
                   <b-button
                     variant="link"
-                    class="text-danger py-0 px-1 outline-none"
+                    class="text-danger py-0 px-1 outline-none cursor-pointer"
+                    @click="onHandleDeleted(item)"
                   >
                     <FontAwesomeIcon :icon="['fas', 'trash-alt']" />
                   </b-button>

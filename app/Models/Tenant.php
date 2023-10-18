@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
 
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -30,6 +30,32 @@ class Tenant extends Model implements HasMedia
     'join_date' => 'datetime',
     'is_online' => 'boolean',
   ];
+
+  /**
+   * The "booted" method of the model.
+   */
+  protected static function booted(): void
+  {
+    /**
+     * Handle the Tenant "deleted" event.
+     */
+    static::deleted(function (Tenant $tenant) {
+      $tenant->deleted_by = auth()->user()->username;
+      $tenant->save();
+    });
+  }
+
+  /**
+   * Scope a query by given url
+   *
+   * @param \Illuminate\Database\Eloquent\Builder $query
+   * @param string $url
+   * @return void
+   */
+  public function scopeByUrl(Builder $query, $url): void
+  {
+    $query->where('url', $url);
+  }
 
   /**
    * Get notes for the tenant.

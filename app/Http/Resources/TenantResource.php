@@ -14,8 +14,8 @@ class TenantResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
-    $collectionName = 'tenant.logo';
     $data = [
+      'slug' => $this->url,
       'name' => $this->name,
       'short_location' => $this->short_location,
       'description' => $this->description,

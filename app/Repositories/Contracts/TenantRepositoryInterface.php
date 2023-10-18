@@ -9,6 +9,14 @@ use Illuminate\Http\{Request, UploadedFile};
 interface TenantRepositoryInterface
 {
   /**
+   * Find a model by its primary key.
+   *
+   * @param mixed $url
+   * @return Model|null
+   */
+  public function findBySlug($url): Model|null;
+
+  /**
    * Create and return an un-saved model instance
    *
    * @param array $attributes
@@ -51,4 +59,12 @@ interface TenantRepositoryInterface
    * @return array [response, error]
    */
   public function uploadFile(Model $eloquentModel, UploadedFile $file, $deleteIfExist = true): array;
+
+  /**
+   * Drop tenant and persist to database
+   *
+   * @param Model $eloquestModel
+   * @return array [response, error]
+   */
+  public function drop(Model $eloquestModel) : array;
 }

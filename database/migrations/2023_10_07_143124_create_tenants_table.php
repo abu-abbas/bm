@@ -14,6 +14,7 @@ return new class extends Migration
     Schema::create('tenants', function (Blueprint $table) {
       $table->id();
       $table->string('name', 250)->comment('tenant name');
+      $table->string('url', 250)->nullable()->comment('tenant url');
       $table->string('short_location', 50)->nullable()->comment('short location eg. jakarta pusat');
       $table->string('description', 2000)->nullable()->comment('tenant description');
       $table->timestamp('join_date')->nullable()->comment('tenant join date');
