@@ -1,9 +1,6 @@
 <script setup>
 import { onMounted, onBeforeUnmount } from 'vue'
 import { useStisla } from '@/js/composable/useStisla'
-import Navbar from '@/js/modules/admin/parts/Navbar.vue'
-import Sidebar from '@/js/modules/admin/parts/Sidebar.vue'
-import Footer from '@/js/modules/admin/parts/Footer.vue'
 
 const { sidebarSticky, resizeHandler } = useStisla()
 
@@ -19,8 +16,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', resizeHandler))
 
 <template>
   <div class="main-wrapper main-wrapper-1">
-    <Navbar />
-    <Sidebar />
+    <router-view name="header"></router-view>
 
     <div class="main-content">
       <section class="section">
@@ -28,7 +24,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', resizeHandler))
       </section>
     </div>
 
-    <Footer />
+    <router-view name="footer"></router-view>
   </div>
 </template>
 

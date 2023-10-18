@@ -17,3 +17,9 @@
     </div>
   </section>
 </template>
+
+<style lang="scss">
+.main-content {
+  padding-left: 0;
+}
+</style>

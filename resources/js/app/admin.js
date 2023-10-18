@@ -1,7 +1,11 @@
 import '@/js/bootstrap.js'
 import Vue, { createApp } from 'vue'
-import MainApp from '@/js/app/Main.vue'
+import MainApp from '@/js/modules/admin/Index.vue'
 import router from '@/js/router/admin-router.js'
+
+// global component
+import SectionHeader from '@/js/components/SectionHeader.vue'
+
 import { configureCompat } from '@/js/compat-config.js'
 import RegisteredBootstrapVue from '@/js/app/registered/admin/bootstrap-vue.js'
 import { registeredFontAwesome } from '@/js/app/registered/admin/font-awesome.js'
@@ -21,5 +25,6 @@ registeredFontAwesome(Vue)
 Vue.use(RegisteredBootstrapVue)
 
 createApp(MainApp)
+  .component('SectionHeader', SectionHeader)
   .use(router)
   .mount('#app')

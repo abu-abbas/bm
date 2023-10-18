@@ -1,6 +1,12 @@
 import { _settings } from '@/js/utils/common'
 import { createWebHistory, createRouter } from 'vue-router'
 
+const Header = () => import('@/js/modules/admin/parts/Header.vue')
+const Footer = () => import('@/js/modules/admin/parts/Footer.vue')
+
+// routes
+import tenantRouter from '@/js/router/modules/tenant-router'
+
 const router = createRouter({
   history: createWebHistory('admin'),
   scrollBehavior(to, from, savedPosition) {
@@ -20,32 +26,18 @@ const router = createRouter({
   routes: [
     {
       path: '',
-      component: () => import('@/js/modules/admin/Index.vue'),
+      name: 'admin.home',
+      components: {
+        default: () => import('@/js/modules/dashboard/Admin.vue'),
+        header: Header,
+        footer: Footer
+      },
       meta: {
         auth: true,
         access: true,
       },
-      children: [
-        {
-          path: '',
-          name: 'admin.home',
-          component: () => import('@/js/modules/dashboard/Admin.vue'),
-          meta: {
-            auth: true,
-            access: true,
-          },
-        },
-        {
-          path: 'settings/tenant',
-          name: 'settings.tenant',
-          component: () => import('@/js/modules/settings/tenant/Index.vue'),
-          meta: {
-            auth: true,
-            access: true,
-          },
-        }
-      ]
     },
+    ...tenantRouter({ header: Header, footer: Footer }),
     {
       path: '/404',
       name: 'admin.forbidden',

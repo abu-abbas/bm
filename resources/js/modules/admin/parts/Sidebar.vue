@@ -13,11 +13,13 @@ import { _settings } from '@/js/utils/common'
       </div>
       <ul class="sidebar-menu">
         <router-link
-          v-slot="{ isActive, href, navigate, isExactActive }"
+          v-slot="{ href, navigate, isActive }"
           :to="{ name: 'admin.home' }"
           custom
+          active-class="active"
+          exact-active-class="active"
         >
-          <li :class="{ 'active': isActive && isExactActive }">
+          <li :class="{ 'active': isActive }">
             <a :href="href" class="nav-link" @click="navigate">
               <FontAwesomeIcon :icon="['far', 'square']" />
               <span>Dashboard</span>
@@ -27,11 +29,13 @@ import { _settings } from '@/js/utils/common'
 
         <li class="menu-header">Pengaturan</li>
         <router-link
-          v-slot="{ isActive, href, navigate, isExactActive }"
+          v-slot="{ href, navigate, isActive }"
           :to="{ name: 'settings.tenant' }"
           custom
+          active-class="active"
+          exact-active-class="active"
         >
-          <li :class="{ 'active': isActive && isExactActive }">
+          <li :class="{ 'active': isActive }">
             <a :href="href" class="nav-link" @click="navigate">
               <FontAwesomeIcon :icon="['fas', 'people-group']" />
               <span>Master Tenant</span>
