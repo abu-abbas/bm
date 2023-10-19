@@ -112,7 +112,7 @@ const doEmits = () => {
         class="image-preview"
         alt="Output after crop and resize"
       >
-      <a href="javascript:void" @click="onHandleRemoveImage">
+      <a href="javascript:void(0)" @click="onHandleRemoveImage">
         <FontAwesomeIcon :icon="['fas', 'trash-alt']"/>
       </a>
     </div>

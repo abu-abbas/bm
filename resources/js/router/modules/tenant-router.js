@@ -22,7 +22,7 @@ export default function tenantRoutes({ header, footer }) {
                 isActive: true
               },
               {
-                label: 'Master Tenant',
+                label: 'Daftar Tenant',
                 url: null,
                 isActive: false
               },
@@ -44,12 +44,12 @@ export default function tenantRoutes({ header, footer }) {
                 isActive: true
               },
               {
-                label: 'Master Tenant',
+                label: 'Daftar Tenant',
                 url: 'settings.tenant',
                 isActive: true
               },
               {
-                label: 'Detail Tenant',
+                label: 'Info Tenant',
                 url: null,
                 isActive: false
               },

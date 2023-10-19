@@ -13,6 +13,7 @@ Route::group([
   ], function () {
     Route::get('/', [TenantController::class, 'list'])->name('get');
     Route::post('/', [TenantController::class, 'store'])->name('store');
+    Route::put('/', [TenantController::class, 'edit'])->name('edit');
     Route::delete('/', [TenantController::class, 'drop'])->name('drop');
   });
 });

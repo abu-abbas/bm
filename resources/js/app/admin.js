@@ -1,4 +1,5 @@
 import '@/js/bootstrap.js'
+import { createPinia } from 'pinia'
 import Vue, { createApp } from 'vue'
 import MainApp from '@/js/modules/admin/Index.vue'
 import router from '@/js/router/admin-router.js'
@@ -24,7 +25,10 @@ configureCompat(Vue)
 registeredFontAwesome(Vue)
 Vue.use(RegisteredBootstrapVue)
 
+const pinia = createPinia()
+
 createApp(MainApp)
   .component('SectionHeader', SectionHeader)
   .use(router)
+  .use(pinia)
   .mount('#app')

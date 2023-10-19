@@ -42,6 +42,12 @@ class TenantRequest extends FormRequest
       'description' => ['max:2000'],
     ];
 
+    if (request('_method') == 'put') {
+      $rules['slug'] = ['required'];
+      array_shift($rules['logo']) ;
+      return $rules;
+    }
+
     return $rules;
   }
 

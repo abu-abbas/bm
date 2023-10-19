@@ -18,6 +18,7 @@ class TenantRepository implements TenantRepositoryInterface
     $this->tenant = $tenant;
     $this->mappedColumn = [
       'name' => 'name',
+      'url' => 'url',
       'short_location' => 'short_location',
       'description' => 'description',
     ];
@@ -69,15 +70,17 @@ class TenantRepository implements TenantRepositoryInterface
     $response = null;
 
     try {
-      $perPage = $request->limit ?? $this->serviceReq->getPerPage();
+      $perPage = $request->limit ?? $this->tenant->getPerPage();
       $selectedColumns = explode(',', $request->columns);
       $filtered = collect($this->mappedColumn)->reject(fn ($v, $k) => !in_array($k, $selectedColumns))->values();
 
-      $response = $this->tenant
+      $query = $this->tenant
         ->with('singleMedia')
-        ->when($request->search, fn ($q, $searchText) => $q->searchByColumn($searchText, $filtered))
-        ->paginate($perPage);
+        ->when($request->search, fn ($q, $searchText) => $q->searchByColumn($searchText, $filtered));
 
+      $response = $request->fetch_first
+        ? $query->first()
+        : $query->paginate($perPage);
     } catch (\Throwable $th) {
       $error = 'Terjadi kesalah saat mengambil data master tenant. Silakan hubungi Admin untuk lebih lanjut.';
       Log::error($error, [

@@ -10,6 +10,16 @@ const props = defineProps({
     type: Boolean,
     required: true,
     default: false,
+  },
+  initData: {
+    type: [Object, null],
+    required: false,
+    default: () => {},
+  },
+  isEdit: {
+    type: Boolean,
+    required: true,
+    default: false,
   }
 })
 
@@ -18,22 +28,52 @@ const emits = defineEmits(['update:visible', 'submit'])
 // declaration
 const componentId = Math.random().toString(36).substring(2, 9)
 const localVisible = computed(() => props.visible)
+const localData = computed(() => props.initData)
 const nameInput = ref(null)
+const formRef = ref(null)
+const showPreviewImage = ref(false)
 
 // method
-const onHandleShown = () => nextTick(() => nameInput.value.focus())
+const onHandleShown = () => nextTick(() => {
+  nameInput.value.focus()
+
+  if (localData.value) {
+    formRef.value.setFieldValue('name', localData.value.name)
+    formRef.value.setFieldValue('short_location', localData.value.short_location)
+    formRef.value.setFieldValue('description', localData.value.description)
+    showPreviewImage.value = true
+  }
+})
 const onHandleHide = () => emits('update:visible', false)
+const onHandleRemoveImage = () => showPreviewImage.value = false
 
 const handleSubmit = (values, { resetForm }) => {
+  const isEdit = props.isEdit
+  const msgText = isEdit
+    ? `Apakah Anda yakan untuk mengubah data ${ localData.value?.name } ?`
+    : `Apakah Anda yakin untuk menambahkan ${values.name} sebagai tenant?`
+  const method = isEdit ? 'put' : 'post'
+  const url = `backend.tenant.${ isEdit ? 'edit' : 'store' }`
+  let hasChange = false
+
+  if (isEdit) {
+    Object.keys(values).forEach(k => {
+      if (values[k] != localData.value[k])
+        hasChange = true
+    })
+  }
+
+  if (isEdit && !hasChange) return
+
   _confirm(
     {
-      title: 'Tambah tenant',
-      text: `Apakah Anda yakin untuk menambahkan ${ values.name } sebagai tenant?`,
+      title: `${ isEdit ? 'Ubah' : 'Tambah' } tenant`,
+      text: msgText,
       icon: 'question',
     },
     () => _http.post(
-      _route('backend.tenant.store'),
-      { ...values },
+      _route(url),
+      { ...values, '_method': method, slug: isEdit ? localData.value?.slug : null },
       { headers: { 'Content-Type': 'multipart/form-data' } }
     )
       .then(res => res)
@@ -72,7 +112,7 @@ const handleSubmit = (values, { resetForm }) => {
         })
 
         resetForm()
-        emits('submit')
+        emits('submit', value.data?.data)
         onHandleHide()
       }
     })
@@ -83,7 +123,7 @@ const handleSubmit = (values, { resetForm }) => {
   <b-modal
     :id="componentId"
     v-model:visible="localVisible"
-    title="Tambah Tenant"
+    :title="`${ props.isEdit ? 'Ubah' : 'Tambah' } Tenant`"
     hide-footer
     @shown="onHandleShown"
     @hide="onHandleHide"
@@ -158,7 +198,7 @@ const handleSubmit = (values, { resetForm }) => {
                   id="deskripsi"
                   v-bind="field"
                   type="text"
-                  class="form-control"
+                  class="form-control custom-scroll"
                   placeholder="Masukkan deskripsi tentang tenant"
                 ></textarea>
                 <div
@@ -176,7 +216,21 @@ const handleSubmit = (values, { resetForm }) => {
               Logo
             </label>
             <div class="col-sm-9">
+              <div
+                v-if="showPreviewImage"
+                class="preview-wrapper"
+              >
+                <img
+                  :src="localData?.logo?.thumb"
+                  :alt="localData?.name"
+                  class="image-preview"
+                >
+                <a href="javascript:void(0)" @click="onHandleRemoveImage">
+                  <FontAwesomeIcon :icon="['fas', 'trash-alt']"/>
+                </a>
+              </div>
               <Field
+                v-else
                 v-slot="{ field, errorMessage }"
                 label="Logo"
                 name="logo"
@@ -196,7 +250,7 @@ const handleSubmit = (values, { resetForm }) => {
                 <FontAwesomeIcon :icon="['fas', 'save']" class="mr-1"/>
                 Simpan
               </button>
-              <button class="btn btn-light" @click="hide">
+              <button type="reset" class="btn btn-light" @click="hide">
                 Batal
               </button>
             </div>
@@ -211,6 +265,41 @@ const handleSubmit = (values, { resetForm }) => {
 textarea {
   &.form-control {
     min-height: 100px;
+  }
+}
+
+.preview-wrapper {
+  position: relative;
+  width: 80px;
+  padding: 4px;
+  border: 1px solid #e4e6fc;
+  border-radius: 5px;
+
+  img {
+    &.image-preview {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  > a {
+    position: absolute;
+    background-color: rgba($color: #fff, $alpha: .625);
+    padding: 5px 10px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: .2;
+    transition: ease-in-out;
+
+    svg {
+      color: var(--danger);
+    }
+
+    &:hover {
+      opacity: .875;
+    }
   }
 }
 </style>

@@ -28,8 +28,9 @@ class TenantController extends Controller
       ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    return TenantResource::collection($response)
-      ->additional(['status' => 'success']);
+    return $request->fetch_first
+      ? response()->json(['status' => 'success', 'data' => new TenantResource($response)])
+      : TenantResource::collection($response)->additional(['status' => 'success']);
   }
 
   public function store(TenantRequest $request)
@@ -92,6 +93,52 @@ class TenantController extends Controller
     return response()->json([
       'status' => 'success',
       'message' => 'Data berhasil dihapus',
+    ]);
+  }
+
+  public function edit(TenantRequest $request)
+  {
+    $request->validated();
+
+    $found = $this->tenant->findBySlug($request->slug);
+    if (!$found) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Tenant tidak ditemukan.'
+      ], JsonResponse::HTTP_EXPECTATION_FAILED);
+    }
+
+    $tenant = $this->tenant->fill($found, [
+      'name' => $request->name,
+      'short_location' => $request->short_location,
+      'description' => $request->description,
+      'updated_by' => auth()->user()->username,
+    ]);
+
+    [$response, $error] = $this->tenant->saveOrEdit($tenant, 'edit');
+    if (!is_null($error)) {
+      return response()->json([
+        'status' => 'error',
+        'message' => $error
+      ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    if ($request->has('logo')) {
+      // upload logo
+      [$response, $error] = $this->tenant->uploadFile($response, $request->file('logo'));
+      if (!is_null($error)) {
+        return response()->json([
+          'status' => 'error',
+          'message' => $error
+        ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+      }
+    }
+
+    $message = $request->_method == 'put' ? 'diubah' : 'ditambahkan';
+    return response()->json([
+      'status' => 'success',
+      'message' => "Data berhasil {$message}",
+      'data' => new TenantResource($response)
     ]);
   }
 }

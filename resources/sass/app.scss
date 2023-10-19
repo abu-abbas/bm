@@ -67,6 +67,24 @@ body {
     }
   }
 
+  textarea {
+    &.custom-scroll {
+      &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      &::-webkit-scrollbar-track-piece {
+        background-color: rgb(243, 244, 245);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #cecece;
+        border-radius: 2px;
+      }
+    }
+  }
+
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;

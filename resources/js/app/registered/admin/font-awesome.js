@@ -14,6 +14,7 @@ import {
   faTrashAlt,
   faCropSimple,
   faSave,
+  faInfoCircle,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -38,6 +39,7 @@ export function registeredFontAwesome(Vue) {
     faSearch,
     faSquare,
     faTrashAlt,
+    faInfoCircle,
     faCropSimple,
     faSignOutAlt,
     faPeopleGroup,

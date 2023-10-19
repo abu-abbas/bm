@@ -33,7 +33,6 @@ import { _settings } from '@/js/utils/common'
           :to="{ name: 'settings.tenant' }"
           custom
           active-class="active"
-          exact-active-class="active"
         >
           <li :class="{ 'active': isActive }">
             <a :href="href" class="nav-link" @click="navigate">

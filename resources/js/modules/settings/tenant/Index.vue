@@ -2,12 +2,14 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { _, _http, _route, _confirm, _alert } from '@/js/utils/common'
+import { useTenantStore } from '@/js/stores/settings/tenant-store.js'
 
 import Spinner from '@/js/components/Spinner.vue'
-import ModalAdd from '@/js/modules/settings/tenant/parts/ModalAdd.vue'
+import ModalForm from '@/js/modules/settings/tenant/parts/ModalForm.vue'
 
-const router = useRouter()
 const refTable = ref(null)
+const router = useRouter()
+const tenantStore = useTenantStore()
 const modalVisible = ref(false)
 const table = ref({
   busy: false,
@@ -125,7 +127,10 @@ const onHandleDeleted = item => {
     })
 }
 
-const onHandleEdit = item => router.push({ name: 'settings.tenant.detail', params: { slug: item.slug } })
+const onHandleEdit = item => {
+  tenantStore.setItemByUrl(item.slug, item)
+  router.push({ name: 'settings.tenant.detail', params: { slug: item.slug } })
+}
 </script>
 
 <template>
@@ -202,7 +207,7 @@ const onHandleEdit = item => router.push({ name: 'settings.tenant.detail', param
                     class="text-info py-0 px-1 outline-none cursor-pointer"
                     @click="onHandleEdit(item)"
                   >
-                    <FontAwesomeIcon :icon="['fas', 'edit']" />
+                    <FontAwesomeIcon :icon="['fas', 'info-circle']" />
                   </b-button>
                   <b-button
                     variant="link"
@@ -261,7 +266,7 @@ const onHandleEdit = item => router.push({ name: 'settings.tenant.detail', param
       </div>
     </div>
 
-    <ModalAdd
+    <ModalForm
       v-model:visible="modalVisible"
       @submit="refTable.refresh()"
     />
