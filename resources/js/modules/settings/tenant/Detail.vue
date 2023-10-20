@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 import { toRef, ref, watchEffect } from 'vue'
 import { _http, _route, _alert } from '@/js/utils/common.js'
 import { useTenantStore } from '@/js/stores/settings/tenant-store.js'
+
+import IframeModal from '@/js/components/IframeModal.vue'
 import ModalForm from '@/js/modules/settings/tenant/parts/ModalForm.vue'
 
 const props = defineProps({
@@ -19,6 +21,7 @@ const getSlug = toRef(props, 'slug')
 const tenantStore = useTenantStore()
 const { getSelectedByUrl } = storeToRefs(tenantStore)
 const modalVisible = ref(false)
+const iframeVisible = ref(false)
 const initData = ref({})
 
 const backToMain = () => router.push({ name: 'settings.tenant' })
@@ -66,6 +69,10 @@ const onHandleSubmit = (value) => {
   fetchTenant()
 }
 
+const onHandleQrcode = () => {
+  iframeVisible.value = true
+}
+
 const unwatch = watchEffect(
   () => {
     if (!localTenant.value)
@@ -88,7 +95,7 @@ const unwatch = watchEffect(
           <div class="flex-1 ml-0 ml-sm-3">{{ localTenant?.description }}</div>
         </div>
 
-        <div class="action d-flex align-items-center mt-3 mt-sm-0">
+        <div class="action d-flex align-items-center mt-3">
           <a
             href="javascript:void(0)"
             rel="noopener noreferrer"
@@ -123,5 +130,7 @@ const unwatch = watchEffect(
       is-edit
       @submit="onHandleSubmit"
     />
+
+    <IframeModal v-model:visible="iframeVisible" />
   </div>
 </template>

@@ -169,6 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Elibyy\TCPDF\ServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
         App\Providers\CustomCaptchaServiceProvider::class,
 
@@ -188,7 +189,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'Captcha' => Mews\Captcha\Facades::class
+        'Captcha' => Mews\Captcha\Facades::class,
+        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
     ])->toArray(),
 
 ];

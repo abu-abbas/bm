@@ -15,5 +15,7 @@ Route::group([
     Route::post('/', [TenantController::class, 'store'])->name('store');
     Route::put('/', [TenantController::class, 'edit'])->name('edit');
     Route::delete('/', [TenantController::class, 'drop'])->name('drop');
+
+    Route::get('generate-qrcode/{slug}', [TenantController::class, 'qrcode'])->name('qrcode');
   });
 });

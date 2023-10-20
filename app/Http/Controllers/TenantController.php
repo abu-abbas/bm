@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use Illuminate\Support\Str;
 use App\Http\Requests\TenantRequest;
 use App\Http\Resources\TenantResource;
@@ -140,5 +141,119 @@ class TenantController extends Controller
       'message' => "Data berhasil {$message}",
       'data' => new TenantResource($response)
     ]);
+  }
+
+  public function qrcode($slug)
+  {
+    $tenant = $this->tenant->findBySlug($slug);
+
+    // set document information
+    PDF::SetCreator('Bussiness Matching Apps');
+    PDF::SetAuthor('Bussiness Matching Apps');
+    PDF::SetTitle($tenant->name);
+    PDF::SetSubject($slug);
+    PDF::SetKeywords('bussiness matching, jakarta');
+
+    // disable header and footer
+    PDF::setPrintHeader(false);
+    PDF::setPrintFooter(false);
+
+    // set margins
+    PDF::SetMargins(10, 0, 10, 0);
+
+    // set auto page breaks
+    PDF::SetAutoPageBreak(true, 0);
+
+    // PDF::SetTitle($slug);
+    PDF::AddPage('P', 'B5', true);
+
+    // PDF::Polygon(
+    //   [
+    //     0,
+    //     0,
+    //     PDF::getPageWidth() * 0.75,
+    //     0,
+    //     0,
+    //     50
+    //   ],
+    //   'F',
+    //   [],
+    //   [255, 234, 221]
+    // );
+
+    // PDF::Polygon(
+    //   [
+    //     0,
+    //     57,
+    //     PDF::getPageWidth() * 0.60,
+    //     13,
+    //     0,
+    //     80
+    //   ],
+    //   'F',
+    //   [],
+    //   [255, 234, 221]
+    // );
+
+    // background footer
+    PDF::Polygon(
+      [
+        0,
+        PDF::getPageHeight() - 25,
+        PDF::getPageWidth(),
+        PDF::getPageHeight() - 25,
+        PDF::getPageWidth(),
+        PDF::getPageHeight(),
+        0,
+        PDF::getPageHeight(),
+      ],
+      'F',
+      [],
+      [183, 4, 4]
+    );
+
+    $img_file = storage_path('app/public/logo-dki-thumb.png');
+    PDF::Image($img_file, 15, 15, 16, 18, '', '', '', false, 300, '', false, false, 0);
+
+    $img_file = storage_path('app/public/jakpreneur.png');
+    PDF::Image($img_file, (PDF::getPageWidth() - 45), 13, 35, 23, '', '', '', false, 300, '', false, false, 0);
+
+    PDF::SetFont('Helvetica', 'B', 16);
+    PDF::Text(35, 16, 'Bussines');
+    PDF::Text(35, 22, 'Matching');
+
+    PDF::SetFont('Helvetica', 'B', 20);
+    PDF::SetXY(10, 60);
+    PDF::MultiCell(0, 0, $tenant->name, 0, 'C');
+
+    PDF::SetFont('Helvetica', 'B', 14);
+    PDF::SetTextColor(170, 173, 177);
+    PDF::SetXY(10, 73);
+    PDF::Cell(0, 0, $tenant->short_location, 0, 0, 'C', 0, '', 1, false, 'C', 'C');
+
+    // set qrcode
+    $style = [
+      'border' => 0,
+      'padding' => 1,
+      'fgcolor' => [0, 0, 0],
+      'bgcolor' => [255, 255, 255],
+      'module_width' => 1,
+      'module_height' => 1,
+    ];
+    $size = 100;
+    $top = ceil((PDF::getPageHeight() - $size) / 2) + 10;
+    $left = ceil((PDF::getPageWidth() - $size) / 2);
+    $url = config('app.url') . 'vendor-page?id=' . encrypt_params($tenant->id);
+    PDF::Write2DBarcode($url , 'QRCODE,L', $left, $top, $size, $size, $style, 'N');
+
+    // set footer text
+    PDF::SetFontSize(8);
+    PDF::SetTextColor(255, 255, 255);
+
+    $user = encrypt_params(auth()->user()->id);
+    PDF::Text(10, (PDF::getPageHeight() - 15), "Dicetak oleh: {$user}");
+    PDF::Text(10, (PDF::getPageHeight() - 12), "Versi Cetak 1.0.00");
+
+    PDF::Output("{$slug}-bmqrcode.pdf", 'I');
   }
 }
