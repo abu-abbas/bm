@@ -78,16 +78,6 @@ const unwatch = watchEffect(
   <div class="section-body">
     <h2 class="section-title fs-lg">
       {{ localTenant?.name }}
-      <a
-        href="javascript:void(0)"
-        rel="noopener noreferrer"
-        @click="onHandleEdit"
-      >
-        <FontAwesomeIcon
-          :icon="['fas', 'edit']"
-          class="cursor-pointer ml-2 text-info"
-        />
-      </a>
     </h2>
     <p class="section-lead">{{ localTenant?.short_location }}</p>
 
@@ -96,6 +86,33 @@ const unwatch = watchEffect(
         <div class="d-flex align-items-start flex-wrap flex-sm-nowrap">
           <img :src="localTenant?.logo?.thumb" :alt="`Logo ${ localTenant?.name }`">
           <div class="flex-1 ml-0 ml-sm-3">{{ localTenant?.description }}</div>
+        </div>
+
+        <div class="action d-flex align-items-center mt-3 mt-sm-0">
+          <a
+            href="javascript:void(0)"
+            rel="noopener noreferrer"
+            class="btn btn-info btn-icon mr-2"
+            @click="onHandleEdit"
+          >
+            <FontAwesomeIcon
+              :icon="['fas', 'edit']"
+              class="mr-1"
+            />
+            Ubah
+          </a>
+          <a
+            href="javascript:void(0)"
+            rel="noopener noreferrer"
+            class="btn btn-primary btn-icon"
+            @click="onHandleQrcode"
+          >
+            <FontAwesomeIcon
+              :icon="['fas', 'qrcode']"
+              class="mr-1"
+            />
+            Tampilkan Qrcode
+          </a>
         </div>
       </div>
     </div>

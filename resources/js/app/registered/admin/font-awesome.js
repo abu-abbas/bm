@@ -1,20 +1,21 @@
 import { useFontAwesome } from '@/js/composable/useFontAwesome'
 
 import {
+  faPlus,
+  faEdit,
   faBars,
+  faSave,
   faHeart,
-  faSignOutAlt,
   faHouse,
-  faPeopleGroup,
   faTimes,
   faCheck,
-  faEdit,
-  faPlus,
+  faQrcode,
   faSearch,
   faTrashAlt,
   faCropSimple,
-  faSave,
   faInfoCircle,
+  faSignOutAlt,
+  faPeopleGroup,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -36,6 +37,7 @@ export function registeredFontAwesome(Vue) {
     faHeart,
     faTimes,
     faImage,
+    faQrcode,
     faSearch,
     faSquare,
     faTrashAlt,
