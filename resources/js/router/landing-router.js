@@ -1,14 +1,8 @@
 import { _settings } from '@/js/utils/common'
 import { createWebHistory, createRouter } from 'vue-router'
 
-const Header = () => import('@/js/modules/admin/parts/Header.vue')
-const Footer = () => import('@/js/modules/admin/parts/Footer.vue')
-
-// routes
-import tenantRouter from '@/js/router/modules/tenant-router'
-
 const router = createRouter({
-  history: createWebHistory('admin'),
+  history: createWebHistory(),
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition)
       return savedPosition
@@ -26,21 +20,18 @@ const router = createRouter({
   routes: [
     {
       path: '',
-      name: 'admin.home',
+      name: 'landing.home',
       components: {
-        default: () => import('@/js/modules/dashboard/Admin.vue'),
-        header: Header,
-        footer: Footer
+        default: () => import('@/js/modules/landing/parts/Home.vue'),
       },
       meta: {
-        auth: true,
+        auth: false,
         access: true,
       },
     },
-    ...tenantRouter({ header: Header, footer: Footer }),
     {
       path: '/404',
-      name: 'admin.forbidden',
+      name: 'landing.forbidden',
       component: () => import('@/js/modules/errors/404.vue'),
       meta: {
         auth: false,
@@ -56,7 +47,7 @@ router.beforeEach((to, from, next) => {
 
   // cek hak akses
   if (!to.meta.access) {
-    next({ name: 'admin.forbidden' })
+    next({ name: 'landing.forbidden' })
     return
   }
 

@@ -13,6 +13,6 @@ class GuestController extends Controller
    */
   public function landing()
   {
-    return view('welcome');
+    return view('layouts.app.landing');
   }
 }
