@@ -4,18 +4,18 @@ import { _settings } from '@/js/utils/common'
 const redirectTo = (page) => window.location = page
 
 const btnLogout = ref(null)
+const onHandleLogout = function () {
+  window.doLogout.apply(this, arguments)
+}
 
 onMounted(() => {
-  if (btnLogout.value) {
-    btnLogout.value.addEventListener('click', function() {
-      window.doLogout.apply(this, arguments)
-    })
-  }
+  if (btnLogout.value)
+    btnLogout.value.addEventListener('click', onHandleLogout)
 })
 
 onBeforeUnmount(() => {
   if (btnLogout.value)
-    btnLogout.value.removeEventListener('click')
+    btnLogout.value.removeEventListener('click', onHandleLogout)
 })
 </script>
 

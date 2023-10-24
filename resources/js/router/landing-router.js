@@ -30,6 +30,18 @@ const router = createRouter({
       },
     },
     {
+      path: '/:slug',
+      name: 'tenant.home',
+      props: true,
+      components: {
+        default: () => import('@/js/modules/landing/tenant/Index.vue'),
+      },
+      meta: {
+        auth: false,
+        access: true,
+      },
+    },
+    {
       path: '/404',
       name: 'landing.forbidden',
       component: () => import('@/js/modules/errors/404.vue'),
