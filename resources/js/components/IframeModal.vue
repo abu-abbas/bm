@@ -1,19 +1,24 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { _route } from '@/js/utils/common.js'
-// import FilePdf from '@/12345.pdf'
 
 const props = defineProps({
   visible: {
     type: Boolean,
     required: true,
     default: false
+  },
+  slug: {
+    type: [String, null],
+    required: true,
+    default: null
   }
 })
 const emits = defineEmits(['update:visible'])
 
 const iframeRef = ref(null)
 const localVisible = computed(() => props.visible)
+const localSlug = computed(() => props.slug)
 const onHandleHide = () => emits('update:visible', false)
 </script>
 
@@ -30,7 +35,7 @@ const onHandleHide = () => emits('update:visible', false)
   >
     <iframe
       ref="iframeRef"
-      :src="`${_route('backend.tenant.qrcode', { slug: 'pt-gamma-persada-solusindo' })}#zoom=50`"
+      :src="`${_route('backend.tenant.qrcode', { slug: localSlug })}#zoom=50`"
       class="custom-iframe"
       seamless="seamless"
       scrolling="no"

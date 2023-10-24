@@ -131,6 +131,9 @@ const unwatch = watchEffect(
       @submit="onHandleSubmit"
     />
 
-    <IframeModal v-model:visible="iframeVisible" />
+    <IframeModal
+      v-model:visible="iframeVisible"
+      :slug="getSlug"
+    />
   </div>
 </template>
