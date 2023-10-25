@@ -167,34 +167,6 @@ class TenantController extends Controller
     // PDF::SetTitle($slug);
     PDF::AddPage('P', 'B5', true);
 
-    // PDF::Polygon(
-    //   [
-    //     0,
-    //     0,
-    //     PDF::getPageWidth() * 0.75,
-    //     0,
-    //     0,
-    //     50
-    //   ],
-    //   'F',
-    //   [],
-    //   [255, 234, 221]
-    // );
-
-    // PDF::Polygon(
-    //   [
-    //     0,
-    //     57,
-    //     PDF::getPageWidth() * 0.60,
-    //     13,
-    //     0,
-    //     80
-    //   ],
-    //   'F',
-    //   [],
-    //   [255, 234, 221]
-    // );
-
     // background footer
     PDF::Polygon(
       [

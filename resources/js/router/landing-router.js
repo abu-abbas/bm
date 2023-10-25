@@ -30,8 +30,20 @@ const router = createRouter({
       },
     },
     {
-      path: '/:slug',
+      path: '/tenant/:slug',
       name: 'tenant.home',
+      props: true,
+      components: {
+        default: () => import('@/js/modules/landing/tenant/Index.vue'),
+      },
+      meta: {
+        auth: false,
+        access: true,
+      },
+    },
+    {
+      path: '/tenant/:slug/:productSlug',
+      name: 'tenant.product',
       props: true,
       components: {
         default: () => import('@/js/modules/landing/tenant/Index.vue'),
