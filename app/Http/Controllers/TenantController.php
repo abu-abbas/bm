@@ -29,6 +29,13 @@ class TenantController extends Controller
       ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
 
+    if (!$response) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Tenant tidak ditemukan'
+      ], JsonResponse::HTTP_NOT_FOUND);
+    }
+
     return $request->fetch_first
       ? response()->json(['status' => 'success', 'data' => new TenantResource($response)])
       : TenantResource::collection($response)->additional(['status' => 'success']);

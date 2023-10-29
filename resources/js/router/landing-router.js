@@ -30,7 +30,7 @@ const router = createRouter({
       },
     },
     {
-      path: '/tenant/:slug',
+      path: '/:slug',
       name: 'tenant.home',
       props: true,
       components: {
@@ -42,11 +42,11 @@ const router = createRouter({
       },
     },
     {
-      path: '/tenant/:slug/:productSlug',
+      path: '/:tenantSlug/:productSlug',
       name: 'tenant.product',
       props: true,
       components: {
-        default: () => import('@/js/modules/landing/tenant/Index.vue'),
+        default: () => import('@/js/modules/landing/products/Index.vue'),
       },
       meta: {
         auth: false,

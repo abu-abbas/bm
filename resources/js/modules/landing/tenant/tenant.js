@@ -1,8 +1,10 @@
 import { storeToRefs } from 'pinia'
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useTenantStore } from '@/js/stores/settings/tenant-store.js'
 
 export function useTenant(slug) {
+  const router = useRouter()
   const tenantStore = useTenantStore()
   const { getSelectedByUrl } = storeToRefs(tenantStore)
 
@@ -31,11 +33,17 @@ export function useTenant(slug) {
       .finally(() => setTimeout(() => loading.value = false, 500))
   }
 
+  const onHandleSelectedProduct = (productSlug) => {
+    // console.log({ slug, productSlug })
+    router.push({ name: 'tenant.product', params: { tenantSlug: slug, productSlug } })
+  }
+
   onMounted(() => fetchTenant())
 
   return {
     data,
     found,
-    loading
+    loading,
+    onHandleSelectedProduct
   }
 }
