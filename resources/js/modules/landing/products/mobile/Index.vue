@@ -1,4 +1,7 @@
 <script setup>
+import { toRef } from 'vue'
+
+import Checkout from '@/js/modules/landing/checkout/Index.vue'
 const props = defineProps({
   tenantSlug: {
     type: [String, null],
@@ -11,11 +14,23 @@ const props = defineProps({
     default: null
   },
 })
+
+const localTenantSlug = toRef(props, 'tenantSlug')
+const localProductSlug = toRef(props, 'productSlug')
+
 </script>
 
 <template>
   <div class="tenant-page-for-desktop-wrapper">
-    {{ props.tenantSlug }} - {{ props.productSlug }} on mobile device
+    <div class="d-flex flex-column my-5 mx-3">
+      {{ props.tenantSlug }} - {{ props.productSlug }} on mobile device
+
+      <Checkout
+        :tenant-slug="localTenantSlug"
+        :product-slug="localProductSlug"
+        class="mt-5"
+      />
+    </div>
   </div>
 </template>
 
