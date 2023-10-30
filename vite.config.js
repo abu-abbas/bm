@@ -90,7 +90,7 @@ export default defineConfig({
           'bootstrap-utils': ['bootstrap'],
           'bootstrap-vue-utils': ['bootstrap-vue'],
           'jquery-utils': ['@popperjs/core', 'popper.js', 'jquery'],
-          'common-utils': ['axios', 'moment', 'lodash', 'sweetalert2', 'ziggy-js', 'hashids', 'maska', 'tippy.js'],
+          'common-utils': ['axios', 'moment', 'lodash', 'sweetalert2', 'ziggy-js', 'hashids', 'maska', 'tippy.js', 'ismobilejs'],
           'images-utils': ['cropperjs', 'compressorjs'],
           'vue-utils': ['vue', 'vue-router', 'pinia', '@vue/compat'],
           'vue-plugins-utils': ['@vee-validate/i18n', '@vee-validate/rules', '@vee-validate/yup', 'vee-validate', 'vue-multiselect', 'vue-slimscroll', 'vue-tippy', 'vue-cropperjs'],

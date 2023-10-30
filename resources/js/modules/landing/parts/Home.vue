@@ -55,28 +55,34 @@ onBeforeUnmount(() => {
         <p class="text-center">Discover the services we offer to make business matching easier for you.</p>
         <div class="row">
           <div class="col-md-4">
-            <div class="service-item text-center">
-              <b-icon class='mb-2' icon="star" scale="3"></b-icon>
-              <!-- Ganti dengan kelas ikon Font Awesome yang sesuai -->
-              <h3>Search</h3>
-              <p>Efficiently search for potential business partners.</p>
-            </div>
+            <b-card>
+              <div class="service-item text-center">
+                <b-icon class='mb-2' icon="star" scale="3"></b-icon>
+                <!-- Ganti dengan kelas ikon Font Awesome yang sesuai -->
+                <h3>Search</h3>
+                <p>Efficiently search for potential business partners.</p>
+              </div>
+            </b-card>
           </div>
           <div class="col-md-4">
-            <div class="service-item text-center">
-              <b-icon class='mb-2' icon="check" scale="3"></b-icon>
-              <!-- Ganti dengan kelas ikon Font Awesome yang sesuai -->
-              <h3>Matchmaking</h3>
-              <p>Our platform facilitates successful business matchmaking.</p>
-            </div>
+            <b-card>
+              <div class="service-item text-center">
+                <b-icon class='mb-2' icon="check" scale="3"></b-icon>
+                <!-- Ganti dengan kelas ikon Font Awesome yang sesuai -->
+                <h3>Matchmaking</h3>
+                <p>Our platform facilitates successful business matchmaking.</p>
+              </div>
+            </b-card>
           </div>
           <div class="col-md-4">
-            <div class="service-item text-center">
-              <b-icon class='mb-2' icon="briefcase" scale="3"></b-icon>
-              <!-- Ganti dengan kelas ikon Font Awesome yang sesuai -->
-              <h3>Connect</h3>
-              <p>Connect with potential partners and expand your network.</p>
-            </div>
+            <b-card>
+              <div class="service-item text-center">
+                <b-icon class='mb-2' icon="briefcase" scale="3"></b-icon>
+                <!-- Ganti dengan kelas ikon Font Awesome yang sesuai -->
+                <h3>Connect</h3>
+                <p>Connect with potential partners and expand your network.</p>
+              </div>
+            </b-card>
           </div>
         </div>
       </div>

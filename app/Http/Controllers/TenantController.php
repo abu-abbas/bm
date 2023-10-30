@@ -29,6 +29,13 @@ class TenantController extends Controller
       ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
 
+    if (!$response) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Tenant tidak ditemukan'
+      ], JsonResponse::HTTP_NOT_FOUND);
+    }
+
     return $request->fetch_first
       ? response()->json(['status' => 'success', 'data' => new TenantResource($response)])
       : TenantResource::collection($response)->additional(['status' => 'success']);
@@ -166,34 +173,6 @@ class TenantController extends Controller
 
     // PDF::SetTitle($slug);
     PDF::AddPage('P', 'B5', true);
-
-    // PDF::Polygon(
-    //   [
-    //     0,
-    //     0,
-    //     PDF::getPageWidth() * 0.75,
-    //     0,
-    //     0,
-    //     50
-    //   ],
-    //   'F',
-    //   [],
-    //   [255, 234, 221]
-    // );
-
-    // PDF::Polygon(
-    //   [
-    //     0,
-    //     57,
-    //     PDF::getPageWidth() * 0.60,
-    //     13,
-    //     0,
-    //     80
-    //   ],
-    //   'F',
-    //   [],
-    //   [255, 234, 221]
-    // );
 
     // background footer
     PDF::Polygon(
