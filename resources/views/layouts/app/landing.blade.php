@@ -50,7 +50,7 @@
       'current_date' => Str::now('Y-m-d'),
       'home' => route('home'),
       'validateCaptcha' => config('app.env') === 'production',
-      'user' => auth()->user()
+      'user' => session('user')
     ]) !!}
   </script>
 </body>

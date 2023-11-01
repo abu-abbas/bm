@@ -1,5 +1,5 @@
 <script setup>
-import { _settings } from '@/js/utils/common.js'
+import { _settings, _redirectToLogin } from '@/js/utils/common.js'
 import { ref, computed, onMounted, onBeforeMount } from 'vue'
 import { useTenant } from '@/js/modules/landing/tenant/tenant.js'
 
@@ -19,7 +19,16 @@ const needSticky = ref(null)
 
 const onHandleScroll = () => {
   const method = window.scrollY > 200 ? 'add' : 'remove'
-  needSticky.value.classList[method]('sticky-top')
+  needSticky.value?.classList[method]('sticky-top')
+}
+
+const onHandleCartShoppingClick = () => {
+  if (!_settings.user) {
+    _redirectToLogin()
+    return
+  }
+
+  // baru redirect ke cart-shopping
 }
 
 onMounted(() => document.addEventListener('scroll', onHandleScroll))
@@ -47,19 +56,38 @@ onBeforeMount(() => document.removeEventListener('scroll', onHandleScroll))
           </div>
         </div>
         <div class="header-action-wrapper">
-          <a class="d-flex justify-content-center align-items-center text__header fs-icon-size">
+          <a
+            class="d-flex justify-content-center align-items-center text__header fs-icon-size"
+            @click="onHandleCartShoppingClick"
+          >
             <FontAwesomeIcon :icon="['fas', 'cart-shopping']" />
           </a>
-          <a class="d-flex justify-content-center align-items-center text__header fs-icon-size">
-            <FontAwesomeIcon :icon="['fas', 'arrow-right-to-bracket']" />
-          </a>
+          <template v-if="!_settings.user">
+            <a
+              class="d-flex justify-content-center align-items-center text__header fs-icon-size"
+              @click="_redirectToLogin"
+            >
+              <FontAwesomeIcon :icon="['fas', 'arrow-right-to-bracket']" />
+            </a>
+          </template>
+          <template v-else>
+            <a
+              class="d-flex justify-content-center align-items-center text__header fs-icon-size"
+              href="javascript:void(0)"
+              onclick="doLogout.apply(this, arguments)"
+            >
+              <FontAwesomeIcon :icon="['fas', 'arrow-right-from-bracket']" />
+            </a>
+          </template>
+
         </div>
       </header>
       <div class="spacing-wrapper"></div>
       <div class="user-information">
         <div class="info__wrapper">
           <div class="d-flex w-100 align-items-center m-2">
-            Anda belum login.
+            <span v-if="!_settings.user">Anda belum login.</span>
+            <span v-else>Halo, {{ _settings.user.name }}</span>
           </div>
         </div>
       </div>

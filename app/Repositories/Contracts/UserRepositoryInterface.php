@@ -2,7 +2,9 @@
 
 namespace App\Repositories\Contracts;
 
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 interface UserRepositoryInterface
 {
@@ -38,4 +40,13 @@ interface UserRepositoryInterface
    * @return array <response, error>
    */
   public function updateOrCreate(Model $eloquentModel): array;
+
+  /**
+   * Create login history for user
+   *
+   * @param \Illuminate\Http\Request $request
+   * @param \Illuminate\Contracts\Auth\Authenticatable $user
+   * @return void
+   */
+  public function loginHistory(Request $request, Authenticatable $user);
 }

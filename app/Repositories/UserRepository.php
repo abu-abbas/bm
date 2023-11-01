@@ -2,9 +2,12 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Models\{User, UserEtpp};
 use Illuminate\Support\Facades\Log;
 use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 use App\Repositories\Contracts\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
@@ -103,5 +106,24 @@ class UserRepository implements UserRepositoryInterface
     }
 
     return [$response, $error];
+  }
+
+  /**
+   * Create login history for user
+   *
+   * @param \Illuminate\Http\Request $request
+   * @param \Illuminate\Contracts\Auth\Authenticatable $user
+   * @return void
+   */
+  public function loginHistory(Request $request, Authenticatable $user)
+  {
+    session([
+      'user' => [
+        'username' => $user->username,
+        'name' => Str::title($user->name),
+        'sipkd' => $user->is_etpp ? '' : '21101000', //sementara masih dihardcode dulu
+        'permissions' => []
+      ]
+    ]);
   }
 }
