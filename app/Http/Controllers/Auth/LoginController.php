@@ -222,4 +222,16 @@ class LoginController extends Controller
     if ($request->user_etpp)
       $this->user->updateOrCreate($userEtpp);
   }
+
+  /**
+   * The user has been authenticated.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  mixed  $user
+   * @return mixed
+   */
+  protected function authenticated(Request $request, $user)
+  {
+    $this->user->loginHistory($request, $user);
+  }
 }
