@@ -15,7 +15,7 @@ export const useTenantStore = defineStore('tenant-store', {
   actions: {
     fetchTenantByUrl(url) {
       return new Promise((resolve, reject) => {
-        _http.get(_route('backend.tenant.landing.get', { columns: 'url', search: url, fetch_first: true }))
+        _http.get(_route('backend.landing.tenant.get', { columns: 'url', search: url, fetch_first: true }))
           .then(res => {
             if (res.status == 200) {
               const data = res.data.data
