@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\MediaLibrary\{HasMedia, InteractsWithMedia};
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-  use HasFactory, SoftDeletes;
+  use HasFactory, SoftDeletes, InteractsWithMedia;
 
   /**
    * The attributes that aren't mass assignable.
