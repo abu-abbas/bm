@@ -4,7 +4,6 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 // const redirectTo = (page) => window.location = page
 
 const btnLogout = ref(null)
-const jumlahProduk = ref(0)
 const mainImage = ref('https://th.bing.com/th/id/OIP.3vxFi4e09BLrfl2LRKlWHgHaHa?pid=ImgDet&w=910&h=910&rs=1')
 const productImages = ref([
       'https://th.bing.com/th/id/OIP.3vxFi4e09BLrfl2LRKlWHgHaHa?pid=ImgDet&w=910&h=910&rs=1',
@@ -12,14 +11,6 @@ const productImages = ref([
       'https://images.pexels.com/photos/19090/pexels-photo.jpg?cs=srgb&dl=pexels-web-donut-19090.jpg',
     ]);
 
-const addJumlah = () => {
-  jumlahProduk.value++;
-}
-const minJumlah = () => {
-  if(jumlahProduk.value > 0){
-    jumlahProduk.value--;
-  }
-}
 
 const changeMainImage = (newImage) => {
   mainImage.value = newImage;

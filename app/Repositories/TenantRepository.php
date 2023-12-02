@@ -207,7 +207,7 @@ class TenantRepository implements TenantRepositoryInterface
         : 'Terjadi kesalahan pada server. Silakan hubungi Admin.';
 
       Log::error($error, [
-        'payload' => $eloquentModel->toArray(),
+        'payload' => $eloquestModel->toArray(),
         'error' => ['message' => $th->getMessage()]
       ]);
     }

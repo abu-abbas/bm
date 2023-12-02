@@ -54,6 +54,19 @@ import { _settings } from '@/js/utils/common'
             </a>
           </li>
         </router-link>
+        <router-link
+          v-slot="{ href, navigate, isActive }"
+          :to="{ name: 'settings.user' }"
+          custom
+          active-class="active"
+        >
+          <li :class="{ 'active': isActive }">
+            <a :href="href" class="nav-link" @click="navigate">
+              <FontAwesomeIcon :icon="['fas', 'user']" />
+              <span>Master Pengguna</span>
+            </a>
+          </li>
+        </router-link>
       </ul>
     </aside>
   </div>

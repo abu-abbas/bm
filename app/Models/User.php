@@ -22,6 +22,9 @@ class User extends Authenticatable
     'username',
     'password',
     'is_etpp',
+    'email_verified_at',
+    'created_by',
+    'created_at'
   ];
 
   /**
