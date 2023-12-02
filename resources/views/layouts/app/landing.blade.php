@@ -24,7 +24,7 @@
     'resources/js/app/landing.js',
   ])
 </head>
-<body>
+<body class="bg-white">
   <div id="app">
     @yield('content')
   </div>
