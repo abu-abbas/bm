@@ -17,6 +17,9 @@ import { defineRule, configure } from 'vee-validate'
 import id from '@vee-validate/i18n/dist/locale/id.json'
 import { localize, setLocale } from '@vee-validate/i18n'
 
+import VueMultiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.css';
+
 configure({ generateMessage: localize({ id }) })
 Object.keys(rules).forEach(rule => defineRule(rule, rules[rule]))
 setLocale('id')
@@ -24,6 +27,7 @@ setLocale('id')
 configureCompat(Vue)
 registeredFontAwesome(Vue)
 Vue.use(RegisteredBootstrapVue)
+Vue.component('VueMultiselect', VueMultiselect)
 
 const pinia = createPinia()
 

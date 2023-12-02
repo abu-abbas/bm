@@ -1,6 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
+import { _, _http, _route, _settings, _redirectToLogin } from '@/js/utils/common.js'
+
 import BottomSheet from '@/js/components/BottomSheet.vue'
+import Select from '@/js/components/budget/Select.vue';
 
 const props = defineProps({
   tenantSlug: {
@@ -15,28 +18,234 @@ const props = defineProps({
   },
 })
 const showBottomSheet = ref(false)
-onMounted(() => console.log({ props }))
+const onHandleClick = () => {
+  if (!_settings.user) {
+    _redirectToLogin()
+    return
+  }
+
+  showBottomSheet.value = true
+}
+const refRsk = ref(null)
+const refAkun = ref(null)
+const refVoi = ref(null)
+const nilaiKetertarikan = ref(0)
+
+const budget = ref({
+  kegiatan: {
+    options: [],
+    selected: null,
+    props: {
+      trackBy: 'kode_kegiatan',
+      label: 'nama_kegiatan',
+      placeholder: 'Pilih kegiatan'
+    },
+    loading: false,
+  },
+  rsk: {
+    options: [],
+    selected: null,
+    props: {
+      trackBy: 'nama_rsk',
+      label: 'nama_rsk',
+      placeholder: 'Pilih rsk'
+    },
+    loading: false,
+  },
+  akun: {
+    options: [],
+    selected: null,
+    props: {
+      trackBy: 'id_rskbas',
+      label: 'nama_akun',
+      placeholder: 'Pilih akun'
+    },
+    loading: false,
+  }
+})
+
+const fetchBudget = (type = 'kegiatan', value = null, addons = null) => {
+  budget.value[type].loading = true
+  _http.get(_route('backend.budget.get', { type, value, addons }))
+    .then(res => budget.value[type].options = [...res.data.data])
+    .catch(() => budget.value[type].options = [])
+    .finally(() => budget.value[type].loading = false)
+}
+
+watch(
+  [
+    () => budget.value.kegiatan.selected,
+    () => budget.value.rsk.selected,
+  ],
+  (
+    [
+      newKegiatanSelected,
+      newRskSelected,
+    ],
+    [
+      oldKegiatanSelected,
+      oldRskSelected,
+    ]
+  ) => {
+    if (newKegiatanSelected && JSON.stringify(oldKegiatanSelected) != JSON.stringify(newKegiatanSelected)) {
+      budget.value.rsk.selected = null
+      budget.value.akun.selected = null
+      refRsk.value?.removeSelected()
+      refAkun.value?.removeSelected()
+
+      fetchBudget('rsk', newKegiatanSelected.kode_kegiatan)
+    }
+
+    if (newRskSelected && JSON.stringify(newRskSelected) != JSON.stringify(oldRskSelected)) {
+      budget.value.akun.selected = null
+      refAkun.value?.removeSelected()
+
+      fetchBudget('akun', budget.value.kegiatan.selected.kode_kegiatan, newRskSelected.kode_rsk)
+    }
+  }
+)
+
+const onHandleKeyupNilaiKetertarikan = _.debounce((e) => {
+  const allowedChar = '0123456789.'
+  const mapped = [...e.target.value].filter(v => allowedChar.includes(v)).join('')
+  e.target.value = mapped
+
+  const current = parseFloat(e.target.value.split('.').join('') || 0)
+  const dpa_rsk = parseFloat(budget.value.akun.selected.dpa_rsk || 0)
+
+  if (current < 0) {
+    nilaiKetertarikan.value = 0
+    e.target.value = 0
+    return
+  }
+
+  if (current > dpa_rsk) {
+    nilaiKetertarikan.value = dpa_rsk
+    e.target.value = dpa_rsk.toLocaleString('id-ID', { style: 'decimal' })
+    return
+  }
+
+  nilaiKetertarikan.value = current
+  e.target.value = current.toLocaleString('id-ID', { style: 'decimal' })
+}, 500)
+
+
+const onHandleAkunSelect = () => setTimeout(() => refVoi.value.focus(), 250)
+
+onMounted(() => {
+  fetchBudget()
+  console.log({ props })
+})
 </script>
 
 <template>
   <div class="checkout-wrapper">
     <button
       class="btn btn-lg btn-primary"
-      @click="showBottomSheet = true"
+      @click="onHandleClick"
     >
       <FontAwesomeIcon :icon="['fas', 'plus']" />
       Ketertarikan
     </button>
     <BottomSheet v-model:visible="showBottomSheet">
-      <template #header>
-        <h2>Masukkan nilai ketertarikan</h2>
-      </template>
-      <p>Create a bottom sheet modal that functions similarly to Facebook modal using HTML CSS and JavaScript. This modal allows user to view its contents, drag it up or down, and close it. It also works on touch-enabled devices. Lorem Ipsum are simply dummy text of there printing and typesetting industry. Lorem new Ipsum has been the industryss standard dummy text ever since the 1500s, when an off unknown printer tooks a galley of type and scrambled it to makes type spemen book It has survived not only five centuries.</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat quae facere, quaerat deleniti, voluptates optio ipsam ipsum beatae, maxime quis ea quasi minima numquam. Minima accusamus reiciendis, impedit blanditiis nulla quia? Odio deleniti commodi id nesciunt voluptas cumque odit, vel molestias ratione sit consectetur inventore error ullam magni labore voluptate doloribus sed similique. Delectus non pariatur eligendi eos voluptatum provident eveniet consequuntur. Laboriosam, nesciunt reiciendis libero sunt adipisci numquam voluptas ullam, iure voluptates soluta mollitia quam voluptatem? Nemo, ipsum magnam.</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum eligendi commodi tenetur est beatae cupiditate incidunt aspernatur asperiores repudiandae? Odit, nulla modi ducimus assumenda ad voluptatem explicabo laudantium est unde ea similique excepturi fugiat nisi facere ab pariatur libero eius aperiam, non accusantium, asperiores optio. Accusantium, inventore in. Quaerat exercitationem aut, alias dolorem facere atque sint quo quasi vitae sed corrupti perferendis laborum eligendi repudiandae esse autem doloribus sapiente deleniti.</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde voluptates, animi ipsa explicabo assumenda molestiae adipisci. Amet, dignissimos reiciendis, voluptatibus placeat quo ab quibusdam illum repellat, ad molestias quaerat saepe modi aperiam distinctio dolore id sapiente molestiae quas! Animi optio nobis nesciunt pariatur? Non necessitatibus mollitia veniam nihil eos natus libero quaerat vitae maiores. Praesentium nesciunt natus tempora. Doloremque, fuga?</p>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deserunt deleniti a non dolorem delectus possimus distinctio! Nemo officiis tempore quos culpa fugit iste suscipit minus voluptatem, officia dicta ad deleniti harum voluptatibus dignissimos in, commodi placeat accusamus sint tenetur non natus? Error fugit quasi repudiandae mollitia doloribus officia eius magnam ratione soluta aut in iusto vel ut minima, at facere, minus sequi earum dolores animi ipsa nihil labore. Odio eius vitae iste repellendus molestias, amet sapiente laudantium optio, provident dignissimos voluptatum nesciunt nemo magni obcaecati commodi officiis delectus esse sed.</p>
-      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat atque labore eligendi iusto sint! Fuga vel eius dolor eligendi ab cumque, maxime commodi, ducimus inventore temporibus illo delectus iste, quisquam ipsum labore eaque ipsa soluta praesentium voluptatem accusamus amet recusandae. Veniam necessitatibus laboriosam deleniti maxime, saepe vitae officia tempora voluptates voluptas ratione fugiat ad? Nostrum explicabo, earum dolor magnam commodi maiores iusto delectus porro ducimus architecto non enim eum, perspiciatis facere mollitia. Minus, mollitia animi! Nostrum deleniti, error quia hic eum modi? Corrupti illo provident dolores qui enim, expedita adipisci.</p>
+      <template #header><h2>Ajukan ketertarikan</h2></template>
+
+      <div class="form-group mt-4">
+        <label class="form-label text-muted">Kegiatan</label>
+        <Select
+          v-model:selected="budget.kegiatan.selected"
+          :options="budget.kegiatan.options"
+          :multiselect-options="budget.kegiatan.props"
+          :loading="budget.kegiatan.loading"
+        >
+          <template #option="optionProps">
+            <div class="d-flex flex-column">
+              <strong class="text-sm text-muted">{{ optionProps.option.kode_kegiatan }}</strong>
+              <span>{{ optionProps.option.nama_kegiatan }}</span>
+            </div>
+          </template>
+
+          <template #singleLabel="optionProps">
+            <div class="d-flex flex-column">
+              <strong class="text-sm text-muted fw-500">{{ optionProps.option.kode_kegiatan }}</strong>
+              <span>{{ optionProps.option.nama_kegiatan }}</span>
+            </div>
+          </template>
+        </Select>
+      </div>
+
+      <div v-if="budget.kegiatan.selected" class="form-group">
+        <label class="form-label text-muted">RSK</label>
+        <Select
+          ref="refRsk"
+          v-model:selected="budget.rsk.selected"
+          :options="budget.rsk.options"
+          :multiselect-options="budget.rsk.props"
+          :loading="budget.rsk.loading"
+        >
+        </Select>
+      </div>
+
+      <div v-if="budget.rsk.selected" class="form-group">
+        <label class="form-label text-muted">Akun</label>
+        <Select
+          ref="refAkun"
+          v-model:selected="budget.akun.selected"
+          :options="budget.akun.options"
+          :multiselect-options="budget.akun.props"
+          :loading="budget.akun.loading"
+          @select="onHandleAkunSelect"
+        >
+          <template #option="optionProps">
+            <div class="d-flex flex-column">
+              <strong class="text-sm text-muted">{{ optionProps.option.kode_akun }}</strong>
+              <span>{{ optionProps.option.nama_akun }}</span>
+              <div class="d-flex align-items-center mt-2">
+                <strong class="text-sm fw-500">Nilai Anggaran:
+                  {{ parseFloat(optionProps.option.dpa_rsk || 0)?.toLocaleString('id-ID', { style: 'decimal' }) }}
+                </strong>
+              </div>
+            </div>
+          </template>
+
+          <template #singleLabel="optionProps">
+            <div class="d-flex flex-column">
+              <strong class="text-sm text-muted fw-500">{{ optionProps.option.kode_akun }}</strong>
+              <span>{{ optionProps.option.nama_akun }}</span>
+              <div class="d-flex align-items-center mt-2">
+                <strong class="text-sm fw-500">Nilai Anggaran:
+                  {{ parseFloat(optionProps.option.dpa_rsk || 0)?.toLocaleString('id-ID', { style: 'decimal' }) }}
+                </strong>
+              </div>
+            </div>
+          </template>
+        </Select>
+      </div>
+
+      <div v-if="budget.akun.selected" class="form-group">
+        <label class="form-label text-muted">Nilai Ketertarikan</label>
+        <input
+          ref="refVoi"
+          type="text"
+          class="form-control text-right custom-form-control font-bold"
+          @keyup="onHandleKeyupNilaiKetertarikan"
+        >
+      </div>
+
     </BottomSheet>
   </div>
 </template>
+
+<style lang="scss">
+.custom-form-control {
+  border-color: #f1ebfa;
+  background: #f7f2ff;
+}
+
+.font-bold {
+  font-weight: 700 !important;
+  color: var(--dark);
+}
+</style>
+
+

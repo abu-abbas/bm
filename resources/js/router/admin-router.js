@@ -6,6 +6,7 @@ const Footer = () => import('@/js/modules/admin/parts/Footer.vue')
 
 // routes
 import tenantRouter from '@/js/router/modules/tenant-router'
+import productRouter from '@/js/router/modules/product-router'
 
 const router = createRouter({
   history: createWebHistory('admin'),
@@ -38,6 +39,10 @@ const router = createRouter({
       },
     },
     ...tenantRouter({ header: Header, footer: Footer }),
+    ...productRouter({
+      header: Header,
+      footer: Footer
+    }),
     {
       path: '/404',
       name: 'admin.forbidden',

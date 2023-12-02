@@ -48,5 +48,10 @@ if (_settings && _settings.user) {
   _settings.user.can = permission => _settings.user.permissions.includes(permission)
 }
 
-export { _, _moment, _http, _route, _alert, _confirm, _settings, _encrypt, _decrypt, _initialName }
+const _redirectToLogin = () => {
+  const current = window.location
+  window.location = `/login?intended=${encodeURIComponent(current.pathname)}`
+}
+
+export { _, _moment, _http, _route, _alert, _confirm, _settings, _encrypt, _decrypt, _initialName, _redirectToLogin }
 

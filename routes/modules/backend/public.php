@@ -6,8 +6,10 @@ use App\Http\Controllers\TenantController;
 Route::group(['prefix' => 'backend', 'as' => 'backend.'], function () {
   Route::get('/captcha', [App\Http\Controllers\CaptchaController::class, 'index'])->name('captcha.generate');
 
-  Route::group(['prefix' => 'tenant', 'as' => 'tenant.'], function() {
-    Route::get('/', [TenantController::class, 'list'])->name('landing.get');
+  Route::group(['prefix' => 'landing', 'as' => 'landing.'], function () {
+    Route::group(['prefix' => 'tenant', 'as' => 'tenant.'], function() {
+      Route::get('/', [TenantController::class, 'list'])->name('get');
+    });
   });
 
   Route::get(

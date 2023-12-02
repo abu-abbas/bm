@@ -14,6 +14,10 @@
 // override bootstraps style with stisla theme
 @import 'stisla/style.scss';
 
+// vue-multiselect
+@import 'vue-multiselect/dist/vue-multiselect.css';
+@import 'multiselect';
+
 // custom
 @import 'custom/modal.scss';
 @import 'custom/bordered_table.scss';
