@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 include_route_files(__DIR__ . '/modules/');
 
-Route::get('/{vue_capture?}', [App\Http\Controllers\GuestController::class, 'landing'])
-  ->where('vue_capture', '[\/\w\.-]*')
+Route::get('/', [App\Http\Controllers\GuestController::class, 'landing'])
+  // ->where('vue_capture', '[\/\w\.-]*')
   ->name('home');
+Route::get('/product', [App\Http\Controllers\GuestController::class, 'product'])
+  ->name('product');

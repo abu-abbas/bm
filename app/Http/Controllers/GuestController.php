@@ -15,4 +15,8 @@ class GuestController extends Controller
   {
     return view('layouts.app.landing');
   }
+  public function product()
+  {
+    return view('layouts.app.landing.products.dekstop');
+  }
 }
