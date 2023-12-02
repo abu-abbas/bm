@@ -49,4 +49,37 @@ interface UserRepositoryInterface
    * @return void
    */
   public function loginHistory(Request $request, Authenticatable $user);
+
+   /**
+   * Create or update a complaint of model and persist them to the database
+   *
+   * @param \Illuminate\Http\Request $eloquentModel
+   * @return array <response, error>
+   */
+  public function list(Request $request): array;
+
+   /**
+   * Create or update a complaint of model and persist them to the database for user by admin
+   *
+   * @param \Illuminate\Http\Request $eloquentModel
+   * @return array <response, error>
+   */
+
+  public function updateOrCreateAdmin(Model $eloquentModel): array;
+  
+   /**
+   * Find User By Username
+   *
+   * @param \Illuminate\Http\Request $eloquentModel
+   * @return array <response, error>
+   */
+  public function findByUsername($username): Model|null;
+
+    /**
+   * Drop User and persist to database
+   *
+   * @param Model $eloquestModel
+   * @return array [response, error]
+   */
+  public function drop(Model $eloquestModel) : array;
 }

@@ -18,6 +18,7 @@ import {
   faPeopleGroup,
   faExclamationCircle,
   faBoxes,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -48,6 +49,7 @@ export function registeredFontAwesome(Vue) {
     faPeopleGroup,
     faExclamationCircle,
     faBoxes,
+    faUser,
   )
 
   Vue.component('FontAwesomeIcon', FontAwesomeIcon)

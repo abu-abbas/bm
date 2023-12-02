@@ -14,6 +14,7 @@ class UserRepository implements UserRepositoryInterface
 {
   protected $user;
   protected $etpp;
+  protected $mappedColumn = [];
 
   public function __construct(
     User $user,
@@ -21,6 +22,10 @@ class UserRepository implements UserRepositoryInterface
   ) {
     $this->user = $user;
     $this->etpp = $etpp;
+    $this->mappedColumn = [
+      'username' => 'username',
+      'name' => 'name',
+    ];
   }
 
   /**
@@ -107,6 +112,31 @@ class UserRepository implements UserRepositoryInterface
 
     return [$response, $error];
   }
+  public function updateOrCreateAdmin(Model $eloquentModel): array
+  {
+    $error = null;
+    $response = null;
+
+    try {
+      $response = $this->user->updateOrCreate(
+        ['username' => $eloquentModel->username],
+        [
+          'name' => $eloquentModel->name,
+          'password' => request('password') ? bcrypt(request('password')) : $eloquentModel->getOriginal('password'),
+          'email_verified_at' => $eloquentModel->email_verified_at ?: now(),
+          'is_etpp' => 0,
+        ]
+      );
+    } catch (\Throwable $th) {
+      $error = 'Terjadi kesalahan pada server';
+      Log::error('Error saat update or create user etpp', [
+        'payload' => $eloquentModel,
+        'error_message' => $th->getMessage()
+      ]);
+    }
+
+    return [$response, $error];
+  }
 
   /**
    * Create login history for user
@@ -125,5 +155,63 @@ class UserRepository implements UserRepositoryInterface
         'permissions' => []
       ]
     ]);
+  }
+
+  public function list(Request $request): array
+  {
+    $error = null;
+    $response = null;
+
+    try {
+      $perPage = $request->limit ?? $this->user->getPerPage();
+      $selectedColumns = explode(',', $request->columns);
+      $filtered = collect($this->mappedColumn)->reject(fn ($v, $k) => !in_array($k, $selectedColumns))->values();
+
+      $query = $this->user
+        ->when($request->search, fn ($q, $searchText) => $q->searchByColumn($searchText, $filtered));
+
+      $response = $request->fetch_first
+        ? $query->first()
+        : $query->paginate($perPage);
+    } catch (\Throwable $th) {
+      $error = 'Terjadi kesalah saat mengambil data master user. Silakan hubungi Admin untuk lebih lanjut.';
+      Log::error($error, [
+        'payload' => $request->toArray(),
+        'error' => [
+          'message' => $th->getMessage()
+        ]
+      ]);
+    }
+
+    return [$response, $error];
+  }
+
+  public function findByUsername($username): Model|null
+  {
+    return $this->user->where('username',$username)->first();
+  }
+
+  public function drop(Model $eloquestModel): array
+  {
+    $error = null;
+    $response = null;
+
+    try {
+      if (!$eloquestModel->delete())
+        throw new \Exception("Error saat menghapus pengguna", -99);
+
+      $response = true;
+    } catch (\Throwable $th) {
+      $error = $th->getCode() == -99
+        ? $th->getMessage()
+        : 'Terjadi kesalahan pada server. Silakan hubungi Admin.';
+
+      Log::error($error, [
+        'payload' => $eloquestModel->toArray(),
+        'error' => ['message' => $th->getMessage()]
+      ]);
+    }
+
+    return [$response, $error];
   }
 }
