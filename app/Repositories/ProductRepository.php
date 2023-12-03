@@ -213,11 +213,44 @@ class ProductRepository implements ProductRepositoryInterface
         : 'Terjadi kesalahan pada server. Silakan hubungi Admin.';
 
       Log::error($error, [
-        'payload' => $eloquentModel->toArray(),
+        'payload' => $eloquestModel->toArray(),
         'error' => ['message' => $th->getMessage()]
       ]);
     }
 
     return [$response, $error];
   }
+
+  /**
+   * Get product by tenant
+   *
+   * @param Request $request
+   * @return array [response, error]
+   */
+
+   public function singelProduct($tenant,$product): array
+   {
+      
+      $error = null;
+      $response = null;
+  
+      try {
+        $response = $this->product
+        ->select('products.name as nama_barang', 'b.name as nama_tenant', 'products.*')
+        ->leftJoin('tenants as b', 'b.id', '=', 'products.tenant_id')
+        ->where('b.url', $tenant)
+        ->where('products.name', str_replace('-', ' ', $product))
+        ->with('singleMedia')->first();
+      } catch (\Throwable $th) {
+        $error = 'Terjadi kesalah saat mengambil data master product. Silakan hubungi Admin untuk lebih lanjut.';
+        Log::error($error, [
+          'payload' => [$product,$tenant],
+          'error' => [
+            'message' => $th->getMessage()
+          ]
+        ]);
+      }
+  
+      return [$response, $error];
+   }
 }
