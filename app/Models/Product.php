@@ -27,4 +27,16 @@ class Product extends Model implements HasMedia
   {
     return $this->hasMany(Specification::class);
   }
+
+  public function tenant() : HasOne
+  {
+    return $this->hasOne(Tenant::class);
+  }
+
+  public function singleMedia()
+  {
+    return $this->media()->one()->ofMany('id', 'max');
+  }
+
+
 }

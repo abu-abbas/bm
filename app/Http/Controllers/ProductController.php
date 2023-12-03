@@ -240,4 +240,12 @@ class ProductController extends Controller
 
     PDF::Output("{$slug}-bmqrcode.pdf", 'I');
   }
+
+  public function getProduct($tenant,$product){
+    $product = $this->product->singelProduct($tenant,$product);
+    return response()->json([
+      'status' => 'success',
+      'data' => $product[0]
+    ]);
+  }
 }

@@ -67,4 +67,12 @@ interface ProductRepositoryInterface
    * @return array [response, error]
    */
   public function drop(Model $eloquestModel) : array;
+
+  /**
+   * Get product by tenant
+   *
+   * @param Request $request
+   * @return array
+   */
+  public function singelProduct($tenant,$product) : array;
 }
