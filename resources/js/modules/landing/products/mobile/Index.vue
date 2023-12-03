@@ -1,5 +1,6 @@
 <script setup>
 import { toRef } from 'vue'
+import { _settings, _redirectToLogin } from '@/js/utils/common.js'
 
 import Checkout from '@/js/modules/landing/checkout/Index.vue'
 const props = defineProps({
@@ -17,7 +18,6 @@ const props = defineProps({
 
 const localTenantSlug = toRef(props, 'tenantSlug')
 const localProductSlug = toRef(props, 'productSlug')
-
 </script>
 
 <template>
@@ -25,7 +25,17 @@ const localProductSlug = toRef(props, 'productSlug')
     <div class="d-flex flex-column my-5 mx-3">
       {{ props.tenantSlug }} - {{ props.productSlug }} on mobile device
 
+      <button
+        v-if="!_settings.user"
+        class="btn btn-lg btn-primary"
+        @click="_redirectToLogin()"
+      >
+        <FontAwesomeIcon :icon="['fas', 'plus']" />
+        Ketertarikan
+      </button>
+
       <Checkout
+        v-else
         :tenant-slug="localTenantSlug"
         :product-slug="localProductSlug"
         class="mt-5"
