@@ -15,6 +15,7 @@ return new class extends Migration
       $table->id();
       $table->unsignedBigInteger('tenant_id')->comment('tenant_id from tenants table');
       $table->string('name', 250)->comment('product title');
+      $table->string('url', 250)->comment('product url');
       $table->string('description', 2000)->comment('product description');
       $table->string('minimum_qty', 100)->default(1);
       $table->string('minimum_unit', 100)->comment('product minimum unit');

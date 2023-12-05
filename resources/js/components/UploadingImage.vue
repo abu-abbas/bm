@@ -1,6 +1,46 @@
+<template>
+  <div class="uploader-image-wrapper">
+    <label for="file-input" class="border">
+      <FontAwesomeIcon :icon="['far', 'image']"/>
+      <input
+        id="file-input"
+        type="file"
+        name="upload"
+        multiple
+        :accept="localAccept"
+        @change="onHandleChange"
+      />
+    </label>
+
+    <div v-for="(file, index) in files" :key="index" class="preview-wrapper">
+      <img
+        v-if="file.output"
+        :src="file.output"
+        class="image-preview"
+        alt="Output after crop and resize"
+      />
+      <a href="javascript:void(0)" @click="onHandleRemoveImage(index)">
+        <FontAwesomeIcon :icon="['fas', 'trash-alt']"/>
+      </a>
+
+      <CropperImage
+        v-if="file.visible"
+        v-model:visible="file.visible"
+        :image-url="file.input"
+        @after-cropping="onHandleCropping"
+      />
+    </div>
+
+    <div v-if="errorMessage" class="fs-nano text-danger">
+      {{ errorMessage }}
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, computed, nextTick } from 'vue'
 import CropperImage from '@/js/components/CropperImage.vue'
+// Import FontAwesomeIcon as needed
 
 const props = defineProps({
   accept: {
@@ -12,7 +52,7 @@ const props = defineProps({
       'image/jpeg',
       'image/png',
       'image/tiff',
-      'image/webp',
+      // 'image/webp',
     ],
   },
   maxSize: {
@@ -21,12 +61,12 @@ const props = defineProps({
     default: 5
   },
   modelValue: {
-    type: [File, null],
+    type: [Array, null],
     required: true,
     default: null
   },
   urlObject: {
-    type: [String, null],
+    type: [Array, null],
     required: false,
     default: null
   },
@@ -38,96 +78,56 @@ const props = defineProps({
 })
 const emits = defineEmits(['update:modelValue', 'update:urlObject', 'cropping'])
 
-const componentId = Math.random().toString(36).substring(2, 9)
-const identity = `uploader-image-${componentId}`
 const URL = window.URL || window.webkitURL
 
-const cropper = ref({
-  visible: false,
-  input: null,
-  output: null,
-  name: null,
-  mime: null,
-  file: null
-})
+const files = ref([])
+
 const localAccept = computed(() => props.accept.join(','))
+
 const onHandleChange = (e) => {
   if (!e.target.files.length) return
 
-  const newFile = e.target.files[0]
-  cropper.value.input = URL.createObjectURL(newFile)
-  cropper.value.visible = true
-  cropper.value.name = newFile.name
-  cropper.value.mime = newFile.type
+  const selectedFiles = Array.from(e.target.files)
+
+  selectedFiles.forEach((file) => {
+    const cropperInstance = {
+      visible: true,
+      input: URL.createObjectURL(file),
+      output: null,
+      name: file.name,
+      mime: file.type,
+      file: null
+    }
+
+    files.value.push(cropperInstance)
+  })
 
   nextTick(() => e.target.value = '')
 }
 
 const onHandleCropping = ({ image }) => {
-  cropper.value.output = URL.createObjectURL(image)
-  cropper.value.file = new File([image], cropper.value.name,{ type: cropper.value.mime })
+  const lastAddedFile = files.value[files.value.length - 1]
+
+  lastAddedFile.output = URL.createObjectURL(image)
+  lastAddedFile.file = new File([image], lastAddedFile.name, { type: lastAddedFile.mime })
+
   doEmits()
 }
 
-const onHandleRemoveImage = () => {
-  cropper.value.input = null
-  cropper.value.output = null
-  cropper.value.file = null
+const onHandleRemoveImage = (index) => {
+  files.value.splice(index, 1)
   doEmits()
 }
 
 const doEmits = () => {
-  emits('update:modelValue', cropper.value.file)
-  emits('update:urlObject', cropper.value.output)
-  emits('cropping', { file: cropper.value.file, urlObject: cropper.value.output })
+  const filesToUpdate = files.value.map(file => file.file)
+  const urlObjectsToUpdate = files.value.map(file => file.output)
+
+  emits('update:modelValue', filesToUpdate)
+  emits('update:urlObject', urlObjectsToUpdate)
+  emits('cropping', { files: filesToUpdate, urlObjects: urlObjectsToUpdate })
 }
 </script>
-
-<template>
-  <div
-    :key="componentId"
-    class="uploader-image-wrapper"
-  >
-    <label
-      v-if="!cropper.output"
-      :for="identity"
-      class="border"
-    >
-      <FontAwesomeIcon :icon="['far', 'image']"/>
-      <input
-        :id="identity"
-        type="file"
-        name="upload"
-        :accept="localAccept"
-        @change="onHandleChange"
-      >
-    </label>
-
-    <div
-      v-else
-      class="preview-wrapper"
-    >
-      <img
-        :src="cropper.output"
-        class="image-preview"
-        alt="Output after crop and resize"
-      >
-      <a href="javascript:void(0)" @click="onHandleRemoveImage">
-        <FontAwesomeIcon :icon="['fas', 'trash-alt']"/>
-      </a>
-    </div>
-
-    <CropperImage
-      v-model:visible="cropper.visible"
-      :image-url="cropper.input"
-      @after-cropping="onHandleCropping"
-    />
-
-    <div v-if="props.errorMessage" class="fs-nano text-danger">
-      {{ props.errorMessage }}
-    </div>
-  </div>
-</template>
 
 <style lang="scss">
 .uploader-image-wrapper {
