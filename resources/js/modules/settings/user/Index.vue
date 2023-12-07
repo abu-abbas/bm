@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { _, _http, _route, _confirm, _alert } from '@/js/utils/common'
+import { _, _http, _route, _confirm, _alert, _settings } from '@/js/utils/common'
 
 import Spinner from '@/js/components/Spinner.vue'
 import ModalForm from '@/js/modules/settings/user/parts/ModalForm.vue'
@@ -204,6 +204,7 @@ const onHandleEdit = item => {
                     <FontAwesomeIcon :icon="['fas', 'edit']" />
                   </b-button>
                   <b-button
+                    v-if="item.username != _settings.user?.username"
                     variant="link"
                     class="text-danger py-0 px-1 outline-none cursor-pointer"
                     @click="onHandleDeleted(item)"
