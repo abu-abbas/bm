@@ -37,7 +37,6 @@ class Product extends Model implements HasMedia
     return $this->media()->one()->ofMany('id', 'max');
   }
 
-
   /**
    * Scope a query by given url
    *

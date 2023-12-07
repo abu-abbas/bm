@@ -70,19 +70,20 @@ class ProductRepository implements ProductRepositoryInterface
     $error = null;
     $response = null;
 
-    // dd($request);
-
     try {
       $perPage = $request->limit ?? $this->product->getPerPage();
       $selectedColumns = explode(',', $request->columns);
       $filtered = collect($this->mappedColumn)->reject(fn ($v, $k) => !in_array($k, $selectedColumns))->values();
 
       $query = $this->product
-      ->select('products.name as nama_barang', 'b.name as nama_tenant', 'products.*')
-      ->leftJoin('tenants as b', 'b.id', '=', 'products.tenant_id')
-      ->when($request->search, function ($q, $searchText) use ($filtered) {
-        return $q->searchByColumn($searchText, $filtered);
-      });
+        ->with([
+          'media' => fn($q) => $q->where('collection_name', 'product.logo')
+        ])
+        ->select('products.name as nama_barang', 'b.name as nama_tenant', 'products.*')
+        ->leftJoin('tenants as b', 'b.id', '=', 'products.tenant_id')
+        ->when($request->search, function ($q, $searchText) use ($filtered) {
+          return $q->searchByColumn($searchText, $filtered);
+        });
 
       $response = $request->fetch_first
         ? $query->first()
@@ -230,10 +231,10 @@ class ProductRepository implements ProductRepositoryInterface
 
    public function singelProduct($tenant,$product): array
    {
-      
+
       $error = null;
       $response = null;
-  
+
       try {
         $response = $this->product
         ->select('products.name as nama_barang', 'b.name as nama_tenant', 'products.*')
@@ -250,7 +251,7 @@ class ProductRepository implements ProductRepositoryInterface
           ]
         ]);
       }
-  
+
       return [$response, $error];
    }
 }

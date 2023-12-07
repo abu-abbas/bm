@@ -14,7 +14,6 @@ class ProductResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
-    // dd($this);
     $data = [
       'slug' => $this->url,
       'tenant_id' => $this->tenant_id,
@@ -26,19 +25,12 @@ class ProductResource extends JsonResource
       'tkdn_value' => $this->tkdn_value,
       'price' => $this->price,
       'condition' => $this->condition,
-      // 'join_date' => $this->join_date,
-      // 'reputation' => $this->reputation,
-      // 'is_online' => $this->is_online,
-      // 'logo' => [
-      //   'thumb' => null,
-      //   'original' => null,
-      // ],
+      'images' => [],
     ];
 
-    // if ($this->singleMedia) {
-    //   $data['logo']['thumb'] = route('backend.inline.download', ['media' => $this->singleMedia, 'thumb']);
-    //   $data['logo']['original'] = route('backend.inline.download', ['media' => $this->singleMedia]);
-    // }
+    foreach ($this->media as $media) {
+      $data['images'][] = route('backend.inline.download', ['media' => $media]);
+    }
 
     return $data;
   }
