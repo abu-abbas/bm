@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -39,4 +38,15 @@ class Product extends Model implements HasMedia
   }
 
 
+  /**
+   * Scope a query by given url
+   *
+   * @param \Illuminate\Database\Eloquent\Builder $query
+   * @param string $url
+   * @return void
+   */
+  public function scopeByUrl(Builder $query, $url): void
+  {
+    $query->where('url', $url);
+  }
 }

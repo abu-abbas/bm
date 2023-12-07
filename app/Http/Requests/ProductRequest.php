@@ -44,12 +44,12 @@ class ProductRequest extends FormRequest
       'tkdn' => ['required', 'min:3', 'max:5'],
       'price' => ['required', 'min:1', 'max:200'],
       'condition' => ['required'],
-      'pict' => ['required', File::types($allowedMimes)->max(5000)],
+      'files' => ['required', File::types($allowedMimes)->max(5000)],
     ];
 
     if (request('_method') == 'put') {
       $rules['slug'] = ['required'];
-      array_shift($rules['pict']) ;
+      array_shift($rules['files']) ;
       return $rules;
     }
 
@@ -93,9 +93,9 @@ class ProductRequest extends FormRequest
 
       'condition.required' => 'Kondisi diperlukan',
 
-      'pict.required' => 'pict diperlukan',
-      'pict.max' => 'pict harus lebih kecil dari :max KB',
-      'pict.mimes' => 'Format pict harus :mimes',
+      'files.required' => 'files diperlukan',
+      'files.max' => 'files harus lebih kecil dari :max KB',
+      'files.mimes' => 'Format files harus :mimes',
     ];
   }
 

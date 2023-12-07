@@ -44,9 +44,8 @@ class ProductController extends Controller
   public function store(ProductRequest $request)
   {
     $request->validated();
-
     $product = $this->product->make([
-      'tenant_id' => 1,
+      'tenant_id' => $request->tenant['value'],
       'name' => $request->name,
       'description' => $request->description,
       'minimum_qty' => $request->min_qty,
@@ -55,6 +54,7 @@ class ProductController extends Controller
       'price' => $request->price,
       'condition' => $request->condition['value'],
       'created_by' => auth()->user()->username,
+      'url' => Str::slug($request->name),
     ]);
 
     [$response, $error] = $this->product->saveOrEdit($product);
@@ -91,7 +91,7 @@ class ProductController extends Controller
     if (!$product) {
       return response()->json([
         'status' => 'error',
-        'message' => 'Tenant tidak ditemukan.'
+        'message' => 'Barang tidak ditemukan.'
       ], JsonResponse::HTTP_EXPECTATION_FAILED);
     }
 

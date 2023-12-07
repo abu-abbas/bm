@@ -105,12 +105,12 @@ const loadProvider = _.debounce((ctx, callback) => {
 const onHandleDeleted = item => {
   _confirm(
     {
-      title: 'Hapus Tenant',
-      text: `Apakah Anda yakin untuk menghapus data tenant an. ${ item.name }?`,
+      title: 'Hapus Barang',
+      text: `Apakah Anda yakin untuk menghapus data barang an. ${ item.product_name }?`,
       icon: 'question'
     },
     () => _http.post(
-      _route('backend.tenant.drop'),
+      _route('backend.product.drop'),
       {
         '_method': 'delete',
         slug: item.slug
@@ -145,7 +145,7 @@ const onHandleDeleted = item => {
 
       // show response
       if (isConfirmed && value)
-        _alert.fire({ title: `Hapus Tenant Berhasil`, text: `Tenant an ${item.name} berhasil dihapus`, 'icon': 'success' })
+        _alert.fire({ title: `Hapus Barang Berhasil`, text: `Barang an ${item.product_name} berhasil dihapus`, 'icon': 'success' })
 
       // refresh table
       refTable.value.refresh()

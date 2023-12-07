@@ -24,7 +24,7 @@ onBeforeUnmount(() => {
         <span class="navbar-toggler-icon text-white"></span>
       </button>
 
-      <div id="navbarSupportedContent" class="collapse navbar-collapse">
+      <!-- <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
             <a class="nav-link text-white" href="#">Home <span class="sr-only">(current)</span></a>
@@ -48,7 +48,7 @@ onBeforeUnmount(() => {
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-      </div>
+      </div> -->
     </nav>
   </div>
   <div class="container-fluid p-0">
@@ -59,9 +59,9 @@ onBeforeUnmount(() => {
           <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit facere, eaque reprehenderit commodi nulla ad dolor nisi doloribus corporis distinctio sequi! Iure tenetur atque numquam commodi vitae tempore quos saepe.</p>
         </div>
       </div>
-      <!-- <div class="col-lg-5">
+      <div class="col-lg-5">
         <b-img id="img" src="http://bm.test/shop.png" fluid alt="Responsive image"></b-img>
-      </div> -->
+      </div>
       <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
         <path fill="#ffffff" fill-opacity="1" d="M0,256L60,250.7C120,245,240,235,360,208C480,181,600,139,720,144C840,149,960,203,1080,218.7C1200,235,1320,213,1380,202.7L1440,192L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
       </svg>
@@ -148,17 +148,17 @@ onBeforeUnmount(() => {
     height: 70vh;
     background: linear-gradient(45deg, #0D5CFE,#43AFFF);
   }
-  
+
   #img{
     position: relative;
     max-width: 50%;
     z-index: 10;
   }
-  
+
   #img:hover{
     transform: scale(1.02);
   }
-  
+
   .wave{
     position: absolute;
     bottom: -1px;
@@ -200,7 +200,7 @@ onBeforeUnmount(() => {
     height: 10px;
     width: 50px;
     margin-left: auto;
-    margin-right: auto;
+    mrgin-right: auto;
     display: block;
     transform: translateY(5px);
   }

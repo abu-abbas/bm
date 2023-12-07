@@ -15,6 +15,7 @@ class TenantResource extends JsonResource
   public function toArray(Request $request): array
   {
     $data = [
+      'id' => $this->id,
       'slug' => $this->url,
       'name' => $this->name,
       'short_location' => $this->short_location,
