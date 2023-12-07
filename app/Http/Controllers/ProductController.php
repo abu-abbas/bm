@@ -68,12 +68,14 @@ class ProductController extends Controller
     }
 
     // upload pict
-    [$response, $error] = $this->product->uploadFile($response, $request->file('pict'));
-    if (!is_null($error)) {
-      return response()->json([
-        'status' => 'error',
-        'message' => $error
-      ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+    foreach ($request->file('pict') as $file) {
+      [$response, $error] = $this->product->uploadFile($response, $file);
+      if (!is_null($error)) {
+        return response()->json([
+          'status' => 'error',
+          'message' => $error
+        ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+      }
     }
 
     return response()->json([

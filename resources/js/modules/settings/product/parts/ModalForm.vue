@@ -308,7 +308,6 @@ const handleSubmit = (values, { resetForm }) => {
                 <input
                   id="min_unit"
                   v-bind="field"
-                  type="number"
                   class="form-control"
                   placeholder="Masukkan minimum unit"
                 >
@@ -333,7 +332,6 @@ const handleSubmit = (values, { resetForm }) => {
                 <input
                   id="tkdn"
                   v-bind="field"
-                  type="number"
                   class="form-control"
                   placeholder="Masukkan nilai TKDN"
                 >

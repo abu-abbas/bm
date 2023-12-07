@@ -44,7 +44,7 @@ class ProductRequest extends FormRequest
       'tkdn' => ['required', 'min:3', 'max:5'],
       'price' => ['required', 'min:1', 'max:200'],
       'condition' => ['required'],
-      'files' => ['required', File::types($allowedMimes)->max(5000)],
+      'pict.*' => ['required', File::types($allowedMimes)->max(5000)],
     ];
 
     if (request('_method') == 'put') {
