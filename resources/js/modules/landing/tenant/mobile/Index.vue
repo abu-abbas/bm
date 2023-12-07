@@ -116,17 +116,15 @@ onBeforeMount(() => document.removeEventListener('scroll', onHandleScroll))
 
         <div class="content-product px-3 mt-4">
           <div class="row no-gutters">
-            <div v-for="idx in 9" :key="idx" class="col-6">
+            <div v-for="(product, idx) in data?.products" :key="idx" class="col-6">
               <div class="product-wrapper">
                 <div
                   class="card border shadow-sm rounded-lg"
-                  @click="onHandleSelectedProduct('testing-product')"
+                  @click="onHandleSelectedProduct(product.slug)"
                 >
-                  <img :src="data?.logo?.original" alt="">
+                  <img :src="product?.images[0]" :alt="product.product_name">
                   <div class="card-body p-2 d-flex flex-column">
-                    <div class="product-description fs-sm">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi distinctio optio dolor recusandae commodi quos! Voluptates molestiae id amet consequatur dolores cupiditate ex omnis deleniti sit iusto! Architecto, eligendi perspiciatis?
-                    </div>
+                    <div class="product-description fs-sm">{{ product?.description }}</div>
                   </div>
                 </div>
               </div>

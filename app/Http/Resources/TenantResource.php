@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,7 +16,6 @@ class TenantResource extends JsonResource
   public function toArray(Request $request): array
   {
     $data = [
-      'id' => $this->id,
       'slug' => $this->url,
       'name' => $this->name,
       'short_location' => $this->short_location,
@@ -29,6 +29,10 @@ class TenantResource extends JsonResource
       ],
       'products' => ProductResource::collection($this->products),
     ];
+
+    if (Str::contains($request->url(), 'admin', true)) {
+      $data['id'] = $this->id;
+    }
 
     if ($this->singleMedia) {
       $data['logo']['thumb'] = route('backend.inline.download', ['media' => $this->singleMedia, 'thumb']);
