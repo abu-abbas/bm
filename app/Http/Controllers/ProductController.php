@@ -244,10 +244,11 @@ class ProductController extends Controller
   }
 
   public function getProduct($tenant,$product){
-    $product = $this->product->singelProduct($tenant,$product);
+    [$response, $hasError] = $this->product->singelProduct($tenant,$product);
+
     return response()->json([
       'status' => 'success',
-      'data' => $product[0]
+      'data' => new ProductResource($response)
     ]);
   }
 }

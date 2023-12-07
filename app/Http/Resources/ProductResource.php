@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use PharIo\Manifest\Url;
 
 class ProductResource extends JsonResource
 {
@@ -14,11 +15,11 @@ class ProductResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
+    $tenant = $this->tenant;
     $data = [
       'slug' => $this->url,
-      'tenant_id' => $this->tenant_id,
+      'tenant_name' => $tenant?->name,
       'product_name' => $this->name,
-      'tenant_name' => $this->nama_tenant,
       'description' => $this->description,
       'minimum_qty' => $this->minimum_qty,
       'minimum_unit' => $this->minimum_unit,
@@ -26,6 +27,7 @@ class ProductResource extends JsonResource
       'price' => $this->price,
       'condition' => $this->condition,
       'images' => [],
+      'landing_url' => sprintf('%s%s/%s', config('app.url'), $tenant?->url, $this->url)
     ];
 
     foreach ($this->media as $media) {

@@ -70,7 +70,7 @@ class Tenant extends Model implements HasMedia
    */
   public function products() : HasMany
   {
-    return $this->hasMany(Product::class);
+    return $this->hasMany(Product::class, 'tenant_id', 'id');
   }
 
   /**

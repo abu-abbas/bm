@@ -77,10 +77,9 @@ class ProductRepository implements ProductRepositoryInterface
 
       $query = $this->product
         ->with([
+          'tenant',
           'media' => fn($q) => $q->where('collection_name', 'product.logo')
         ])
-        ->select('products.name as nama_barang', 'b.name as nama_tenant', 'products.*')
-        ->leftJoin('tenants as b', 'b.id', '=', 'products.tenant_id')
         ->when($request->search, function ($q, $searchText) use ($filtered) {
           return $q->searchByColumn($searchText, $filtered);
         });
@@ -229,7 +228,7 @@ class ProductRepository implements ProductRepositoryInterface
    * @return array [response, error]
    */
 
-   public function singelProduct($tenant,$product): array
+   public function singelProduct($tenant, $product): array
    {
 
       $error = null;
@@ -237,11 +236,15 @@ class ProductRepository implements ProductRepositoryInterface
 
       try {
         $response = $this->product
-        ->select('products.name as nama_barang', 'b.name as nama_tenant', 'products.*')
-        ->leftJoin('tenants as b', 'b.id', '=', 'products.tenant_id')
-        ->where('b.url', $tenant)
-        ->where('products.name', str_replace('-', ' ', $product))
-        ->with('singleMedia')->first();
+          ->with(['tenant', 'media' => fn($q) => $q->where('collection_name', 'product.logo')])
+          ->where('url', $product)
+          ->whereHas('tenant', fn($q) => $q->where('url', $tenant))
+          ->first();
+          // ->select('products.name as nama_barang', 'b.name as nama_tenant', 'products.*')
+          // ->leftJoin('tenants as b', 'b.id', '=', 'products.tenant_id')
+          // ->where('b.url', $tenant)
+          // ->where('products.name', str_replace('-', ' ', $product))
+          // ->with('singleMedia')->first();
       } catch (\Throwable $th) {
         $error = 'Terjadi kesalah saat mengambil data master product. Silakan hubungi Admin untuk lebih lanjut.';
         Log::error($error, [

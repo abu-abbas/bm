@@ -27,6 +27,7 @@ class TenantResource extends JsonResource
         'thumb' => null,
         'original' => null,
       ],
+      'products' => ProductResource::collection($this->products),
     ];
 
     if ($this->singleMedia) {

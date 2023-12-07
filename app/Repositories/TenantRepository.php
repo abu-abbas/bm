@@ -75,7 +75,7 @@ class TenantRepository implements TenantRepositoryInterface
       $filtered = collect($this->mappedColumn)->reject(fn ($v, $k) => !in_array($k, $selectedColumns))->values();
 
       $query = $this->tenant
-        ->with('singleMedia')
+        ->with(['singleMedia', 'products'])
         ->when($request->search, fn ($q, $searchText) => $q->searchByColumn($searchText, $filtered));
 
       $response = $request->fetch_first

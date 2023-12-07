@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\{HasMedia, InteractsWithMedia};
@@ -27,9 +28,9 @@ class Product extends Model implements HasMedia
     return $this->hasMany(Specification::class);
   }
 
-  public function tenant() : HasOne
+  public function tenant() : BelongsTo
   {
-    return $this->hasOne(Tenant::class);
+    return $this->belongsTo(Tenant::class);
   }
 
   public function singleMedia()

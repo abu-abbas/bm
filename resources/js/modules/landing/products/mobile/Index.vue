@@ -51,12 +51,12 @@ const loadItem = async () => {
           return redirectTo('/404')
         }
         items.value = res.data.data
-        productImages.value.push(res.data.data.single_media.original_url)
+        productImages.value = [...res?.data?.data?.images || []]
       })
       .catch(error => {
         console.log(error);
       })
-      
+
   } catch (error) {
     console.log(error)
   }
@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
 <template>
   <div>
     <b-nav tabs fill class="fixed-top bg-white">
-      <b-nav-item class="text-left"><b-icon icon="arrow-left"></b-icon> {{ items.nama_tenant }}</b-nav-item>
+      <b-nav-item class="text-left"><b-icon icon="arrow-left"></b-icon> {{ items.tenant_name }}</b-nav-item>
     </b-nav>
     <div class="mainImage">
       <b-carousel id="carousel" :controls="true" :indicators="true" :interval="0">
@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
       <div class="container">
         <!-- <div class="bg-white" style="border-top-left-radius: 1rem; border-top-right-radius: 1rem;"> -->
         <h3 class="text-dark mt-2">{{ items.nama_barang }}</h3>
-        <span class="mt-2 text-dark"><b-icon icon="shop"></b-icon>  Product By:  {{ items.nama_tenant }}</span>
+        <span class="mt-2 text-dark"><b-icon icon="shop"></b-icon>  Product By:  {{ items.tenant_name }}</span>
         <h4 class="text-info mt-4"><b-icon icon="tags" varian="info"></b-icon> {{ formatCurrency(items.price) }}</h4>
         <div class="detail">
           <span class="text-dark" style="white-space: pre-line;">{{ items.description}}</span>

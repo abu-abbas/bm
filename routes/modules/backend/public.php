@@ -12,13 +12,13 @@ Route::group(['prefix' => 'backend', 'as' => 'backend.'], function () {
       Route::get('/', [TenantController::class, 'list'])->name('get');
     });
   });
-  
+
   Route::group(['prefix' => 'landing', 'as' => 'landing.'], function () {
     Route::group(['prefix' => 'product', 'as' => 'product.'], function() {
-      Route::get('/{tenant?}/{product?}', [ProductController::class, 'getProduct'])->name('getsingelproduct');
+      Route::get('/{tenant}/{product}', [ProductController::class, 'getProduct'])->name('getsingelproduct');
     });
   });
-  
+
 
   Route::get(
     'preview/{media:uuid}/{conversion?}/{name?}',

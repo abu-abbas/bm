@@ -44,19 +44,19 @@ const loadItem = async () => {
           return redirectTo('/404')
         }
         items.value = res.data.data
-        mainImage.value = res.data.data.single_media.original_url
+        mainImage.value = [...res?.data?.data?.images || []]
       })
       .catch(error => {
         console.log(error);
       })
-      
+
   } catch (error) {
     console.log(error)
   }
 }
 
 onMounted(() => {
-  
+
   loadItem()
   if (btnLogout.value) {
     btnLogout.value.addEventListener('click', function() {
@@ -77,9 +77,9 @@ onBeforeUnmount(() => {
       <div class="col-12">
         <b-breadcrumb>
           <b-breadcrumb-item href="#home">
-            <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon> {{ items.nama_tenant }}
+            <b-icon icon="house-fill" scale="1.25" shift-v="1.25" aria-hidden="true"></b-icon> {{ items.tenant_name }}
           </b-breadcrumb-item>
-          <b-breadcrumb-item active>{{ items.nama_barang }}</b-breadcrumb-item>
+          <b-breadcrumb-item active>{{ items.product_name }}</b-breadcrumb-item>
         </b-breadcrumb>
       </div>
       <div class="col-12 d-block d-sm-none mb-3">
@@ -104,9 +104,9 @@ onBeforeUnmount(() => {
         <div class="row">
           <div class="col-lg-6 	d-none d-lg-block d-xl-block">
             <div class="col-12 mb-2">
-              <b-img 
-                :src="mainImage" 
-                fluid-grow 
+              <b-img
+                :src="mainImage"
+                fluid-grow
                 alt="Responsive image"
                 style="width: 100%; height: 100%; border-radius: 1rem; height: 27rem;"
               />
@@ -149,10 +149,10 @@ onBeforeUnmount(() => {
           <div class="col-sm-12 col-xs-12 col-lg-6 d-flex align-items-center mb-5">
             <div class="row">
               <div class="col-12">
-                <h5 class="b-text text-warning nama-tenant">{{ items.nama_tenant }}</h5>
+                <h5 class="b-text text-warning nama-tenant">{{ items.tenant_name }}</h5>
               </div>
               <div class="col-12">
-                <h3 class="b-text text-dark nama-product">{{ items.nama_barang }}</h3>
+                <h3 class="b-text text-dark nama-product">{{ items.product_name }}</h3>
               </div>
               <div class="col-12 my-3">
                 <span style="white-space: pre-line;">{{ items.description}}</span>
