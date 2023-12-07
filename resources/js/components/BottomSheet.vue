@@ -115,10 +115,15 @@ watch(
         >
           <span></span>
         </div>
+        <div class="static-title">
+          <slot name="fixed-header">
+            <h2>Fixed Header</h2>
+          </slot>
+        </div>
       </div>
       <div class="body">
         <slot name="header">
-          <h2>Bottom Sheet Modal</h2>
+          <!-- <h2>Bottom Sheet Modal</h2> -->
         </slot>
         <slot></slot>
       </div>
@@ -168,7 +173,9 @@ watch(
 
   .header {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 
     .drag-icon {
       cursor: grab;
@@ -184,6 +191,16 @@ watch(
         border-radius: 50px;
       }
     }
+
+    .static-title {
+      display: flex;
+      width: 100%;
+
+      h2 {
+        font-size: 1.275rem;
+      }
+    }
+
   }
 
   .body {
@@ -209,6 +226,7 @@ watch(
   &.show {
     opacity: 1;
     pointer-events: auto;
+    z-index: 1040;
 
     .content {
       transform: translateY(0%);

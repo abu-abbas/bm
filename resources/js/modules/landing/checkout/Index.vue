@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+import { defineRule, Field, Form as VeeForm } from 'vee-validate'
 import { _, _http, _route, _settings, _redirectToLogin } from '@/js/utils/common.js'
 
 import BottomSheet from '@/js/components/BottomSheet.vue'
@@ -17,15 +18,10 @@ const props = defineProps({
     default: null
   },
 })
-const showBottomSheet = ref(false)
-const onHandleClick = () => {
-  if (!_settings.user) {
-    _redirectToLogin()
-    return
-  }
 
-  showBottomSheet.value = true
-}
+const showBottomSheet = ref(false)
+
+const formRef = ref(null)
 const refRsk = ref(null)
 const refAkun = ref(null)
 const refVoi = ref(null)
@@ -61,8 +57,17 @@ const budget = ref({
       placeholder: 'Pilih akun'
     },
     loading: false,
-  }
+  },
 })
+
+const onHandleClick = () => {
+  if (!_settings.user) {
+    _redirectToLogin()
+    return
+  }
+
+  showBottomSheet.value = true
+}
 
 const fetchBudget = (type = 'kegiatan', value = null, addons = null) => {
   budget.value[type].loading = true
@@ -71,6 +76,41 @@ const fetchBudget = (type = 'kegiatan', value = null, addons = null) => {
     .catch(() => budget.value[type].options = [])
     .finally(() => budget.value[type].loading = false)
 }
+
+const onHandleKeyupNilaiKetertarikan = _.debounce((e) => {
+  const allowedChar = '0123456789.'
+  const mapped = [...e.target.value].filter(v => allowedChar.includes(v)).join('')
+  e.target.value = mapped
+
+  const current = parseFloat(e.target.value.split('.').join('') || 0)
+  const dpa_rsk = parseFloat(budget.value.akun.selected.dpa_rsk || 0)
+
+  if (current < 0) {
+    nilaiKetertarikan.value = 0
+    e.target.value = 0
+    return
+  }
+
+  if (current > dpa_rsk) {
+    nilaiKetertarikan.value = dpa_rsk
+    e.target.value = dpa_rsk.toLocaleString('id-ID', { style: 'decimal' })
+    return
+  }
+
+  nilaiKetertarikan.value = current
+  e.target.value = current.toLocaleString('id-ID', { style: 'decimal' })
+}, 500)
+
+defineRule('voi_value', (value, [target]) => {
+  if (value == 0) return 'Nilai ketertarikan tidak boleh 0'
+
+  if (value <= parseFloat(target?.dpa_rsk))
+    return true
+
+  return `Nilai ketertarikan maksimal ${parseFloat(target?.dpa_rsk)?.toLocaleString('id-ID', { style: 'decimal' })}`
+})
+
+const onHandleAkunSelect = () => setTimeout(() => refVoi.value.focus(), 250)
 
 watch(
   [
@@ -105,33 +145,6 @@ watch(
   }
 )
 
-const onHandleKeyupNilaiKetertarikan = _.debounce((e) => {
-  const allowedChar = '0123456789.'
-  const mapped = [...e.target.value].filter(v => allowedChar.includes(v)).join('')
-  e.target.value = mapped
-
-  const current = parseFloat(e.target.value.split('.').join('') || 0)
-  const dpa_rsk = parseFloat(budget.value.akun.selected.dpa_rsk || 0)
-
-  if (current < 0) {
-    nilaiKetertarikan.value = 0
-    e.target.value = 0
-    return
-  }
-
-  if (current > dpa_rsk) {
-    nilaiKetertarikan.value = dpa_rsk
-    e.target.value = dpa_rsk.toLocaleString('id-ID', { style: 'decimal' })
-    return
-  }
-
-  nilaiKetertarikan.value = current
-  e.target.value = current.toLocaleString('id-ID', { style: 'decimal' })
-}, 500)
-
-
-const onHandleAkunSelect = () => setTimeout(() => refVoi.value.focus(), 250)
-
 onMounted(() => {
   fetchBudget()
   console.log({ props })
@@ -148,90 +161,157 @@ onMounted(() => {
       Ketertarikan
     </button>
     <BottomSheet v-model:visible="showBottomSheet">
-      <template #header><h2>Ajukan ketertarikan</h2></template>
+      <template #fixed-header><h2>Ajukan ketertarikan</h2></template>
 
-      <div class="form-group mt-4">
-        <label class="form-label text-muted">Kegiatan</label>
-        <Select
-          v-model:selected="budget.kegiatan.selected"
-          :options="budget.kegiatan.options"
-          :multiselect-options="budget.kegiatan.props"
-          :loading="budget.kegiatan.loading"
-        >
-          <template #option="optionProps">
-            <div class="d-flex flex-column">
-              <strong class="text-sm text-muted">{{ optionProps.option.kode_kegiatan }}</strong>
-              <span>{{ optionProps.option.nama_kegiatan }}</span>
+      <VeeForm ref="formRef" v-slot="{ errors }">
+        <div class="form-group mt-4">
+          <label class="form-label text-muted">Kegiatan</label>
+          <Field
+            v-slot="{ errorMessage }"
+            v-model="budget.kegiatan.selected"
+            label="Kegiatan"
+            name="kegiatan"
+            rules="required"
+          >
+            <Select
+              v-model:selected="budget.kegiatan.selected"
+              :options="budget.kegiatan.options"
+              :multiselect-options="budget.kegiatan.props"
+              :loading="budget.kegiatan.loading"
+            >
+              <template #option="optionProps">
+                <div class="d-flex flex-column">
+                  <strong class="text-sm text-muted">{{ optionProps.option.kode_kegiatan }}</strong>
+                  <span>{{ optionProps.option.nama_kegiatan }}</span>
+                </div>
+              </template>
+
+              <template #singleLabel="optionProps">
+                <div class="d-flex flex-column">
+                  <strong class="text-sm text-muted fw-500">{{ optionProps.option.kode_kegiatan }}</strong>
+                  <span>{{ optionProps.option.nama_kegiatan }}</span>
+                </div>
+              </template>
+            </Select>
+
+            <div
+              v-if="errorMessage"
+              class="text-danger fs-sm mt-2"
+            >
+              {{ errorMessage }}
             </div>
-          </template>
+          </Field>
+        </div>
 
-          <template #singleLabel="optionProps">
-            <div class="d-flex flex-column">
-              <strong class="text-sm text-muted fw-500">{{ optionProps.option.kode_kegiatan }}</strong>
-              <span>{{ optionProps.option.nama_kegiatan }}</span>
+        <div v-if="budget.kegiatan.selected" class="form-group">
+          <label class="form-label text-muted">RSK</label>
+          <Field
+            v-slot="{ errorMessage }"
+            v-model="budget.rsk.selected"
+            label="RSK"
+            name="rsk"
+            rules="required"
+          >
+            <Select
+              ref="refRsk"
+              v-model:selected="budget.rsk.selected"
+              :options="budget.rsk.options"
+              :multiselect-options="budget.rsk.props"
+              :loading="budget.rsk.loading"
+            >
+            </Select>
+            <div
+              v-if="errorMessage"
+              class="text-danger fs-sm mt-2"
+            >
+              {{ errorMessage }}
             </div>
-          </template>
-        </Select>
-      </div>
+          </Field>
+        </div>
 
-      <div v-if="budget.kegiatan.selected" class="form-group">
-        <label class="form-label text-muted">RSK</label>
-        <Select
-          ref="refRsk"
-          v-model:selected="budget.rsk.selected"
-          :options="budget.rsk.options"
-          :multiselect-options="budget.rsk.props"
-          :loading="budget.rsk.loading"
-        >
-        </Select>
-      </div>
+        <div v-if="budget.rsk.selected" class="form-group">
+          <label class="form-label text-muted">Akun</label>
+          <Field
+            v-slot="{ errorMessage }"
+            v-model="budget.akun.selected"
+            label="Akun"
+            name="akun"
+            rules="required"
+          >
+            <Select
+              ref="refAkun"
+              v-model:selected="budget.akun.selected"
+              :options="budget.akun.options"
+              :multiselect-options="budget.akun.props"
+              :loading="budget.akun.loading"
+              @select="onHandleAkunSelect"
+            >
+              <template #option="optionProps">
+                <div class="d-flex flex-column">
+                  <strong class="text-sm text-muted">{{ optionProps.option.kode_akun }}</strong>
+                  <span>{{ optionProps.option.nama_akun }}</span>
+                  <div class="d-flex align-items-center mt-2">
+                    <strong class="text-sm fw-500">Nilai Anggaran:
+                      {{ parseFloat(optionProps.option.dpa_rsk || 0)?.toLocaleString('id-ID', { style: 'decimal' }) }}
+                    </strong>
+                  </div>
+                </div>
+              </template>
 
-      <div v-if="budget.rsk.selected" class="form-group">
-        <label class="form-label text-muted">Akun</label>
-        <Select
-          ref="refAkun"
-          v-model:selected="budget.akun.selected"
-          :options="budget.akun.options"
-          :multiselect-options="budget.akun.props"
-          :loading="budget.akun.loading"
-          @select="onHandleAkunSelect"
-        >
-          <template #option="optionProps">
-            <div class="d-flex flex-column">
-              <strong class="text-sm text-muted">{{ optionProps.option.kode_akun }}</strong>
-              <span>{{ optionProps.option.nama_akun }}</span>
-              <div class="d-flex align-items-center mt-2">
-                <strong class="text-sm fw-500">Nilai Anggaran:
-                  {{ parseFloat(optionProps.option.dpa_rsk || 0)?.toLocaleString('id-ID', { style: 'decimal' }) }}
-                </strong>
-              </div>
+              <template #singleLabel="optionProps">
+                <div class="d-flex flex-column">
+                  <strong class="text-sm text-muted fw-500">{{ optionProps.option.kode_akun }}</strong>
+                  <span>{{ optionProps.option.nama_akun }}</span>
+                  <div class="d-flex align-items-center mt-2">
+                    <strong class="text-sm fw-500">Nilai Anggaran:
+                      {{ parseFloat(optionProps.option.dpa_rsk || 0)?.toLocaleString('id-ID', { style: 'decimal' }) }}
+                    </strong>
+                  </div>
+                </div>
+              </template>
+            </Select>
+            <div
+              v-if="errorMessage"
+              class="text-danger fs-sm mt-2"
+            >
+              {{ errorMessage }}
             </div>
-          </template>
+          </Field>
+        </div>
 
-          <template #singleLabel="optionProps">
-            <div class="d-flex flex-column">
-              <strong class="text-sm text-muted fw-500">{{ optionProps.option.kode_akun }}</strong>
-              <span>{{ optionProps.option.nama_akun }}</span>
-              <div class="d-flex align-items-center mt-2">
-                <strong class="text-sm fw-500">Nilai Anggaran:
-                  {{ parseFloat(optionProps.option.dpa_rsk || 0)?.toLocaleString('id-ID', { style: 'decimal' }) }}
-                </strong>
-              </div>
+        <div v-if="budget.akun.selected" class="form-group">
+          <label class="form-label text-muted">Nilai Ketertarikan</label>
+          <Field
+            v-slot="{ errorMessage }"
+            v-model="nilaiKetertarikan"
+            label="Nilai Ketertarikan"
+            name="voi"
+            rules="required|voi_value:@akun"
+          >
+            <input
+              ref="refVoi"
+              type="text"
+              class="form-control text-right custom-form-control font-bold"
+              @keyup="onHandleKeyupNilaiKetertarikan"
+            >
+            <div
+              v-if="errorMessage"
+              class="text-danger fs-sm mt-2"
+            >
+              {{ errorMessage }}
             </div>
-          </template>
-        </Select>
-      </div>
+          </Field>
+        </div>
 
-      <div v-if="budget.akun.selected" class="form-group">
-        <label class="form-label text-muted">Nilai Ketertarikan</label>
-        <input
-          ref="refVoi"
-          type="text"
-          class="form-control text-right custom-form-control font-bold"
-          @keyup="onHandleKeyupNilaiKetertarikan"
+        <button
+          :class="{
+            'btn btn-primary btn-block': true,
+            'disabled': errors
+          }"
         >
-      </div>
-
+          Simpan
+        </button>
+      </VeeForm>
     </BottomSheet>
   </div>
 </template>
