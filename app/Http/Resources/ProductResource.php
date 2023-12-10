@@ -18,6 +18,7 @@ class ProductResource extends JsonResource
     $tenant = $this->tenant;
     $data = [
       'slug' => $this->url,
+      'tenant_id' => $this->tenant_id,
       'tenant_name' => $tenant?->name,
       'product_name' => $this->name,
       'description' => $this->description,

@@ -3,7 +3,7 @@ import { ref, computed, nextTick } from 'vue'
 import { Field, Form as VeeForm } from 'vee-validate'
 import { _http, _route, _alert, _confirm } from '@/js/utils/common'
 
-import ImageUploader from '@/js/components/UploadingImage.vue'
+import ImageUploader from '@/js/components/UploadingImageTenant.vue'
 
 const props = defineProps({
   visible: {

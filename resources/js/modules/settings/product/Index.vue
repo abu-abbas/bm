@@ -154,7 +154,7 @@ const onHandleDeleted = item => {
 
 const onHandleEdit = item => {
   tenantStore.setItemByUrl(item.slug, item)
-  router.push({ name: 'settings.tenant.detail', params: { slug: item.slug } })
+  router.push({ name: 'settings.product.detail', params: { slug: item.slug } })
 }
 </script>
 

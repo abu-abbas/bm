@@ -125,9 +125,11 @@ class ProductController extends Controller
 
     $product = $this->product->fill($found, [
       'name' => $request->name,
-      'short_location' => $request->short_location,
       'description' => $request->description,
-      'updated_by' => auth()->user()->username,
+      'minimimum_qty' => $request->min_qty,
+      'minimum_unit' => $request->min_unit,
+      'tkdn_value' => $request->tkdn,
+      'price' => $request->price,
     ]);
 
     [$response, $error] = $this->product->saveOrEdit($product, 'edit');
@@ -153,7 +155,7 @@ class ProductController extends Controller
     return response()->json([
       'status' => 'success',
       'message' => "Data berhasil {$message}",
-      'data' => new TenantResource($response)
+      'data' => new ProductResource($response)
     ]);
   }
 
