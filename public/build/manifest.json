@@ -162,7 +162,7 @@
       "resources/js/modules/dashboard/Admin.vue",
       "resources/js/modules/errors/404.vue"
     ],
-    "file": "assets/compiled/js/modules/app/admin-21baee8e.js",
+    "file": "assets/compiled/js/modules/app/admin-1503624c.js",
     "imports": [
       "_id-959b107e.js",
       "_vue-utils-cea615f1.js",
@@ -234,7 +234,7 @@
     "assets": [
       "assets/compiled/images/avatar-1-f00bb589.png"
     ],
-    "file": "assets/compiled/js/modules/chunk/parts/header-c073ced9.js",
+    "file": "assets/compiled/js/modules/chunk/parts/header-b176072c.js",
     "imports": [
       "_vue-utils-cea615f1.js",
       "_id-959b107e.js",
@@ -453,7 +453,7 @@
     "css": [
       "assets/compiled/css/Index-802c8dcb.css"
     ],
-    "file": "assets/compiled/js/modules/chunk/user/index-acedfd13.js",
+    "file": "assets/compiled/js/modules/chunk/user/index-8972f267.js",
     "imports": [
       "_vue-utils-cea615f1.js",
       "_id-959b107e.js",
