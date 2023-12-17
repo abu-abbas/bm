@@ -197,6 +197,7 @@ const onHandleEdit = item => {
               <template #cell(action)="{ item }">
                 <div class="d-flex align-items-baseline justify-content-center">
                   <b-button
+                    v-if="!item.is_etpp && item.username != _settings.user?.username"
                     variant="link"
                     class="text-info py-0 px-1 outline-none cursor-pointer"
                     @click="onHandleEdit(item)"
@@ -204,7 +205,7 @@ const onHandleEdit = item => {
                     <FontAwesomeIcon :icon="['fas', 'edit']" />
                   </b-button>
                   <b-button
-                    v-if="item.username != _settings.user?.username"
+                    v-if="!item.is_etpp && item.username != _settings.user?.username"
                     variant="link"
                     class="text-danger py-0 px-1 outline-none cursor-pointer"
                     @click="onHandleDeleted(item)"

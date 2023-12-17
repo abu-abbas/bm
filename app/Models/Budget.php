@@ -14,7 +14,7 @@ class Budget extends Model
    *
    * @var string|null
    */
-  // protected $connection = 'etpp';
+  protected $connection = 'sipkd';
 
   /**
    * The primary key for the model.
@@ -41,6 +41,6 @@ class Budget extends Model
   {
     parent::__construct($attributes);
 
-    $this->setTable('v_dparskbas');
+    $this->setTable('newsipkd.vw_dparskbas');
   }
 }
