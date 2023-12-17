@@ -49,7 +49,7 @@ class ProductRequest extends FormRequest
 
     if (request('_method') == 'put') {
       $rules['slug'] = ['required'];
-      array_shift($rules['files']) ;
+      array_shift($rules['pict.*']) ;
       return $rules;
     }
 

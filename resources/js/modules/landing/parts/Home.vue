@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import Swal from 'sweetalert2';
 const btnLogout = ref(null)
+
 const onHandleLogout = function () {
   window.doLogout.apply(this, arguments)
 }
@@ -14,6 +16,15 @@ onBeforeUnmount(() => {
   if (btnLogout.value)
     btnLogout.value.removeEventListener('click', onHandleLogout)
 })
+
+const showSwal = () => {
+  Swal.fire({
+    title: 'Maaf,',
+    text: 'Saat ini fitur yang dituju masih dalam pengembangan.',
+    icon: 'info',
+    confirmButtonText: 'Baik',
+  });
+};
 </script>
 
 <template>
@@ -67,14 +78,14 @@ onBeforeUnmount(() => {
       </svg>
     </div>
 
-    <div class="row justify-content-center align-items-center mx-0 bg-white mt-3">
+    <div class="row justify-content-center align-items-center mx-0 bg-white mt-3 ml-5 mr-5">
       <div class="col-12 mb-3">
         <h2 class="font-weight-bold text-dark text-center title">What you gain by joining us</h2>
       </div>
       <div class="col-lg-4 col-md-12 col-xs-12 col-12 mt-2">
         <div class="row">
           <div class="col-lg-2 col-md-2 col-xs-2 col-2 iconImage">
-            <b-img src="http://bm.test/icon/search.png" fluid class="align-items-center"></b-img>
+            <b-img src="http://bm.test/icon/search.png" fluid class="align-items-center" style="width: 50px; height: 50px;"></b-img>
           </div>
           <div class="col-lg-10 col-md-10 col-xs-10 col-10">
             <h4 class="text-dark">Search</h4>
@@ -85,7 +96,7 @@ onBeforeUnmount(() => {
       <div class="col-lg-4 col-md-12 col-xs-12 col-12 mt-2">
         <div class="row">
           <div class="col-lg-2 col-md-2 col-xs-2 col-2 iconImage">
-            <b-img src="http://bm.test/icon/puzzle.png" fluid class="align-items-center"></b-img>
+            <b-img src="http://bm.test/icon/puzzle.png" fluid class="align-items-center" style="width: 50px; height: 50px;"></b-img>
           </div>
           <div class="col-lg-10 col-md-10 col-xs-10 col-10">
             <h4 class="text-dark">Matchmaking</h4>
@@ -96,7 +107,7 @@ onBeforeUnmount(() => {
       <div class="col-lg-4 col-md-12 col-xs-12 col-12 mt-2">
         <div class="row">
           <div class="col-lg-2 col-md-2 col-xs-2 col-2 iconImage">
-            <b-img src="http://bm.test/icon/handshake.png" fluid class="align-items-center"></b-img>
+            <b-img src="http://bm.test/icon/handshake.png" fluid class="align-items-center" style="width: 50px; height: 50px;"></b-img>
           </div>
           <div class="col-lg-10 col-md-10 col-xs-10 col-10">
             <h4 class="text-dark">Connect</h4>
@@ -104,7 +115,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary mt-4 btn-lg btn-join">Join Us</button>
+      <button type="button" class="btn btn-primary mt-4 btn-lg btn-join" @click="showSwal">Join Us</button>
     </div>
     <div class="container mt-5 my-5">
       <div class="row justify-content-center align-items-center mx-0 bg-white mt-3">
@@ -135,7 +146,7 @@ onBeforeUnmount(() => {
         <div class="col-lg-3 col-md-6 col-xs-12 col-12 mt-2">
           <b-img src="https://images.crunchbase.com/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/r5fgevdavh3vzmlurlx8" fluid class="align-items-center"></b-img>
         </div>
-        <button type="button" class="btn btn-primary mt-4 btn-lg btn-join">More Vendor</button>
+        <button type="button" class="btn btn-primary mt-4 btn-lg btn-join" @click="showSwal">More Vendor</button>
       </div>
     </div>
   </div>

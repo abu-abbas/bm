@@ -22,7 +22,6 @@ const props = defineProps({
     default: false,
   }
 })
-
 onMounted(() => {
   fetchDataFromAPI();
 });
@@ -45,13 +44,14 @@ const optionsCondition = ref([
 const selectedCondition = ref(null);
 
 // method
+
 const fetchDataFromAPI = async () => {
   try {
     const response = await _http.get(
       _route(
         'backend.tenant.get',{}
-      )
-    )
+        )
+        )
     .then(res => res);
     const data = await response.data.data;
     // Create an array of options with the 'text' property
@@ -61,6 +61,9 @@ const fetchDataFromAPI = async () => {
     }));
 
     optionsTenant.value = optionData; // Update the options ref with the new options data
+    if (optionData.length > 0) {
+      selectedTenant.value = optionData[0].value; // Select the value of the first tenant
+    }
   } catch (error) {
     console.error('Error fetching data from the API:', error);
   }
@@ -68,14 +71,31 @@ const fetchDataFromAPI = async () => {
 
 const onHandleShown = () => nextTick(() => {
   if (localData.value) {
-    formRef.value.setFieldValue('name', localData.value.name)
+    console.log(localData.value);
+    selectedCondition.value = {value: localData.value.condition, text: localData.value.condition == 0 ? 'Baru' : 'Bekas'}
+    selectedTenant.value = {value: localData.value.tenant_id, text: localData.value.tenant_name}
+    // formRef.value.setFieldValue('selectedTenant.value', localData.value.tenant_name)
+    formRef.value.setFieldValue('name', localData.value.product_name)
     // formRef.value.setFieldValue('short_location', localData.value.short_location)
     formRef.value.setFieldValue('description', localData.value.description)
+    formRef.value.setFieldValue('min_qty', localData.value.minimum_qty)
+    formRef.value.setFieldValue('min_unit', localData.value.minimum_unit)
+    formRef.value.setFieldValue('price', localData.value.price)
+    formRef.value.setFieldValue('tkdn', localData.value.tkdn_value)
     showPreviewImage.value = true
   }
 })
 const onHandleHide = () => emits('update:visible', false)
-const onHandleRemoveImage = () => showPreviewImage.value = false
+const onHandleRemoveImage = (index) => {
+  if (index >= 0 && index < localData.value.images.length) {
+    localData.value.images.splice(index, 1);
+
+    // Jika ingin menyembunyikan gambar saat semua gambar dihapus
+    if (localData.value.images.length === 0) {
+      showPreviewImage.value = false;
+    }
+  }
+}
 
 const handleSubmit = (values, { resetForm }) => {
   const isEdit = props.isEdit
@@ -400,19 +420,19 @@ const handleSubmit = (values, { resetForm }) => {
               Gambar
             </label>
             <div class="col-sm-9">
-              <div
-                v-if="showPreviewImage"
-                class="preview-wrapper"
-              >
-                <img
-                  :src="localData?.pict?.thumb"
-                  :alt="localData?.name"
-                  class="image-preview"
-                >
-                <a href="javascript:void(0)" @click="onHandleRemoveImage">
-                  <FontAwesomeIcon :icon="['fas', 'trash-alt']"/>
-                </a>
+              <div v-if="showPreviewImage" class="preview-wrapper">
+                <div v-for="(image, index) in localData.images" :key="index">
+                  <img
+                    :src="localData?.images[index]"
+                    :alt="image.product_name"
+                    class="image-preview"
+                  >
+                  <a href="javascript:void(0)" @click="() => onHandleRemoveImage(index)">
+                    <FontAwesomeIcon :icon="['fas', 'trash-alt']"/>
+                  </a>
+                </div>
               </div>
+
               <Field
                 v-else
                 v-slot="{ field, errorMessage }"

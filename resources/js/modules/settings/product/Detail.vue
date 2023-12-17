@@ -3,10 +3,10 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { toRef, ref, watchEffect } from 'vue'
 import { _http, _route, _alert } from '@/js/utils/common.js'
-import { useTenantStore } from '@/js/stores/settings/tenant-store.js'
+import { useProductStore } from '@/js/stores/settings/product-store.js'
 
 import IframeModal from '@/js/components/IframeModal.vue'
-import ModalForm from '@/js/modules/settings/tenant/parts/ModalForm.vue'
+import ModalForm from '@/js/modules/settings/product/parts/ModalForm.vue'
 
 const props = defineProps({
   slug: {
@@ -16,21 +16,21 @@ const props = defineProps({
 })
 
 const router = useRouter()
-const localTenant = ref(null)
+const localProduct = ref(null)
 const getSlug = toRef(props, 'slug')
-const tenantStore = useTenantStore()
-const { getSelectedByUrl } = storeToRefs(tenantStore)
+const productStore = useProductStore()
+const { getSelectedByUrl } = storeToRefs(productStore)
 const modalVisible = ref(false)
 const iframeVisible = ref(false)
 const initData = ref({})
 
-const backToMain = () => router.push({ name: 'settings.tenant' })
-const fetchTenant = () => {
+const backToMain = () => router.push({ name: 'settings.product' })
+const fetchProduct = () => {
   const hasSelectedData = getSelectedByUrl.value(getSlug.value)
   if (!hasSelectedData) {
     _http.get(
       _route(
-        'backend.tenant.get',
+        'backend.product.get',
         {
           search: getSlug.value,
           columns: 'url',
@@ -38,11 +38,11 @@ const fetchTenant = () => {
         }
       )
     )
-      .then(res => tenantStore.setItemByUrl(getSlug.value, res.data?.data))
+      .then(res => productStore.setItemByUrl(getSlug.value, res.data?.data))
       .catch(error => {
         _alert.fire({
           title: 'Terjadi Kesalahan',
-          text: error?.response?.data?.message || 'Data tenant tidak ditemukan',
+          text: error?.response?.data?.message || 'Data product tidak ditemukan',
           icon: 'error',
           timer: 5000,
           timerProgressBar: true,
@@ -56,27 +56,29 @@ const fetchTenant = () => {
       .finally(() => unwatch())
   }
 
-  localTenant.value = getSelectedByUrl.value(getSlug.value)
+  
+  localProduct.value = getSelectedByUrl.value(getSlug.value)
+  console.log(localProduct.value);
 }
 
 const onHandleEdit = () => {
-  initData.value = localTenant.value
+  initData.value = localProduct.value
   modalVisible.value = true
 }
 
 const onHandleSubmit = (value) => {
-  tenantStore.setItemByUrl(getSlug.value, value)
-  fetchTenant()
+  productStore.setItemByUrl(getSlug.value, value)
+  fetchProduct()
 }
 
-const onHandleQrcode = () => {
-  iframeVisible.value = true
-}
+// const onHandleQrcode = () => {
+//   iframeVisible.value = true
+// }
 
 const unwatch = watchEffect(
   () => {
-    if (!localTenant.value)
-      fetchTenant()
+    if (!localProduct.value)
+      fetchProduct()
   }
 )
 </script>
@@ -84,15 +86,23 @@ const unwatch = watchEffect(
 <template>
   <div class="section-body">
     <h2 class="section-title fs-lg">
-      {{ localTenant?.name }}
+      {{ localProduct?.product_name }}
     </h2>
-    <p class="section-lead">{{ localTenant?.short_location }}</p>
+    <p class="section-lead">{{ localProduct?.short_location }}</p>
 
     <div class="row">
       <div class="col-12">
         <div class="d-flex align-items-start flex-wrap flex-sm-nowrap">
-          <img :src="localTenant?.logo?.thumb" :alt="`Logo ${ localTenant?.name }`">
-          <div class="flex-1 ml-0 ml-sm-3">{{ localTenant?.description }}</div>
+          <div v-for="(image, index) in localProduct.images" :key="index" class="mr-3">
+            <img
+              :src="localProduct?.images[index]"
+              :alt="`Logo ${localProduct.product_name}`"
+              width="150"
+              height="150"
+              style="object-fit: cover;"
+            >
+          </div>
+          <div class="flex-1 ml-0 ml-sm-3">{{ localProduct.description }}</div>
         </div>
 
         <div class="action d-flex align-items-center mt-3">
@@ -108,7 +118,7 @@ const unwatch = watchEffect(
             />
             Ubah
           </a>
-          <a
+          <!-- <a
             href="javascript:void(0)"
             rel="noopener noreferrer"
             class="btn btn-primary btn-icon"
@@ -119,7 +129,7 @@ const unwatch = watchEffect(
               class="mr-1"
             />
             Tampilkan Qrcode
-          </a>
+          </a> -->
         </div>
       </div>
     </div>
