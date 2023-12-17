@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Budget;
 use App\Repositories\Contracts\BudgetRepositoryInterface;
-use Illuminate\Support\Facades\DB;
 
 class BudgetRepository implements BudgetRepositoryInterface
 {
@@ -37,14 +36,10 @@ class BudgetRepository implements BudgetRepositoryInterface
         $key == 'akun',
         fn ($q) => $q->select(['c_akun', 'n_akun', 'i_idrskbas', 'v_dpa_rsk'])->where('c_giat', $value)->where('i_rsk_no', $addons)
       )
-      ->where('c_angg_tahun', '2021')
+      ->where('c_angg_tahun', now()->format('Y'))
       ->where('c_opd', session('user.sipkd'))
-      ->orderBy('1, 2')
+      ->orderByRaw('1, 2')
       ->distinct()
       ->get();
-
-    // return $this->budget
-    //   ->where(DB::raw('lower(n_giat)'), 'like', "%{$search}%");
-    //   ->orWhere(DB::raw('lower(n_giat)'), 'like', "%{$search}%");
   }
 }

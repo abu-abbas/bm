@@ -5,8 +5,8 @@ namespace App\Repositories;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\{User, UserEtpp};
-use Illuminate\Support\Facades\Log;
 use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\{DB, Log};
 use Illuminate\Contracts\Auth\Authenticatable;
 use App\Repositories\Contracts\UserRepositoryInterface;
 
@@ -147,14 +147,87 @@ class UserRepository implements UserRepositoryInterface
    */
   public function loginHistory(Request $request, Authenticatable $user)
   {
+    $dataPegawai = null;
+    if ($user->is_etpp) {
+      $dataPegawai = $this->getPegawaiData($user->username);
+    }
+
     session([
       'user' => [
         'username' => $user->username,
         'name' => Str::title($user->name),
-        'sipkd' => $user->is_etpp ? '' : '21101000', //sementara masih dihardcode dulu
+        'nip' => $dataPegawai?->nip ?? null,
+        'kojab' => $dataPegawai?->kojab ?? null,
+        'jabatan' => $dataPegawai?->jabatan ?? null,
+        'kolok' => $dataPegawai?->kolok ?? null,
+        'lokasi_kerja' => $dataPegawai?->lokasi_kerja ?? null,
+        'spmu' => $dataPegawai?->spmu ?? null,
+        'kode_pd' => $dataPegawai?->kode_pd ?? null,
+        'perangkat_daerah' => $dataPegawai?->perangkat_daerah ?? null,
+        'email' => $dataPegawai?->email ?? null,
+        'sipkd' => $dataPegawai?->kode_unit_sipkd ?? null,
         'permissions' => []
       ]
     ]);
+  }
+
+  protected function getPegawaiData($nrk)
+  {
+    $query = DB::connection('etpp')
+      ->query()
+      ->fromSub(
+        fn ($q1) =>
+          $q1
+            ->from(DB::raw('pers_pegawai1@simpeg p'))
+            ->joinSub(
+              fn ($t1) =>
+                $t1->from(DB::raw('vw_jabatan_all@simpeg tab'))
+                  ->select([
+                    'tab.*',
+                    DB::raw('row_number () over (partition by tab.nrk order by tab.tmt desc) as rown')
+                  ])
+                ,
+              't',
+              fn ($js) =>$js->on('t.nrk', '=', 'p.nrk')->on('t.rown', 1)
+            )
+            ->leftJoin(
+              DB::raw('pers_peran_tbl@simpeg per'),
+              fn($lj) => $lj->on('t.kolok', '=', 'per.kolok')->on('t.koper', '=', 'per.koper')
+            )
+            ->select([
+              't.nrk',
+              'p.nama',
+              'p.nip18 as nip',
+              't.nalok as lokasi_kerja',
+              DB::raw('case when t.koper is not null then per.koper else t.kojab end kojab'),
+              DB::raw('case when t.koper is not null then per.napers else t.najab end jabatan'),
+              DB::raw('case when t.koper is not null then per.kolok else t.kolok end kolok'),
+              DB::raw("case when t.spmu = 'c031' then 'c030' when t.spmu = 'c041' then 'c040' else t.spmu end spmu")
+            ])
+          ,
+          'q1'
+      )
+      ->join(DB::raw('pers_tabel_spmu@simpeg s'), 'q1.spmu', '=', 's.kode_spm')
+      ->leftJoin(DB::raw('pers_pegawai2@simpeg p2'), 'q1.nrk', '=', 'p2.nrk')
+      ->leftJoin(DB::raw('pers_klogad3@simpeg p3'), 'q1.kolok', '=', 'p3.kolok')
+      ->select([
+        'q1.nrk',
+        'q1.nama',
+        'q1.nip',
+        'q1.kojab',
+        'q1.jabatan',
+        'q1.kolok',
+        'q1.lokasi_kerja',
+        'q1.spmu',
+        's.klogad_induk as kode_pd',
+        's.nama as perangkat_daerah',
+        'p2.email',
+        'p3.kode_unit_sipkd',
+      ])
+      ->where('q1.nrk', $nrk)
+      ->first();
+
+    return $query;
   }
 
   public function list(Request $request): array
