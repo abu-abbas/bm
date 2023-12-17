@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class UserEtpp extends Model
@@ -12,7 +13,7 @@ class UserEtpp extends Model
    *
    * @var string|null
    */
-  protected $connection = 'etpp';
+  protected $connection = 'oracle';
 
   /**
    * The primary key for the model.
@@ -39,6 +40,6 @@ class UserEtpp extends Model
   {
     parent::__construct($attributes);
 
-    $this->setTable('tm_users');
+    $this->setTable(DB::raw('tm_users@etpp'));
   }
 }
