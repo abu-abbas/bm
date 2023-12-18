@@ -34,7 +34,10 @@ class BudgetRepository implements BudgetRepositoryInterface
       )
       ->when(
         $key == 'akun',
-        fn ($q) => $q->select(['c_akun', 'n_akun', 'i_idrskbas', 'v_dpa_rsk'])->where('c_giat', $value)->where('i_rsk_no', $addons)
+        fn ($q) => $q
+          ->select(['c_akun', 'n_akun', 'i_idrskbas', 'v_dpa_rsk', 'v_tapd_rsk', 'n_sumberdana'])
+          ->where('c_giat', $value)
+          ->where('i_rsk_no', $addons)
       )
       ->where('c_angg_tahun', now()->format('Y'))
       ->where('c_opd', session('user.sipkd'))

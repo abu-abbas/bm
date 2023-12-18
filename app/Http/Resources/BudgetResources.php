@@ -33,18 +33,10 @@ class BudgetResources extends JsonResource
       $data['nama_akun'] = $this->n_akun;
       $data['id_rskbas'] = encrypt_params($this->i_idrskbas);
       $data['dpa_rsk'] = $this->v_dpa_rsk;
+      $data['tapd_rsk'] = $this->v_tapd_rsk;
+      $data['sumber_dana'] = $this->n_sumberdana;
       return $data;
     }
-
-    // $data['kode_kegiatan'] = $this->c_giat;
-    // $data['nama_kegiatan'] = $this->n_giat;
-    // $data['idrskbas'] = encrypt_params($this->i_idrskbas);
-    // $data['rsk_no'] = encrypt_params($this->i_rsk_no);
-    // $data['rsk'] = $this->n_rsk;
-    // $data['akun'] = $this->c_akun;
-    // $data['akun'] = $this->n_akun;
-    // $data['tapd_rsk'] = $this->v_tapd_rsk;
-    // $data['rsk_pen'] = $this->c_rsk_pen;
 
     return $data;
   }
