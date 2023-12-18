@@ -17,6 +17,7 @@ class TenantResource extends JsonResource
   {
     $data = [
       'slug' => $this->url,
+      'id' => $this->id,
       'name' => $this->name,
       'short_location' => $this->short_location,
       'description' => $this->description,

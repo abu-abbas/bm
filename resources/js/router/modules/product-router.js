@@ -49,7 +49,7 @@ export default function productRoutes({ header, footer }) {
                 isActive: true
               },
               {
-                label: 'Info Tenant',
+                label: 'Info Barang',
                 url: null,
                 isActive: false
               },
