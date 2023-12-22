@@ -100,7 +100,7 @@ const onHandleRemoveImage = (index) => {
 const handleSubmit = (values, { resetForm }) => {
   const isEdit = props.isEdit
   const msgText = isEdit
-    ? `Apakah Anda yakan untuk mengubah data ${ localData.value?.name } ?`
+    ? `Apakah Anda yakan untuk mengubah data ${values.name} ?`
     : `Apakah Anda yakin untuk menambahkan barang ${values.name} ?`
   const method = isEdit ? 'put' : 'post'
   const url = `backend.product.${ isEdit ? 'edit' : 'store' }`
@@ -234,33 +234,6 @@ const handleSubmit = (values, { resetForm }) => {
               </Field>
             </div>
           </div>
-
-          <!-- <div class="form-group row">
-            <label for="lokasi" class="col-sm-3 col-form-label">
-              Lokasi Singkat
-            </label>
-            <div class="col-sm-9">
-              <Field
-                v-slot="{ field, errorMessage }"
-                label="Lokasi singkat"
-                name="short_location"
-                rules="max:50"
-              >
-                <input
-                  id="lokasi"
-                  v-bind="field"
-                  type="text"
-                  class="form-control"
-                  placeholder="Masukkan lokasi singkat tenant"
-                >
-                <span class="form-text text-muted fs-nano">Contoh: Jakarta Pusat</span>
-                <div v-if="errorMessage" class="form-text text-danger fs-nano">
-                  {{ errorMessage }}
-                </div>
-              </Field>
-            </div>
-          </div> -->
-
           <div class="form-group row">
             <label for="deskripsi" class="col-sm-3 col-form-label">
               Deskripsi
