@@ -140,16 +140,16 @@ class ProductController extends Controller
       ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    if ($request->has('logo')) {
-      // upload logo
-      [$response, $error] = $this->product->uploadFile($response, $request->file('logo'));
-      if (!is_null($error)) {
-        return response()->json([
-          'status' => 'error',
-          'message' => $error
-        ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-      }
-    }
+    // if ($request->has('logo')) {
+    //   // upload logo
+    //   [$response, $error] = $this->product->uploadFile($response, $request->file('logo'));
+    //   if (!is_null($error)) {
+    //     return response()->json([
+    //       'status' => 'error',
+    //       'message' => $error
+    //     ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+    //   }
+    // }
 
     $message = $request->_method == 'put' ? 'diubah' : 'ditambahkan';
     return response()->json([
