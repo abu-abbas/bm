@@ -3,15 +3,23 @@
 namespace App\Repositories;
 
 use App\Models\Budget;
+use App\Models\Transaction;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Contracts\BudgetRepositoryInterface;
 
 class BudgetRepository implements BudgetRepositoryInterface
 {
   protected $budget;
+  protected $transaction;
 
-  public function __construct(Budget $budget)
-  {
+  public function __construct(
+    Budget $budget,
+    Transaction $transaction,
+  ) {
     $this->budget = $budget;
+    $this->transaction = $transaction;
   }
 
   /**
@@ -44,5 +52,45 @@ class BudgetRepository implements BudgetRepositoryInterface
       ->orderByRaw('1, 2')
       ->distinct()
       ->get();
+  }
+
+  /**
+   * Add value of interest
+   *
+   * @param \Illuminate\Http\Request $request
+   * @return array [response, error]
+   */
+  public function addVoi(Request $request): array
+  {
+    $error = null;
+    $response = null;
+
+    try {
+      //
+    } catch (\Throwable $th) {
+      $error = 'Terjadi kesalahan saat proses tambah ketertarikan. Silakan hubungi Admin untuk info lebih lanjut';
+      Log::error($error, [
+        'payload' => [
+          'request' => $request->toArray(),
+          'error' => [
+            'message' => $th->getMessage(),
+          ]
+        ]
+      ]);
+    }
+
+    return [$response, $error];
+  }
+
+  /**
+   * Create and return an un-saved model instance
+   *
+   * @param array $attributes
+   * @param array $attributes
+   * @return \Illuminate\Database\Eloquent\Model
+   */
+  public function make(array $attributes, $model = 'budget'): Model
+  {
+    return $this->{$model}->make($attributes);
   }
 }

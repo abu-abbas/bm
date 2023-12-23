@@ -23,15 +23,15 @@ class Transaction extends Model
     });
   }
 
-  /**
-   * Scope a query by given url
-   *
-   * @param \Illuminate\Database\Eloquent\Builder $query
-   * @param string $username
-   * @return void
-   */
-  public function scopeByUsername(Builder $query, $username): void
-  {
-    $query->where('username', $username);
-  }
+  // /**
+  //  * Scope a query by given url
+  //  *
+  //  * @param \Illuminate\Database\Eloquent\Builder $query
+  //  * @param string $username
+  //  * @return void
+  //  */
+  // public function scopeByUsername(Builder $query, $username): void
+  // {
+  //   $query->where('username', $username);
+  // }
 }

@@ -118,6 +118,7 @@ class LoginController extends Controller
     }
 
     $attemp = $this->attemptLogin($request);
+
     if ($attemp) {
       if ($request->hasSession()) {
         $request->session()->put('auth.password_confirmed_at', time());
