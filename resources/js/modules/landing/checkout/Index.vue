@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { defineRule, Field, Form as VeeForm } from 'vee-validate'
-import { _, _http, _route, _settings, _redirectToLogin } from '@/js/utils/common.js'
+import { _, _http, _route, _settings, _redirectToLogin, _alert, _confirm } from '@/js/utils/common.js'
 
 import BottomSheet from '@/js/components/BottomSheet.vue'
 import Select from '@/js/components/budget/Select.vue';
@@ -144,6 +144,65 @@ watch(
     }
   }
 )
+
+const onHandleSubmitButton = async () => {
+  const { valid } = await formRef.value.validate()
+
+  if (!valid) return
+
+  _confirm(
+    {
+      title: `Buat ketertarikan`,
+      text: `Apakah Anda yakin untuk membuat ketertarikan ini?`,
+      icon: 'question',
+    },
+    () => _http.post(
+      _route('backend.budget.voi'),
+      { form: formRef.value.getValues() },
+    )
+      .then(res => res)
+      .catch(error => {
+        let code = error.response.status
+        let message = error.response.data.message
+
+        if ([409, 417, 500].includes(code)) {
+          _alert.showValidationMessage(`${message}`)
+          return
+        }
+
+        if (code == '422') {
+          const errors = error.response.data.errors
+          message = Object.keys(errors).map(key => {
+            return Array.isArray(errors[key])
+              ? errors[key].join(', ')
+              : errors[key]
+          }).join(', ')
+
+          _alert.showValidationMessage(`${message}`)
+          return
+        }
+      })
+  )
+    .then(({ value, isConfirmed, isDismissed }) => {
+      // do nothing
+      if (isDismissed) return false
+
+      // show response
+      if (isConfirmed && value.data.status == 'success') {
+        _alert.fire({
+          title: 'Tambah ketertarikan',
+          text: value.data.message,
+          icon: 'success'
+        })
+
+        console.log({ value, isConfirmed, isDismissed });
+
+        // resetForm()
+        // emits('submit', value.data?.data)
+        // onHandleHide()
+      }
+    })
+}
 
 onMounted(() => {
   fetchBudget()
@@ -304,10 +363,12 @@ onMounted(() => {
         </div>
 
         <button
+          type="button"
           :class="{
             'btn btn-primary btn-block': true,
             'disabled': errors
           }"
+          @click="onHandleSubmitButton"
         >
           Simpan
         </button>

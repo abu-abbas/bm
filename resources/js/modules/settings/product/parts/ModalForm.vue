@@ -347,7 +347,7 @@ const handleSubmit = (values, { resetForm }) => {
                 v-slot="{ field, errorMessage }"
                 label="Nilai TKDN"
                 name="tkdn"
-                rules="required|min:3|max:5"
+                rules="required|numeric"
               >
                 <input
                   id="tkdn"

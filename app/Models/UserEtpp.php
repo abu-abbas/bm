@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserEtpp extends Model
 {
-  /**
-   * The connection name for the model.
-   *
-   * @var string|null
-   */
-  protected $connection = 'oracle';
+  // /**
+  //  * The connection name for the model.
+  //  *
+  //  * @var string|null
+  //  */
+  // protected $connection = 'oracle';
 
   /**
    * The primary key for the model.

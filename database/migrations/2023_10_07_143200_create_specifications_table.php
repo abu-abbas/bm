@@ -14,8 +14,8 @@ return new class extends Migration
     Schema::create('specifications', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('product_id')->comment('product_id from products table');
-      $table->string('label', 250)->comment('specification label');
-      $table->string('value', 2000)->comment('specification value');
+      $table->string('spec_label', 250)->comment('specification label');
+      $table->string('spec_value', 2000)->comment('specification value');
       $table->unsignedTinyInteger('order_no')->default(0)->comment('note order');
 
       // log

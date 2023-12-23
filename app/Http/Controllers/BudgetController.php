@@ -27,4 +27,9 @@ class BudgetController extends Controller
     return BudgetResources::collection($budget)
       ->additional(['success' => true]);
   }
+
+  public function voi(Request $request)
+  {
+    dd($request->toArray());
+  }
 }

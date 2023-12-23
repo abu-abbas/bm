@@ -41,7 +41,7 @@ class ProductRequest extends FormRequest
       'description' => ['required', 'max:2000'],
       'min_qty' => ['required', 'min:1', 'max:11'],
       'min_unit' => ['required', 'min:1', 'max:11'],
-      'tkdn' => ['required', 'min:3', 'max:5'],
+      'tkdn' => ['required', 'numeric'],
       'price' => ['required', 'min:1', 'max:200'],
       'condition' => ['required'],
       'pict.*' => ['required', File::types($allowedMimes)->max(5000)],
