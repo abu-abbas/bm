@@ -17,7 +17,7 @@ return new class extends Migration
       $table->unsignedBigInteger('event_id')->nullable();
       $table->unsignedBigInteger('product_id');
       $table->string('username', 6);
-      $table->unsignedFloat('value_of_interest');
+      $table->unsignedFloat('value_of_interest', 20);
       $table->string('nama', 100);
       $table->string('nip', 18);
       $table->string('kojab', 6);
@@ -28,6 +28,7 @@ return new class extends Migration
       $table->string('kode_pd', 9);
       $table->string('perangkat_daerah', 100);
       $table->string('email', 100);
+      $table->string('sipkd', 10);
       $table->unsignedBigInteger('i_rsk_no');
       $table->unsignedBigInteger('i_idrskbas');
       $table->string('c_giat', 14);
@@ -35,8 +36,8 @@ return new class extends Migration
       $table->string('n_rsk', 400);
       $table->string('c_akun', 25);
       $table->string('n_akun', 400);
-      $table->unsignedFloat('v_dpa_rsk');
-      $table->unsignedFloat('v_tapd_rsk');
+      $table->unsignedFloat('v_dpa_rsk', 20);
+      $table->unsignedFloat('v_tapd_rsk', 20);
       $table->string('n_sumberdana', 150);
 
       // log

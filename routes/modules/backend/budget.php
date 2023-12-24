@@ -12,6 +12,5 @@ Route::group([
     'middleware' => ['auth'],
   ], function () {
     Route::get('/', [BudgetController::class, 'search'])->name('get');
-    Route::post('voi', [BudgetController::class, 'voi'])->name('voi');
   });
 });

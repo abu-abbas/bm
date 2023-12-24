@@ -183,7 +183,7 @@ const handleSubmit = (values, { resetForm }) => {
         <VeeForm ref="formRef" @submit="handleSubmit">
           <div class="form-group row">
             <label for="tenant" class="col-sm-3 col-form-label">
-              Tenan
+              Tenant
             </label>
             <div class="col-sm-9">
               <Field
@@ -197,7 +197,7 @@ const handleSubmit = (values, { resetForm }) => {
                   :options="optionsTenant"
                   :close-on-select="true"
                   :clear-on-select="false"
-                  placeholder="Pilih nama tenan"
+                  placeholder="Pilih nama tenant"
                   v-bind="field"
                   label="text"
                   track-by="text">

@@ -2,12 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
 
 class Transaction extends Model
 {
   use HasFactory, SoftDeletes;
+
+  /**
+   * The attributes that aren't mass assignable.
+   *
+   * @var array
+   */
+  protected $guarded = [];
 
   /**
    * The "booted" method of the model.
@@ -21,6 +29,11 @@ class Transaction extends Model
       $transaction->deleted_by = auth()->user()->username;
       $transaction->save();
     });
+  }
+
+  public function product() : HasOne
+  {
+    return $this->hasOne(Product::class, 'id', 'product_id');
   }
 
   // /**

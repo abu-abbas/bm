@@ -38,6 +38,11 @@ class Product extends Model implements HasMedia
     return $this->media()->one()->ofMany('id', 'max');
   }
 
+  public function hasTransaction() : HasOne
+  {
+    return $this->hasOne(Transaction::class);
+  }
+
   /**
    * Scope a query by given url
    *

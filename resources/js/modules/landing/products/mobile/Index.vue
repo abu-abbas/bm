@@ -1,9 +1,11 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { toRef } from 'vue'
+import { toRef, ref, onMounted, onBeforeUnmount } from 'vue'
+
+// helper
 import { _settings, _redirectToLogin, _http, _route } from '@/js/utils/common.js'
+
+// component
 import Checkout from '@/js/modules/landing/checkout/Index.vue'
-const redirectTo = (page) => window.location = page
 
 const props = defineProps({
   tenantSlug: {
@@ -23,6 +25,7 @@ const localProductSlug = toRef(props, 'productSlug')
 const btnLogout = ref(null)
 const productImages = ref([]);
 
+const redirectTo = (page) => window.location = page
 const onHandleLogout = function () {
   window.doLogout.apply(this, arguments)
 }
@@ -94,11 +97,6 @@ onBeforeUnmount(() => {
         <div class="detail">
           <span class="text-dark" style="white-space: pre-line;">{{ items.description}}</span>
         </div>
-        <!-- <div class="mt-4">
-          <b-button variant="success" size="lg" class="w-100">
-            <b-icon icon="cart" aria-hidden="true"></b-icon> Tambahkan Ke Keranjang
-          </b-button>
-        </div> -->
         <button
           v-if="!_settings.user"
           class="btn btn-lg btn-primary mt-3 mb-5"
@@ -110,6 +108,7 @@ onBeforeUnmount(() => {
 
         <Checkout
           v-else
+          v-model:product="items"
           :tenant-slug="localTenantSlug"
           :product-slug="localProductSlug"
           class="mt-3"

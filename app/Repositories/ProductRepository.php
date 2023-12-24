@@ -4,11 +4,10 @@ namespace App\Repositories;
 
 use App\Models\Product;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\{DB, Log};
 use Illuminate\Http\{Request, UploadedFile};
 use App\Repositories\Contracts\ProductRepositoryInterface;
-use Illuminate\Support\Facades\DB;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -230,21 +229,26 @@ class ProductRepository implements ProductRepositoryInterface
 
    public function singelProduct($tenant, $product): array
    {
-
       $error = null;
       $response = null;
 
       try {
+        $with = [
+          'tenant',
+          'media' => fn ($q) => $q->where('collection_name', 'product.logo'),
+        ];
+
         $response = $this->product
-          ->with(['tenant', 'media' => fn($q) => $q->where('collection_name', 'product.logo')])
+          ->with($with)
           ->where('url', $product)
           ->whereHas('tenant', fn($q) => $q->where('url', $tenant))
+          ->when(
+            auth()->check(),
+            fn($s) => $s->withCount([
+              'hasTransaction' => fn ($s) => $s->where('username', auth()->user()->username)
+            ]))
           ->first();
-          // ->select('products.name as nama_barang', 'b.name as nama_tenant', 'products.*')
-          // ->leftJoin('tenants as b', 'b.id', '=', 'products.tenant_id')
-          // ->where('b.url', $tenant)
-          // ->where('products.name', str_replace('-', ' ', $product))
-          // ->with('singleMedia')->first();
+
       } catch (\Throwable $th) {
         $error = 'Terjadi kesalah saat mengambil data master product. Silakan hubungi Admin untuk lebih lanjut.';
         Log::error($error, [

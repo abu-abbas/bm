@@ -246,7 +246,14 @@ class ProductController extends Controller
   }
 
   public function getProduct($tenant,$product){
-    [$response, $hasError] = $this->product->singelProduct($tenant,$product);
+    [$response, $hasError] = $this->product->singelProduct($tenant, $product);
+
+    if (!is_null($hasError)) {
+      return response()->json([
+        'status' => 'error',
+        'message' => $hasError
+      ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+    }
 
     return response()->json([
       'status' => 'success',

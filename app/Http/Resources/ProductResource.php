@@ -28,7 +28,8 @@ class ProductResource extends JsonResource
       'price' => $this->price,
       'condition' => $this->condition,
       'images' => [],
-      'landing_url' => sprintf('%s%s/%s', config('app.url'), $tenant?->url, $this->url)
+      'landing_url' => sprintf('%s%s/%s', config('app.url'), $tenant?->url, $this->url),
+      'has_transaction' => $this->has_transaction_count > 0,
     ];
 
     foreach ($this->media as $media) {

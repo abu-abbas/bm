@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Rules\CheckCaptcha;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Repositories\Contracts\UserRepositoryInterface;
-use App\Rules\CheckUserEtpp;
+use App\Rules\{CheckCaptcha, CheckUserEtpp};
 use Illuminate\Http\{JsonResponse, Request};
+use App\Repositories\Contracts\UserRepositoryInterface;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -175,7 +175,14 @@ class LoginController extends Controller
       return $response;
     }
 
-    $data = ['redirect' => $request->user_etpp ? '/' : ($request->intended ?? 'admin')];
+    $redirect = '/';
+    if ($request->user_etpp) {
+      $redirect = !Str::contains($request->intended, 'admin') ? ($request->intended ?? '/') : '/';
+    } else {
+      $redirect = $request->intended ?? 'admin';
+    }
+
+    $data = ['redirect' => $redirect];
 
     return $request->wantsJson()
       ? response()->json($data, JsonResponse::HTTP_ACCEPTED)

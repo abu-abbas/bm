@@ -1,8 +1,12 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { defineRule, Field, Form as VeeForm } from 'vee-validate'
+
+// helper
+import { formatCurrency } from '@/js/utils/formatter.js'
 import { _, _http, _route, _settings, _redirectToLogin, _alert, _confirm } from '@/js/utils/common.js'
 
+// component
 import BottomSheet from '@/js/components/BottomSheet.vue'
 import Select from '@/js/components/budget/Select.vue';
 
@@ -17,15 +21,30 @@ const props = defineProps({
     required: true,
     default: null
   },
+  product: {
+    type: [Object, null],
+    required: true,
+    default: () => {}
+  },
+})
+
+const emits = defineEmits(['update:product'])
+
+const local = computed(() => {
+  return {
+    tenantSlug: props.tenantSlug,
+    productSlug: props.productSlug,
+    product: props.product,
+  }
 })
 
 const showBottomSheet = ref(false)
-
 const formRef = ref(null)
 const refRsk = ref(null)
 const refAkun = ref(null)
 const refVoi = ref(null)
 const nilaiKetertarikan = ref(0)
+const hasTransaction = ref(false)
 
 const budget = ref({
   kegiatan: {
@@ -65,6 +84,8 @@ const onHandleClick = () => {
     _redirectToLogin()
     return
   }
+
+  if (local.value?.product?.has_transaction) return
 
   showBottomSheet.value = true
 }
@@ -157,8 +178,11 @@ const onHandleSubmitButton = async () => {
       icon: 'question',
     },
     () => _http.post(
-      _route('backend.budget.voi'),
-      { form: formRef.value.getValues() },
+      _route('backend.transaction.store'),
+      {
+        product: props.productSlug,
+        ...formRef.value.getValues()
+      },
     )
       .then(res => res)
       .catch(error => {
@@ -195,18 +219,16 @@ const onHandleSubmitButton = async () => {
           icon: 'success'
         })
 
-        console.log({ value, isConfirmed, isDismissed });
-
-        // resetForm()
-        // emits('submit', value.data?.data)
-        // onHandleHide()
+        emits('update:product', { ...local.value.product, has_transaction: true })
+        hasTransaction.value = true
+        showBottomSheet.value = false
       }
     })
 }
 
 onMounted(() => {
   fetchBudget()
-  console.log({ props })
+  hasTransaction.value = local.value?.product?.has_transaction
 })
 </script>
 
@@ -216,8 +238,14 @@ onMounted(() => {
       class="btn btn-lg btn-primary"
       @click="onHandleClick"
     >
-      <FontAwesomeIcon :icon="['fas', 'plus']" />
-      Ketertarikan
+
+      <template v-if="local?.product?.has_transaction || hasTransaction">
+        Lihat ketertarikan
+      </template>
+      <template v-else>
+        <FontAwesomeIcon :icon="['fas', 'plus']" />
+        Ketertarikan
+      </template>
     </button>
     <BottomSheet v-model:visible="showBottomSheet">
       <template #fixed-header><h2>Ajukan ketertarikan</h2></template>
@@ -310,8 +338,8 @@ onMounted(() => {
                   <strong class="text-sm text-muted">{{ optionProps.option.kode_akun }}</strong>
                   <span>{{ optionProps.option.nama_akun }}</span>
                   <div class="d-flex align-items-center mt-2">
-                    <strong class="text-sm fw-500">Nilai Anggaran:
-                      {{ parseFloat(optionProps.option.dpa_rsk || 0)?.toLocaleString('id-ID', { style: 'decimal' }) }}
+                    <strong class="text-sm fw-500">PAGU Anggaran:
+                      {{ formatCurrency(parseFloat(optionProps.option.dpa_rsk || 0)) }}
                     </strong>
                   </div>
                 </div>
@@ -322,8 +350,8 @@ onMounted(() => {
                   <strong class="text-sm text-muted fw-500">{{ optionProps.option.kode_akun }}</strong>
                   <span>{{ optionProps.option.nama_akun }}</span>
                   <div class="d-flex align-items-center mt-2">
-                    <strong class="text-sm fw-500">Nilai Anggaran:
-                      {{ parseFloat(optionProps.option.dpa_rsk || 0)?.toLocaleString('id-ID', { style: 'decimal' }) }}
+                    <strong class="text-sm fw-500">PAGU Anggaran:
+                      {{ formatCurrency(parseFloat(optionProps.option.dpa_rsk || 0)) }}
                     </strong>
                   </div>
                 </div>

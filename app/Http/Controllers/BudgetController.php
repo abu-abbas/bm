@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BudgetResources;
 use Illuminate\Http\Request;
+use App\Http\Resources\BudgetResources;
 use App\Repositories\Contracts\BudgetRepositoryInterface;
 
 class BudgetController extends Controller
@@ -26,10 +26,5 @@ class BudgetController extends Controller
 
     return BudgetResources::collection($budget)
       ->additional(['success' => true]);
-  }
-
-  public function voi(Request $request)
-  {
-    dd($request->toArray());
   }
 }

@@ -20,7 +20,7 @@ return new class extends Migration
       $table->string('minimum_qty', 100)->default(1);
       $table->string('minimum_unit', 100)->comment('product minimum unit');
       $table->unsignedFloat('tkdn_value')->default(0)->comment('tkdn value of product');
-      $table->unsignedFloat('price')->default(0)->comment('price product');
+      $table->unsignedFloat('price', 17, 2)->default(0)->comment('price product');
       $table->unsignedTinyInteger('condition')->default(1)->comment('product condition [1: baru, 2: bekas, 3: pre-order]');
       $table->unsignedTinyInteger('order_no')->default(0)->comment('product order');
 

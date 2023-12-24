@@ -1,9 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { _, _http, _route, _confirm, _alert } from '@/js/utils/common'
 import { useTenantStore } from '@/js/stores/settings/tenant-store.js'
 
+// helper
+import { formatCurrency } from '@/js/utils/formatter.js'
+import { _, _http, _route, _confirm, _alert } from '@/js/utils/common'
+
+// component
 import Spinner from '@/js/components/Spinner.vue'
 import ModalForm from '@/js/modules/settings/product/parts/ModalForm.vue'
 
@@ -28,7 +32,7 @@ const table = ref({
     },
     {
       key: 'tenant_name',
-      label: 'Nama Tenan',
+      label: 'Nama Tenant',
       thStyle: { textAlign: 'center', width: '20%' }
     },
     {
@@ -41,30 +45,30 @@ const table = ref({
       label: 'Deskripsi',
       thStyle: { textAlign: 'center' }
     },
-    {
-      key: 'minimum_qty',
-      label: 'Minimum QTY',
-      thStyle: { textAlign: 'center', width: '88px' }
-    },
-    {
-      key: 'minimum_unit',
-      label: 'Minimum Unit',
-      thStyle: { textAlign: 'center', width: '88px' }
-    },
-    {
-      key: 'tkdn_value',
-      label: 'Nilai TKDN',
-      thStyle: { textAlign: 'center', width: '88px' }
-    },
+    // {
+    //   key: 'minimum_qty',
+    //   label: 'Minimum QTY',
+    //   thStyle: { textAlign: 'center', width: '88px' }
+    // },
+    // {
+    //   key: 'minimum_unit',
+    //   label: 'Minimum Unit',
+    //   thStyle: { textAlign: 'center', width: '88px' }
+    // },
+    // {
+    //   key: 'tkdn_value',
+    //   label: 'Nilai TKDN',
+    //   thStyle: { textAlign: 'center', width: '88px' }
+    // },
     {
       key: 'price',
       label: 'Harga',
-      thStyle: { textAlign: 'center', width: '88px' }
-    },
-    {
-      key: 'condition',
-      label: 'Kondisi',
-      thStyle: { textAlign: 'center', width: '88px' }
+      thStyle: { textAlign: 'center', width: '88px' },
+      formatter: (value) => {
+        const tempValue = parseFloat(value || 0)
+
+        return formatCurrency(tempValue)
+      }
     },
   ],
   search: {
