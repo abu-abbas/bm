@@ -18,6 +18,20 @@ class TransactionRepository implements TransactionRepositoryInterface
   }
 
   /**
+   * Get list of transaction by given auth
+   *
+   * @return mixed
+   */
+  public function list() : mixed
+  {
+    return $this
+      ->transaction
+      ->with('product.tenant')
+      ->where('username', auth()->user()->username)
+      ->get();
+  }
+
+  /**
    * Create and return an un-saved model instance
    *
    * @param array $attributes

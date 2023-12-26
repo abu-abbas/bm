@@ -30,6 +30,17 @@ const router = createRouter({
       },
     },
     {
+      path: '/transaction',
+      name: 'landing.transaction',
+      components: {
+        default: () => import('@/js/modules/landing/transactions/Index.vue'),
+      },
+      meta: {
+        auth: true,
+        access: true,
+      },
+    },
+    {
       path: '/:slug',
       name: 'tenant.home',
       props: true,
@@ -54,7 +65,7 @@ const router = createRouter({
       },
     },
     {
-      path: '/404',
+      path: '/:pathName(.*)',
       name: 'landing.forbidden',
       component: () => import('@/js/modules/errors/404.vue'),
       meta: {

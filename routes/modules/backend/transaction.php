@@ -12,5 +12,6 @@ Route::group([
     'middleware' => ['auth'],
   ], function () {
     Route::post('/', [TransactionController::class, 'addVoi'])->name('store');
+    Route::get('list', [TransactionController::class, 'list'])->name('list');
   });
 });

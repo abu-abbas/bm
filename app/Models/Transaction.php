@@ -11,6 +11,15 @@ class Transaction extends Model
   use HasFactory, SoftDeletes;
 
   /**
+   * The attributes that should be cast.
+   *
+   * @var array
+   */
+  protected $casts = [
+    'trx_date' => 'datetime',
+  ];
+
+  /**
    * The attributes that aren't mass assignable.
    *
    * @var array

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\TransactionResources;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Repositories\Contracts\TransactionRepositoryInterface;
-use Illuminate\Http\JsonResponse;
 
 class TransactionController extends Controller
 {
@@ -20,6 +20,23 @@ class TransactionController extends Controller
   ) {
     $this->product = $product;
     $this->transaction = $transaction;
+  }
+
+  public function list()
+  {
+    $transactions = $this->transaction->list();
+    if (!$transactions) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Ketertarikan tidak ditemukan',
+      ], JsonResponse::HTTP_EXPECTATION_FAILED);
+    }
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'Ketertarikan berhasil ditemukan',
+      'data' => TransactionResources::collection($transactions)
+    ]);
   }
 
   public function addVoi(Request $request)

@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 interface TransactionRepositoryInterface
 {
   /**
+   * Get list of transaction by given auth
+   *
+   * @return mixed
+   */
+  public function list() : mixed;
+
+  /**
    * Create and return an un-saved model instance
    *
    * @param array $attributes
