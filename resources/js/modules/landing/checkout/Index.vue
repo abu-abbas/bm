@@ -1,4 +1,5 @@
 <script setup>
+import { useRouter } from 'vue-router'
 import { ref, onMounted, watch, computed } from 'vue'
 import { defineRule, Field, Form as VeeForm } from 'vee-validate'
 
@@ -30,6 +31,7 @@ const props = defineProps({
 
 const emits = defineEmits(['update:product'])
 
+const router = useRouter()
 const local = computed(() => {
   return {
     tenantSlug: props.tenantSlug,
@@ -85,7 +87,10 @@ const onHandleClick = () => {
     return
   }
 
-  if (local.value?.product?.has_transaction) return
+  if (local.value?.product?.has_transaction) {
+    router.push({ name: 'landing.transaction' })
+    return
+  }
 
   showBottomSheet.value = true
 }

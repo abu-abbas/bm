@@ -1,8 +1,10 @@
 <script setup>
-import { _settings, _redirectToLogin } from '@/js/utils/common.js'
+import { useRouter } from 'vue-router'
 import { ref, computed, onMounted, onBeforeMount } from 'vue'
 import { useTenant } from '@/js/modules/landing/tenant/tenant.js'
+import { _settings, _redirectToLogin } from '@/js/utils/common.js'
 
+import Spinner from '@/js/components/Spinner.vue'
 import NotFound from '@/js/modules/errors/404.vue'
 
 const props = defineProps({
@@ -13,8 +15,9 @@ const props = defineProps({
   },
 })
 
+const router = useRouter()
 const localSlug = computed(() => props.slug)
-const { data, found, onHandleSelectedProduct } = useTenant(localSlug.value)
+const { data, found, loading, onHandleSelectedProduct } = useTenant(localSlug.value)
 const needSticky = ref(null)
 
 const onHandleScroll = () => {
@@ -28,7 +31,7 @@ const onHandleCartShoppingClick = () => {
     return
   }
 
-  // baru redirect ke cart-shopping
+  return router.push({ name: 'landing.transaction' })
 }
 
 onMounted(() => document.addEventListener('scroll', onHandleScroll))
@@ -39,7 +42,10 @@ onBeforeMount(() => document.removeEventListener('scroll', onHandleScroll))
   <div class="root-wrapper tenant-page-for-mobile-wrapper">
     <div class="page-wrapper">
       <header class="fixed-header">
-        <div class="button-wrapper">
+        <div
+          @click="$router.push({ name: 'landing.home' })"
+          class="button-wrapper"
+        >
           <div class="d-flex justify-content-center align-items-center">
             <FontAwesomeIcon :icon="['fas', 'arrow-left']" />
           </div>
@@ -92,8 +98,9 @@ onBeforeMount(() => document.removeEventListener('scroll', onHandleScroll))
         </div>
       </div>
     </div>
-    <div class="content-wrapper">
-      <template v-if="found">
+    <Spinner v-if="loading" class="mt-5" />
+    <div v-else class="content-wrapper">
+      <div v-if="found" class="inner-content-wrapper">
         <div ref="needSticky" class="tenant-information-wrapper">
           <div class="shop-logo d-block">
             <div class="intrinsic w-100 h-100">
@@ -131,7 +138,7 @@ onBeforeMount(() => document.removeEventListener('scroll', onHandleScroll))
             </div>
           </div>
         </div>
-      </template>
+      </div>
       <NotFound v-else class="px-3" />
     </div>
   </div>

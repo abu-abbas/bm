@@ -91,6 +91,14 @@ body {
           }
         }
 
+        .single-header-action-wrapper {
+          display: grid;
+          -webkit-box-align: center;
+          align-items: center;
+          grid-template-rows: 36px;
+          grid-template-columns: repeat(1, 36px);
+        }
+
         .header-action-wrapper {
           display: grid;
           -webkit-box-align: center;
