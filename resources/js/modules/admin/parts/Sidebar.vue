@@ -67,6 +67,19 @@ import { _settings } from '@/js/utils/common'
             </a>
           </li>
         </router-link>
+        <router-link
+          v-slot="{ href, navigate, isActive }"
+          :to="{ name: 'settings.event' }"
+          custom
+          active-class="active"
+        >
+          <li :class="{ 'active': isActive }">
+            <a :href="href" class="nav-link" @click="navigate">
+              <FontAwesomeIcon :icon="['fas', 'calendar']" />
+              <span>Master Event</span>
+            </a>
+          </li>
+        </router-link>
       </ul>
     </aside>
   </div>

@@ -1,1 +1,0 @@
-import{r as e,c as n,fo as o,fr as c,o as s}from"./vee-validate-i18n.esm-b9e812f9.js";import{_ as a}from"./_plugin-vue_export-helper-c27b6911.js";const _={};function i(m,f){const r=e("section-header"),t=e("router-view");return s(),n(c,null,[o(r,{title:"Master Users"}),o(t)],64)}const d=a(_,[["render",i]]);export{d as default};

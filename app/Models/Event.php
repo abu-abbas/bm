@@ -37,11 +37,11 @@ class Event extends Model implements HasMedia
   protected static function booted(): void
   {
     /**
-     * Handle the Tenant "deleted" event.
+     * Handle the Event "deleted" event.
      */
-    static::deleted(function (Tenant $tenant) {
-      $tenant->deleted_by = auth()->user()->username;
-      $tenant->save();
+    static::deleted(function (Event $event) {
+      $event->deleted_by = auth()->user()->username;
+      $event->save();
     });
   }
 
@@ -55,40 +55,5 @@ class Event extends Model implements HasMedia
   public function scopeByUrl(Builder $query, $url): void
   {
     $query->where('url', $url);
-  }
-
-  /**
-   * Get notes for the tenant.
-   */
-  public function notes() : HasMany
-  {
-    return $this->hasMany(Note::class);
-  }
-
-  /**
-   * Get products for the tenant.
-   */
-  public function products() : HasMany
-  {
-    return $this->hasMany(Product::class, 'tenant_id', 'id');
-  }
-
-  /**
-   * To generate that thumbnail
-   *
-   */
-  public function registerMediaConversions(Media $media = null) : void
-  {
-    $this
-      ->addMediaConversion('thumb')
-      ->fit(Manipulations::FIT_CROP, 100, 100);
-  }
-
-  /**
-   * Get the user's max id logo.
-   */
-  public function singleMedia()
-  {
-    return $this->media()->one()->ofMany('id', 'max');
   }
 }
