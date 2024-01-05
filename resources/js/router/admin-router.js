@@ -8,6 +8,7 @@ const Footer = () => import('@/js/modules/admin/parts/Footer.vue')
 import tenantRouter from '@/js/router/modules/tenant-router'
 import productRouter from '@/js/router/modules/product-router'
 import userRouter from '@/js/router/modules/user-router'
+import eventRouter from '@/js/router/modules/event-router'
 
 const router = createRouter({
   history: createWebHistory('admin'),
@@ -45,6 +46,10 @@ const router = createRouter({
       footer: Footer
     }),
     ...userRouter({
+      header: Header,
+      footer: Footer
+    }),
+    ...eventRouter({
       header: Header,
       footer: Footer
     }),
