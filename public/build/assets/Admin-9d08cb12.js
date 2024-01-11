@@ -1,1 +1,0 @@
-import{c as s,o as a,fr as o,fp as e}from"./vee-validate-i18n.esm-b9e812f9.js";import{_ as t}from"./_plugin-vue_export-helper-c27b6911.js";const c={},n=e("div",{class:"section-header"},[e("h1",null,"Dashboard")],-1),r=e("div",{class:"section-body"}," Selamat datang :) ",-1);function d(_,i){return a(),s(o,null,[n,r],64)}const m=t(c,[["render",d]]);export{m as default};

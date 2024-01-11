@@ -25,7 +25,6 @@ return new class extends Migration
             $table->string('created_by', 100)->nullable();
             $table->string('updated_by', 100)->nullable();
             $table->string('deleted_by', 100)->nullable();
-            $table->timestamps(); // Laravel's default 'created_at' and 'updated_at' fields
             $table->softDeletes();
 
             // Add unique constraint to ensure only one published event
