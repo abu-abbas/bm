@@ -74,5 +74,5 @@ interface ProductRepositoryInterface
    * @param Request $request
    * @return array
    */
-  public function singelProduct($product,$product) : array;
+  public function singelProduct($tenant, $product) : array;
 }

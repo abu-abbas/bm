@@ -135,7 +135,7 @@
       "resources/js/modules/dashboard/Admin.vue",
       "resources/js/modules/errors/404.vue"
     ],
-    "file": "assets/admin-acfc7350.js",
+    "file": "assets/admin-2dd3a429.js",
     "imports": [
       "_vee-validate-i18n.esm-2681c40c.js",
       "_vue-multiselect.esm-3fb3c5c8.js"
@@ -186,7 +186,7 @@
     "src": "resources/js/modules/admin/parts/Footer.vue"
   },
   "resources/js/modules/admin/parts/Header.vue": {
-    "file": "assets/Header-50df6282.js",
+    "file": "assets/Header-896ab306.js",
     "imports": [
       "_vee-validate-i18n.esm-2681c40c.js",
       "_avatar-1-0867f404.js",
@@ -325,7 +325,7 @@
     "css": [
       "assets/Index-802c8dcb.css"
     ],
-    "file": "assets/Index-9b9165e3.js",
+    "file": "assets/Index-787bc99b.js",
     "imports": [
       "_vee-validate-i18n.esm-2681c40c.js",
       "_Spinner-2f794a27.js"
