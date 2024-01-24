@@ -24,7 +24,7 @@
     'resources/js/app/landing.js',
   ])
 </head>
-<body class="bg-white">
+<body class="lazy_icons btnt4_style_2 zoom_tp_2 css_scrollbar template-index js_search_true cart_pos_side kalles_toolbar_true hover_img2 swatch_style_rounded swatch_list_size_small label_style_rounded wrapper_full_width header_full_true header_sticky_true hide_scrolld_true des_header_5 h_transparent_true prs_bordered_grid_1 search_pos_full lazyload js_search_type">
   <div id="app">
     @yield('content')
   </div>
