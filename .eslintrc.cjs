@@ -13,10 +13,10 @@ module.exports = {
     'vue/require-default-prop': 'off',
     'vue/html-indent': ['error', 2],
     'vue/singleline-html-element-content-newline': 0,
-    'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+    // 'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     'vue/multi-word-component-names': 'off',
   },
-  ignorePatterns: ['vendor/*', 'theme/*'],
+  ignorePatterns: ['vendor/*', 'theme/*', 'resources/js/kalles/*'],
   globals: {
     _: true,
   },
