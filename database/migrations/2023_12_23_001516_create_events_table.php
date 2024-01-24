@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('event_name', 255)->nullable();
             $table->string('event_header', 255)->nullable();
             $table->string('event_subheader', 255)->nullable();
+            $table->string('url', 255)->comment('event url');
             $table->dateTime('start_at');
             $table->dateTime('finish_at');
             $table->string('location', 255)->nullable();

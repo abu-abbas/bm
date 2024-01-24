@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\{Request, UploadedFile};
 
 
-interface EventRepositoryInterface
+interface PivotRepositoryInterface
 {
   /**
    * Get list data a complaint of model and persist them to the database
@@ -17,15 +17,7 @@ interface EventRepositoryInterface
   public function list(Request $request): array;
 
   /**
-   * Find a model by its primary key.
-   *
-   * @param mixed $url
-   * @return Model|null
-   */
-  public function findBySlug($url): Model|null;
-
-  /**
-   * Find Event By ID
+   * Find Pivot By ID
    *
    * @param \Illuminate\Http\Request $eloquentModel
    * @return array <response, error>
@@ -41,28 +33,11 @@ interface EventRepositoryInterface
   public function make(array $attributes): Model;
 
   /**
-   * Create or update a event of model and persist them to the database
+   * Create or update a Pivot of model and persist them to the database
    *
    * @param \Illuminate\Database\Eloquent\Model $eloquentModel
    * @param string $mode
    * @return array <response, error>
    */
   public function saveOrEdit(Model $eloquentModel, $mode = 'insert'): array;
-
-  /**
-   * Drop Event and persist to database
-   *
-   * @param Model $eloquestModel
-   * @return array [response, error]
-   */
-  public function drop(Model $eloquestModel): array;
-
-  /**
-   * Fill the model with an array of attributes.
-   *
-   * @param \Illuminate\Database\Eloquent\Model $eloquentModel
-   * @param array $attributes
-   * @return \Illuminate\Database\Eloquent\Model
-   */
-  public function fill(Model $eloquentModel, array $attributes): Model;
 }

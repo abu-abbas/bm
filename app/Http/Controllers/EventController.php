@@ -45,6 +45,7 @@ class EventController extends Controller
   {
     $request->validated();
     $event = $this->event->make([
+      'url' => Str::slug($request->event_name),
       'event_name' => $request->event_name,
       'event_header' => $request->event_header,
       'event_subheader' => $request->event_subheader,

@@ -50,7 +50,6 @@ const onHandleShown = () => nextTick(() => {
 const onHandleHide = () => emits('update:visible', false)
 
 const handleSubmit = (values, { resetForm }) => {
-  console.log((values));
   const isEdit = props.isEdit
   const msgText = isEdit
     ? `Apakah Anda yakan untuk mengubah data event ${ localData.value?.event_name } ?`
