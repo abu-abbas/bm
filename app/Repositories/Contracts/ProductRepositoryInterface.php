@@ -12,9 +12,9 @@ interface ProductRepositoryInterface
    * Find a model by its primary key.
    *
    * @param mixed $url
-   * @return Model|null
+   * @return Model
    */
-  public function findBySlug($url): Model|null;
+  public function findBySlug($url): Model;
 
   /**
    * Create and return an un-saved model instance
