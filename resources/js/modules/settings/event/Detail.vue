@@ -316,7 +316,6 @@ const fetchEvent = async () => {
 
         <ModalForm v-model:visible="modalVisible" :init-data="initData" :tenant-event="tenantEvent" :event-id="eventId" :is-edit="false" @submit="onHandleSubmit" />
       </el-tab-pane>
-      <el-tab-pane label="Scheduler">Scheduler</el-tab-pane>
     </el-tabs>
 
   </div>
