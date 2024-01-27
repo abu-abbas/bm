@@ -14,6 +14,11 @@ const props = defineProps({
     required: false,
     default: () => { },
   },
+  eventId: {
+    type: [String, null],
+    required: false,
+    default: () => { },
+  },
   tenantEvent: {
     type: [Object, null],
     required: false,
@@ -35,7 +40,7 @@ const emits = defineEmits(['update:visible', 'submit'])
 const componentId = Math.random().toString(36).substring(2, 9)
 const localVisible = computed(() => props.visible)
 const localData = computed(() => props.initData)
-const localTenantEvent = computed(() => props.tenantEvent)
+// const localDataTenantEvent = computed(() => props.tenantEvent)
 const formRef = ref(null)
 const optionsTenant = ref([]);
 const selectedTenant = ref([]);
@@ -62,7 +67,9 @@ const fetchDataTenantFromAPI = async () => {
 };
 
 const onHandleShown = () => nextTick(() => {
-  selectedTenant.value = optionsTenant.value.filter(option => localTenantEvent.value.includes(option.value));
+  // if (localDataTenantEvent.value) {
+  //   selectedTenant.value = optionsTenant.value.filter(option => localDataTenantEvent.value.includes(option.value));
+  // }
 })
 const onHandleHide = () => emits('update:visible', false)
 
@@ -89,7 +96,7 @@ const handleSubmit = (values, { resetForm }) => {
     },
     () => _http.post(
       _route(url),
-      { ...values, '_method': method, id: localData.value?.id },
+      { ...values, '_method': method, id: props.eventId },
       { headers: { 'Content-Type': 'multipart/form-data' } }
     )
       .then(res => res)
@@ -128,6 +135,7 @@ const handleSubmit = (values, { resetForm }) => {
         })
 
         resetForm()
+        emits('submit', value.data?.data)
         onHandleHide()
       }
     })

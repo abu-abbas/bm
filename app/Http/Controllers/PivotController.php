@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
-use App\Http\Requests\PivotRequest;
 use App\Http\Requests\TenantInEventRequest;
 use App\Http\Resources\PivotResource;
+use App\Models\Event;
+use App\Models\Tenant;
 use Illuminate\Http\{JsonResponse, Request};
 use App\Repositories\Contracts\PivotRepositoryInterface;
 
 class PivotController extends Controller
 {
   protected $pivot;
+  protected $event;
 
-  public function __construct(PivotRepositoryInterface $pivot)
+  public function __construct(PivotRepositoryInterface $pivot, Event $event)
   {
     $this->pivot = $pivot;
+    $this->event = $event;
   }
 
   public function list(Request $request)
@@ -45,15 +47,43 @@ class PivotController extends Controller
   {
     $request->validated();
 
-    foreach ($request['tenant'] as $pivotItem) {
-      $pivot = $this->pivot->make([
-        'key_1' => $request['id'],
-        'key_2' => $pivotItem['value'],
-        'type_of_pivot' => 'tenant_event',
-      ]);
+    $event = Event::find($request['id']);
 
-      [$response, $error] = $this->pivot->saveOrEdit($pivot);
+    $clientIds = [];
+    foreach ($request['tenant'] as $pivotItem) {
+      $clientIds[$pivotItem['value']] = ['type_of_pivot' => 'tenant_event'];
     }
+
+    $response = $event->tenants()->sync($clientIds);
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'Data berhasil ditambahkan',
+      'data' => new PivotResource($response)
+    ]);
+  }
+
+  public function drop(TenantInEventRequest $request)
+  {
+    $request->validated();
+
+    $event = Event::find($request->id);
+
+    if (!$event) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Event tidak ditemukan.'
+      ], JsonResponse::HTTP_EXPECTATION_FAILED);
+    }
+
+    if (!$event->tenants()) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Tenant tidak ditemukan untuk event ini.'
+      ], JsonResponse::HTTP_EXPECTATION_FAILED);
+    }
+
+    [, $error] = $event->tenants()->detach($request->tenant_id);
 
     if (!is_null($error)) {
       return response()->json([
@@ -64,8 +94,7 @@ class PivotController extends Controller
 
     return response()->json([
       'status' => 'success',
-      'message' => 'Data berhasil ditambahkan'
+      'message' => 'Data berhasil dihapus',
     ]);
   }
-
 }

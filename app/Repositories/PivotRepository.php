@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Event;
 use App\Models\Pivot;
 use App\Repositories\Contracts\PivotRepositoryInterface;
 use Illuminate\Support\Facades\Log;
@@ -11,9 +12,11 @@ use Illuminate\Http\{Request};
 class PivotRepository implements PivotRepositoryInterface
 {
   protected $pivot;
+  protected $event;
 
-  public function __construct(Pivot $pivot) {
+  public function __construct(Pivot $pivot, Event $event) {
     $this->pivot = $pivot;
+    $this->event = $event;
   }
 
   public function list(Request $request): array
@@ -21,10 +24,16 @@ class PivotRepository implements PivotRepositoryInterface
     $error = null;
     $response = null;
 
-    try {
-      $query = $this->pivot->where('key_1', $request['id']);
+    $findId = $this->event->byUrl($request->id)->first();
 
-      $response = $query->get();
+    try {
+      $perPage = $request->limit ?? $this->pivot->getPerPage();
+      $event = Event::find($findId->id);
+      $query = $event->tenants;
+
+      $response = $request->fetch_first
+        ? $query->first()
+        : $query->paginate($perPage);
     } catch (\Throwable $th) {
       $error = 'Terjadi kesalah saat mengambil data master Pivot. Silakan hubungi Admin untuk lebih lanjut.';
       Log::error($error, [
@@ -73,7 +82,6 @@ class PivotRepository implements PivotRepositoryInterface
 
       $response = $eloquentModel;
     } catch (\Throwable $th) {
-      dd($th);
       $error = $th->getCode() == -99
         ? $th->getMessage()
         : 'Terjadi kesalahan pada server. Silakan hubungi Admin.';

@@ -16,7 +16,12 @@ class PivotResource extends JsonResource
   public function toArray(Request $request): array
   {
     $data = [
-      'id' => $this->key_2,
+      "id" => $this->id ?? null,
+      "name" => $this->name ?? null,
+      "url" => $this->url ?? null,
+      "pivot" =>$this->pivot ?? null,
+      "key_1" =>$this->key_1 ?? null,
+      "key_2" =>$this->key_2 ?? null,
     ];
     return $data;
   }
