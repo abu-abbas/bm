@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->string('url', 250)->comment('event url');
             $table->string('event_name', 255)->nullable();
             $table->string('event_header', 255)->nullable();
             $table->string('event_subheader', 255)->nullable();
@@ -23,7 +24,9 @@ return new class extends Migration
 
             // Additional fields
             $table->string('created_by', 100)->nullable();
+            $table->timestamp('created_at')->nullable();
             $table->string('updated_by', 100)->nullable();
+            $table->timestamp('updated_at')->nullable();
             $table->string('deleted_by', 100)->nullable();
             $table->softDeletes();
 

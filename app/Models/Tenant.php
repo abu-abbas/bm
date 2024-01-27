@@ -91,4 +91,10 @@ class Tenant extends Model implements HasMedia
   {
     return $this->media()->one()->ofMany('id', 'max');
   }
+
+  public function events()
+  {
+    // return $this->belongsToMany(Event::class, 'pivots', 'key_2', 'key_1')->where('pivots.type_of_pivot', $type);
+    return $this->belongsToMany(Event::class, 'pivots', 'key_2', 'key_1')->where('pivots.type_of_pivot', 'tenant_event');
+  }
 }

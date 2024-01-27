@@ -56,4 +56,9 @@ class Event extends Model implements HasMedia
   {
     $query->where('url', $url);
   }
+  
+  public function tenants()
+  {
+    return $this->belongsToMany(Tenant::class, 'pivots', 'key_1', 'key_2')->where('pivots.type_of_pivot', 'tenant_event');
+  }
 }
