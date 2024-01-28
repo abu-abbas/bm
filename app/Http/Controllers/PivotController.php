@@ -49,12 +49,12 @@ class PivotController extends Controller
 
     $event = Event::find($request['id']);
 
-    $clientIds = [];
+    $tenantId = [];
     foreach ($request['tenant'] as $pivotItem) {
-      $clientIds[$pivotItem['value']] = ['type_of_pivot' => 'tenant_event'];
+      $tenantId[$pivotItem['value']] = ['type_of_pivot' => 'tenant_event'];
     }
 
-    $response = $event->tenants()->sync($clientIds);
+    $response = $event->tenants()->sync($tenantId);
 
     return response()->json([
       'status' => 'success',

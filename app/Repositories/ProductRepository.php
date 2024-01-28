@@ -30,7 +30,7 @@ class ProductRepository implements ProductRepositoryInterface
    * @param mixed $url
    * @return Model
    */
-  public function findBySlug($url): Model
+  public function findBySlug($url): ?Model
   {
     return $this->product->byUrl($url)->first();
   }

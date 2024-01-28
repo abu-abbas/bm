@@ -6,16 +6,20 @@ use PDF;
 use Illuminate\Support\Str;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Models\Product;
+use App\Repositories\Contracts\CategoryRepositoryInterface;
 use Illuminate\Http\{JsonResponse, Request};
 use App\Repositories\Contracts\ProductRepositoryInterface;
 
 class ProductController extends Controller
 {
   protected $product;
+  protected $category;
 
-  public function __construct(ProductRepositoryInterface $product)
+  public function __construct(ProductRepositoryInterface $product, CategoryRepositoryInterface $category)
   {
     $this->product = $product;
+    $this->category = $category;
   }
 
   public function list(Request $request)
@@ -44,6 +48,27 @@ class ProductController extends Controller
   public function store(ProductRequest $request)
   {
     $request->validated();
+
+    $categoryId = [];
+
+    foreach ($request->category as $category) {
+      $isNewCategory = $this->category->findBySlug(Str::slug($category));
+
+      if ($isNewCategory == null) {
+        $categoryData = [
+          'name' => $category,
+          'created_by' => auth()->user()->username,
+          'url' => Str::slug($category),
+        ];
+
+        $category = $this->category->make($categoryData);
+        $inserNewCategory = $this->category->saveOrEdit($category);
+        $categoryId[$inserNewCategory[0]['id']] = ['type_of_pivot' => 'category_product'];
+      } else {
+        $getCategoryId = $this->category->findBySlug(Str::slug($category));
+        $categoryId[$getCategoryId->id] = ['type_of_pivot' => 'category_product'];
+      }
+    }
     $product = $this->product->make([
       'tenant_id' => $request->tenant['value'],
       'name' => $request->name,
@@ -59,6 +84,9 @@ class ProductController extends Controller
 
     [$response, $error] = $this->product->saveOrEdit($product);
 
+    $productModel = $this->product->findBySlug(Str::slug($request->name));
+    
+    $productModel->category()->sync($categoryId);
 
     if (!is_null($error)) {
       return response()->json([
@@ -90,12 +118,22 @@ class ProductController extends Controller
     $request->validated();
 
     $product = $this->product->findBySlug($request->slug);
+
     if (!$product) {
       return response()->json([
         'status' => 'error',
         'message' => 'Barang tidak ditemukan.'
       ], JsonResponse::HTTP_EXPECTATION_FAILED);
     }
+
+    if (!$product->category()) {
+      return response()->json([
+        'status' => 'error',
+        'message' => 'Kategori tidak ditemukan untuk produk ini.'
+      ], JsonResponse::HTTP_EXPECTATION_FAILED);
+    }
+
+    $product->category()->detach();
 
     [, $error] = $this->product->drop($product);
     if (!is_null($error)) {
