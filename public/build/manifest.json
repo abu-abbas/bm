@@ -32,11 +32,11 @@
       "_CropperImage-fffb8212.js"
     ]
   },
-  "_ModalForm-d5f36a70.js": {
+  "_ModalForm-76115dc4.js": {
     "css": [
       "assets/ModalForm-1ffbe9ea.css"
     ],
-    "file": "assets/ModalForm-d5f36a70.js",
+    "file": "assets/ModalForm-76115dc4.js",
     "imports": [
       "_vee-validate-i18n.esm-14720df6.js",
       "_CropperImage-fffb8212.js"
@@ -135,7 +135,7 @@
       "resources/js/modules/dashboard/Admin.vue",
       "resources/js/modules/errors/404.vue"
     ],
-    "file": "assets/admin-352fdb1f.js",
+    "file": "assets/admin-f281e157.js",
     "imports": [
       "_vee-validate-i18n.esm-14720df6.js",
       "_vue-multiselect.esm-aaf679ef.js"
@@ -252,7 +252,7 @@
     "assets": [
       "assets/avatar-1-f00bb589.png"
     ],
-    "file": "assets/Header-2ea575e6.js",
+    "file": "assets/Header-801a948b.js",
     "imports": [
       "_vee-validate-i18n.esm-14720df6.js",
       "resources/js/app/admin.js",
@@ -269,7 +269,7 @@
     "css": [
       "assets/Admin-24a00950.css"
     ],
-    "file": "assets/Admin-5092c4d9.js",
+    "file": "assets/Admin-cc5fc097.js",
     "imports": [
       "_vee-validate-i18n.esm-14720df6.js",
       "resources/js/app/admin.js",
@@ -407,25 +407,25 @@
     "src": "resources/js/modules/settings/event/Main.vue"
   },
   "resources/js/modules/settings/product/Detail.vue": {
-    "file": "assets/Detail-7975e6a0.js",
+    "file": "assets/Detail-fd144538.js",
     "imports": [
       "_vee-validate-i18n.esm-14720df6.js",
       "_vue-multiselect.esm-aaf679ef.js",
-      "_ModalForm-d5f36a70.js",
+      "_ModalForm-76115dc4.js",
       "_CropperImage-fffb8212.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/product/Detail.vue"
   },
   "resources/js/modules/settings/product/Index.vue": {
-    "file": "assets/Index-2031bb23.js",
+    "file": "assets/Index-cb102343.js",
     "imports": [
       "_vee-validate-i18n.esm-14720df6.js",
       "_vue-multiselect.esm-aaf679ef.js",
       "_tenant-store-48d15098.js",
       "_formatter-8fa69f9f.js",
       "_Spinner-e54ce62d.js",
-      "_ModalForm-d5f36a70.js",
+      "_ModalForm-76115dc4.js",
       "_CropperImage-fffb8212.js"
     ],
     "isDynamicEntry": true,
@@ -515,7 +515,7 @@
   },
   "resources/kalles/css/lds-sw.svg": {
     "file": "assets/lds-sw-5944ae61.svg",
-    "src": "resources/kalles/images/svg/lds-sw.svg"
+    "src": "resources/kalles/css/lds-sw.svg"
   },
   "resources/kalles/fonts/fakalles.eot": {
     "file": "assets/fakalles-e6fee5f8.eot",
@@ -695,7 +695,7 @@
   },
   "resources/kalles/images/svg/lds-sw.svg": {
     "file": "assets/lds-sw-5944ae61.svg",
-    "src": "resources/kalles/images/svg/lds-sw.svg"
+    "src": "resources/kalles/css/lds-sw.svg"
   },
   "resources/kalles/images/svg/lds-swl.svg": {
     "file": "assets/lds-swl-449b9fbc.svg",
