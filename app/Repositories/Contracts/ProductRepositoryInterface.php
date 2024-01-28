@@ -14,7 +14,7 @@ interface ProductRepositoryInterface
    * @param mixed $url
    * @return Model
    */
-  public function findBySlug($url): Model;
+  public function findBySlug($url): ?Model;
 
   /**
    * Create and return an un-saved model instance

@@ -16,7 +16,7 @@ module.exports = {
     // 'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     'vue/multi-word-component-names': 'off',
   },
-  ignorePatterns: ['vendor/*', 'theme/*', 'resources/js/kalles/*'],
+  ignorePatterns: ['vendor/*', 'theme/*', 'resources/kalles/*'],
   globals: {
     _: true,
   },
