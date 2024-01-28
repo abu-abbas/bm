@@ -12,9 +12,9 @@ interface ProductRepositoryInterface
    * Find a model by its primary key.
    *
    * @param mixed $url
-   * @return Model|null
+   * @return Model
    */
-  public function findBySlug($url): Model|null;
+  public function findBySlug($url): Model;
 
   /**
    * Create and return an un-saved model instance
@@ -42,7 +42,7 @@ interface ProductRepositoryInterface
   public function list(Request $request): array;
 
   /**
-   * Create or update a tenant of model and persist them to the database
+   * Create or update a product of model and persist them to the database
    *
    * @param \Illuminate\Database\Eloquent\Model $eloquentModel
    * @param string $mode
@@ -51,7 +51,7 @@ interface ProductRepositoryInterface
   public function saveOrEdit(Model $eloquentModel, $mode = 'insert'): array;
 
   /**
-   * Upload logo for tenant request
+   * Upload logo for product request
    *
    * @param \Illuminate\Database\Eloquent\Model $eloquentModel
    * @param \Illuminate\Http\UploadedFile $file
@@ -61,7 +61,7 @@ interface ProductRepositoryInterface
   public function uploadFile(Model $eloquentModel, UploadedFile $file, $deleteIfExist = true): array;
 
   /**
-   * Drop tenant and persist to database
+   * Drop product and persist to database
    *
    * @param Model $eloquestModel
    * @return array [response, error]
@@ -69,10 +69,10 @@ interface ProductRepositoryInterface
   public function drop(Model $eloquestModel) : array;
 
   /**
-   * Get product by tenant
+   * Get product by product
    *
    * @param Request $request
    * @return array
    */
-  public function singelProduct($tenant,$product) : array;
+  public function singelProduct($tenant, $product) : array;
 }

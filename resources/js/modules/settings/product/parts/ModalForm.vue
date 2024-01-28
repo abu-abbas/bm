@@ -60,10 +60,7 @@ const fetchDataFromAPI = async () => {
       value: item.id, // Replace 'value' with the actual property name you want to use
     }));
 
-    optionsTenant.value = optionData; // Update the options ref with the new options data
-    if (optionData.length > 0) {
-      selectedTenant.value = optionData[0].value; // Select the value of the first tenant
-    }
+    optionsTenant.value = optionData;
   } catch (error) {
     console.error('Error fetching data from the API:', error);
   }

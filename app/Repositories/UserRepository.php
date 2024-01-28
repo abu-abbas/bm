@@ -149,7 +149,7 @@ class UserRepository implements UserRepositoryInterface
   {
     $dataPegawai = null;
     if ($user->is_etpp) {
-      $dataPegawai = $this->getPegawaiData('181200');
+      $dataPegawai = $this->getPegawaiData($user->username);
     }
 
     session([
@@ -225,7 +225,7 @@ class UserRepository implements UserRepositoryInterface
       ])
       ->where('q1.nrk', $nrk)
       ->first();
-
+    // dd(getQueries($query));
     return $query;
   }
 

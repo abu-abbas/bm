@@ -126,7 +126,7 @@ class ProductController extends Controller
     $product = $this->product->fill($found, [
       'name' => $request->name,
       'description' => $request->description,
-      'minimimum_qty' => $request->min_qty,
+      'minimum_qty' => $request->min_qty,
       'minimum_unit' => $request->min_unit,
       'tkdn_value' => $request->tkdn,
       'price' => $request->price,
@@ -139,17 +139,6 @@ class ProductController extends Controller
         'message' => $error
       ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
-
-    // if ($request->has('logo')) {
-    //   // upload logo
-    //   [$response, $error] = $this->product->uploadFile($response, $request->file('logo'));
-    //   if (!is_null($error)) {
-    //     return response()->json([
-    //       'status' => 'error',
-    //       'message' => $error
-    //     ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-    //   }
-    // }
 
     $message = $request->_method == 'put' ? 'diubah' : 'ditambahkan';
     return response()->json([

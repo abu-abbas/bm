@@ -28,9 +28,9 @@ class ProductRepository implements ProductRepositoryInterface
    * Find a model by its url.
    *
    * @param mixed $url
-   * @return Model|null
+   * @return Model
    */
-  public function findBySlug($url): Model|null
+  public function findBySlug($url): Model
   {
     return $this->product->byUrl($url)->first();
   }
@@ -227,38 +227,38 @@ class ProductRepository implements ProductRepositoryInterface
    * @return array [response, error]
    */
 
-   public function singelProduct($tenant, $product): array
-   {
-      $error = null;
-      $response = null;
+  public function singelProduct($tenant, $product): array
+  {
+    $error = null;
+    $response = null;
 
-      try {
-        $with = [
-          'tenant',
-          'media' => fn ($q) => $q->where('collection_name', 'product.logo'),
-        ];
+    try {
+      $with = [
+        'tenant',
+        'media' => fn ($q) => $q->where('collection_name', 'product.logo'),
+      ];
 
-        $response = $this->product
-          ->with($with)
-          ->where('url', $product)
-          ->whereHas('tenant', fn($q) => $q->where('url', $tenant))
-          ->when(
-            auth()->check(),
-            fn($s) => $s->withCount([
-              'hasTransaction' => fn ($s) => $s->where('username', auth()->user()->username)
-            ]))
-          ->first();
+      $response = $this->product
+        ->with($with)
+        ->where('url', $product)
+        ->whereHas('tenant', fn($q) => $q->where('url', $tenant))
+        ->when(
+          auth()->check(),
+          fn($s) => $s->withCount([
+            'hasTransaction' => fn ($s) => $s->where('username', auth()->user()->username)
+          ]))
+        ->first();
 
-      } catch (\Throwable $th) {
-        $error = 'Terjadi kesalah saat mengambil data master product. Silakan hubungi Admin untuk lebih lanjut.';
-        Log::error($error, [
-          'payload' => [$product,$tenant],
-          'error' => [
-            'message' => $th->getMessage()
-          ]
-        ]);
-      }
+    } catch (\Throwable $th) {
+      $error = 'Terjadi kesalah saat mengambil data master product. Silakan hubungi Admin untuk lebih lanjut.';
+      Log::error($error, [
+        'payload' => [$product,$tenant],
+        'error' => [
+          'message' => $th->getMessage()
+        ]
+      ]);
+    }
 
-      return [$response, $error];
-   }
+    return [$response, $error];
+  }
 }
