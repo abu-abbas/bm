@@ -6,9 +6,9 @@ import { _settings, _redirectToLogin } from '@/js/utils/common.js'
 
 import Spinner from '@/js/components/Spinner.vue'
 import NotFound from '@/js/modules/errors/404.vue'
-import MobileToolbar from '../../parts/components/mobiletoolbar.vue'
-import MobileMenu from '../../parts/components/MobileMenu.vue'
-import Navbar from '../../parts/Components/Navbar.vue'
+import MobileToolbar from '@/js/modules/landing/parts/Components/MobileToolbar.vue'
+import MobileMenu from '@/js/modules/landing/parts/Components/MobileMenu.vue'
+import Navbar from '@/js/modules/landing/parts/Components/Navbar.vue'
 
 const props = defineProps({
   slug: {

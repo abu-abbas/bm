@@ -2,13 +2,14 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 import { _http, _route } from '@/js/utils/common.js'
-import Navbar from '../../parts/Components/Navbar.vue';
-import MobileToolbar from '../../parts/components/mobiletoolbar.vue';
-import MobileMenu from '../../parts/components/MobileMenu.vue';
-import Footer from '../../parts/components/Footer.vue';
-import breadcrumb from '../parts/_breadcrumb.vue';
-import productThumbnails from '../parts/_productThumbnails.vue';
-import productInfo from '../parts/_productInfo.vue';
+
+import Navbar from '@/js/modules/landing/parts/Components/Navbar.vue'
+import MobileToolbar from '@/js/modules/landing/parts/Components/MobileToolbar.vue'
+import MobileMenu from '@/js/modules/landing/parts/Components/MobileMenu.vue'
+import Footer from '@/js/modules/landing/parts/Components/Footer.vue'
+import breadcrumb from '@/js/modules/landing/products/parts/_breadcrumb.vue'
+import productThumbnails from '@/js/modules/landing/products/parts/_productThumbnails.vue'
+import productInfo from '@/js/modules/landing/products/parts/_productInfo.vue'
 import '@theme/kalles/assets/js/flickity.pkgd.min.js'
 
 const redirectTo = (page) => window.location = page
@@ -21,8 +22,6 @@ const breadcrumbName = ref({
   product: '',
   tenant: ''
 })
-
-
 
 const loadItem = async () => {
   try {
