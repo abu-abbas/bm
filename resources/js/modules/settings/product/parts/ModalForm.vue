@@ -24,6 +24,7 @@ const props = defineProps({
 })
 onMounted(() => {
   fetchDataFromAPI();
+  fetchDataCategoriesFromAPI();
 });
 
 const emits = defineEmits(['update:visible', 'submit'])
@@ -36,13 +37,14 @@ const nameInput = ref(null)
 const formRef = ref(null)
 const showPreviewImage = ref(false)
 const optionsTenant = ref([]);
+const optionsCategory = ref([]); 
 const selectedTenant = ref(null);
 const optionsCondition = ref([
   { text: 'Baru', value: '0' },
   { text: 'Bekas', value: '1' }
 ]);
 const selectedCondition = ref(null);
-
+const selectedCategory = ref([])
 // method
 
 const fetchDataFromAPI = async () => {
@@ -60,10 +62,27 @@ const fetchDataFromAPI = async () => {
       value: item.id, // Replace 'value' with the actual property name you want to use
     }));
 
-    optionsTenant.value = optionData; // Update the options ref with the new options data
-    if (optionData.length > 0) {
-      selectedTenant.value = optionData[0].value; // Select the value of the first tenant
-    }
+    optionsTenant.value = optionData;
+  } catch (error) {
+    console.error('Error fetching data from the API:', error);
+  }
+};
+
+const fetchDataCategoriesFromAPI = async () => {
+  try {
+    const response = await _http.get(
+      _route(
+        'backend.category.get',{}
+        )
+        )
+    .then(res => res);
+    const data = await response.data.data;
+    const optionData = data.map(item => ({
+      label: item.name,
+      value: item.url,
+    }));
+
+    optionsCategory.value = optionData;
   } catch (error) {
     console.error('Error fetching data from the API:', error);
   }
@@ -74,9 +93,7 @@ const onHandleShown = () => nextTick(() => {
     console.log(localData.value);
     selectedCondition.value = {value: localData.value.condition, text: localData.value.condition == 0 ? 'Baru' : 'Bekas'}
     selectedTenant.value = {value: localData.value.tenant_id, text: localData.value.tenant_name}
-    // formRef.value.setFieldValue('selectedTenant.value', localData.value.tenant_name)
     formRef.value.setFieldValue('name', localData.value.product_name)
-    // formRef.value.setFieldValue('short_location', localData.value.short_location)
     formRef.value.setFieldValue('description', localData.value.description)
     formRef.value.setFieldValue('min_qty', localData.value.minimum_qty)
     formRef.value.setFieldValue('min_unit', localData.value.minimum_unit)
@@ -162,6 +179,10 @@ const handleSubmit = (values, { resetForm }) => {
         })
 
         resetForm()
+        fetchDataCategoriesFromAPI()
+        selectedCategory.value = []
+        selectedCondition.value = []
+        selectedTenant.value = []
         emits('submit', value.data?.data)
         onHandleHide()
       }
@@ -228,6 +249,40 @@ const handleSubmit = (values, { resetForm }) => {
                   class="form-control"
                   placeholder="Masukkan nama barang"
                 >
+                <div v-if="errorMessage" class="form-text text-danger fs-nano">
+                  {{ errorMessage }}
+                </div>
+              </Field>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="category" class="col-sm-3 col-form-label">
+              Kategori
+            </label>
+            <div class="col-sm-9">
+              <Field
+                v-slot="{ field, errorMessage }"
+                label="Kategori barang"
+                name="category"
+                rules="required|min:3|max:200"
+              >
+                <el-select
+                  v-bind="field"
+                  v-model="selectedCategory"
+                  multiple
+                  filterable
+                  allow-create
+                  default-first-option
+                  :reserve-keyword="false"
+                  placeholder="Pilih atau ketik kategori"
+                >
+                  <el-option
+                    v-for="item in optionsCategory"
+                    :key="item.label"
+                    :label="item.label"
+                    :value="item.label"
+                  />
+                </el-select>
                 <div v-if="errorMessage" class="form-text text-danger fs-nano">
                   {{ errorMessage }}
                 </div>

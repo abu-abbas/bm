@@ -17,6 +17,14 @@ interface EventRepositoryInterface
   public function list(Request $request): array;
 
   /**
+   * Find a model by its primary key.
+   *
+   * @param mixed $url
+   * @return Model|null
+   */
+  public function findBySlug($url): Model|null;
+
+  /**
    * Find Event By ID
    *
    * @param \Illuminate\Http\Request $eloquentModel

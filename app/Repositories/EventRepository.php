@@ -44,6 +44,17 @@ class EventRepository implements EventRepositoryInterface
     return [$response, $error];
   }
 
+  /**
+   * Find a model by its url.
+   *
+   * @param mixed $url
+   * @return Model|null
+   */
+  public function findBySlug($url): Model|null
+  {
+    return $this->event->byUrl($url)->first();
+  }
+
   public function findById($id): Model|null
   {
     return $this->event->where('id', $id)->first();
@@ -78,7 +89,6 @@ class EventRepository implements EventRepositoryInterface
 
       $response = $eloquentModel;
     } catch (\Throwable $th) {
-      dd($th);
       $error = $th->getCode() == -99
         ? $th->getMessage()
         : 'Terjadi kesalahan pada server. Silakan hubungi Admin.';

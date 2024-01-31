@@ -1,13 +1,17 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { _, _http, _route, _confirm, _alert } from '@/js/utils/common'
 
 import Spinner from '@/js/components/Spinner.vue'
 import ModalForm from '@/js/modules/settings/event/parts/ModalForm.vue'
 import ModalFormEdit from '@/js/modules/settings/event/parts/ModalForm.vue'
+import { useEventStore } from '@/js/stores/settings/event-store.js'
 
 const refTable = ref(null)
 const modalVisible = ref(false)
+const router = useRouter()
+const eventStore = useEventStore()
 const modalVisibleEdit = ref(false)
 const initData = ref({})
 const table = ref({
@@ -145,6 +149,11 @@ const onHandleEdit = item => {
   initData.value = item
   modalVisibleEdit.value = true
 }
+
+const onHandleDetail = item => {
+  eventStore.setItemByUrl(item.slug, item)
+  router.push({ name: 'settings.event.detail', params: { slug: item.slug } })
+}
 </script>
 
 <template>
@@ -216,6 +225,13 @@ const onHandleEdit = item => {
               </template>
               <template #cell(action)="{ item }">
                 <div class="d-flex align-items-baseline justify-content-center">
+                  <b-button
+                    variant="link"
+                    class="text-info py-0 px-1 outline-none cursor-pointer"
+                    @click="onHandleDetail(item)"
+                  >
+                    <FontAwesomeIcon :icon="['fas', 'info-circle']" />
+                  </b-button>
                   <b-button
                     variant="link"
                     class="text-info py-0 px-1 outline-none cursor-pointer"

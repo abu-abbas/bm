@@ -54,4 +54,9 @@ class Product extends Model implements HasMedia
   {
     $query->where('url', $url);
   }
+
+  public function category()
+  {
+    return $this->belongsToMany(Category::class, 'pivots', 'key_1', 'key_2')->where('pivots.type_of_pivot', 'product_category');
+  }
 }

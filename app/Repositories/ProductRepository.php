@@ -28,9 +28,9 @@ class ProductRepository implements ProductRepositoryInterface
    * Find a model by its url.
    *
    * @param mixed $url
-   * @return Model|null
+   * @return Model
    */
-  public function findBySlug($url): Model|null
+  public function findBySlug($url): ?Model
   {
     return $this->product->byUrl($url)->first();
   }

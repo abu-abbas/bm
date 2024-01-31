@@ -17,6 +17,7 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
   },
   ignorePatterns: ['vendor/*', 'theme/*', 'resources/kalles/*','resources/js/modules/landing/products/*'],
+  // ignorePatterns: ['vendor/*', 'theme/*', 'resources/kalles/js/*'],
   globals: {
     _: true,
   },
