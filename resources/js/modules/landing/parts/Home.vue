@@ -1,36 +1,36 @@
 <script setup>
-  import Footer from './Components/Footer.vue'
-  import EventList from './Components/EventList.vue'
   import Navbar from './Components/Navbar.vue'
   import MainSlider from './Components/MainSlider.vue'
-  import Products from './Components/Products.vue'
-  import Blog from './Components/Blog.vue'
+  import Category from './Components/Category.vue'
+  import Footer from './Components/Footer.vue'
+  import MobileMenu from './Components/MobileMenu.vue'
+  import MobileToolbar from './Components/MobileToolbar.vue'
+
+  import '@theme/kalles/assets/js/flickity.pkgd.min.js'
+  // import '@theme/kalles/assets/js/photoswipe.min.js'
+  // import '@theme/kalles/assets/js/photoswipe-ui-default.min.js'
+
 </script>
 
 <template>
-  <Navbar />
   <!-- end header -->
+  <div id="nt_wrapper">
+    <Navbar />
+    <div id="nt_content">
 
-  <div id="nt_content">
+      <!-- main slide -->
+      <MainSlider />
+      <!-- end main slide -->
 
-    <!-- main slide -->
-    <MainSlider />
-    <!-- end main slide -->
-
-    <!-- category banner section -->
-    <EventList />
-    <!-- end category banner section -->
-
-    <!-- bestselling products-->
-    <Products />
-    <!-- end bestselling products-->
-
-    <!--blog post-->
-    <Blog />
-    <!--end blog post-->
+      <!-- category banner section -->
+      <Category />
+      <!-- end category banner section -->
 
 
+      <Footer />
+    </div>
   </div>
-  <Footer />
-  
+  <MobileMenu />
+  <MobileToolbar />
+
 </template>
