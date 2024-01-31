@@ -237,7 +237,6 @@ class ProductRepository implements ProductRepositoryInterface
         'tenant',
         'media' => fn ($q) => $q->where('collection_name', 'product.logo'),
       ];
-
       $response = $this->product
         ->with($with)
         ->where('url', $product)
