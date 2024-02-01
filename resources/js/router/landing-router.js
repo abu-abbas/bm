@@ -30,6 +30,17 @@ const router = createRouter({
       },
     },
     {
+      path: '/tandingan',
+      name: 'landing.home.tandingan',
+      components: {
+        default: () => import('@/js/modules/tandingan/Index.vue'),
+      },
+      meta: {
+        auth: false,
+        access: true,
+      },
+    },
+    {
       path: '/transaction',
       name: 'landing.transaction',
       components: {
