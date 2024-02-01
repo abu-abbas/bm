@@ -2,6 +2,9 @@
 import { _ } from '@/js/utils/common.js'
 import { ref, onMounted, onUnmounted } from 'vue'
 import Flickity from 'flickity'
+import { useInterface } from '@/js/modules/tandingan/interface.js'
+
+const kellesInterface = useInterface()
 
 const flickity = ref({
   ref: null,
@@ -15,6 +18,8 @@ const initializeFlickity = () => {
 
 const onHandleWindowResize = _.debounce(function (e) {
   console.log({ onHandleWindowResize: e })
+
+  kellesInterface.init()
 }, 250)
 
 onMounted(() => {
