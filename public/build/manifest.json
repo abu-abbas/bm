@@ -7,83 +7,117 @@
     "file": "assets/ModalForm-1ffbe9ea.css",
     "src": "ModalForm.css"
   },
-  "_CropperImage-fffb8212.js": {
-    "file": "assets/CropperImage-fffb8212.js",
+  "_CropperImage-6eb75076.js": {
+    "file": "assets/CropperImage-6eb75076.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js"
+      "_vee-validate-i18n.esm-1e13155f.js"
     ]
   },
-  "_IframeModal-505fd910.js": {
+  "_IframeModal-2abe70b5.js": {
     "css": [
       "assets/IframeModal-472b8fdd.css"
     ],
-    "file": "assets/IframeModal-505fd910.js",
+    "file": "assets/IframeModal-2abe70b5.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js"
+      "_vee-validate-i18n.esm-1e13155f.js"
     ]
   },
-  "_ModalForm-6d477577.js": {
+  "_ModalForm-081334f5.js": {
     "css": [
       "assets/ModalForm-1ffbe9ea.css"
     ],
-    "file": "assets/ModalForm-6d477577.js",
+    "file": "assets/ModalForm-081334f5.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_CropperImage-fffb8212.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_CropperImage-6eb75076.js"
     ]
   },
-  "_ModalForm-76115dc4.js": {
+  "_ModalForm-4238184a.js": {
     "css": [
       "assets/ModalForm-1ffbe9ea.css"
     ],
-    "file": "assets/ModalForm-76115dc4.js",
+    "file": "assets/ModalForm-4238184a.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_CropperImage-fffb8212.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_CropperImage-6eb75076.js"
     ]
   },
-  "_Spinner-e54ce62d.js": {
-    "file": "assets/Spinner-e54ce62d.js",
+  "_Spinner-767c0c24.js": {
+    "file": "assets/Spinner-767c0c24.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js"
+      "_vee-validate-i18n.esm-1e13155f.js"
     ]
   },
   "__plugin-vue_export-helper-c27b6911.js": {
     "file": "assets/_plugin-vue_export-helper-c27b6911.js"
   },
-  "_event-store-9dc99cd9.js": {
-    "file": "assets/event-store-9dc99cd9.js",
+  "_event-store-74c7850e.js": {
+    "file": "assets/event-store-74c7850e.js",
     "imports": [
-      "_vue-multiselect.esm-aaf679ef.js"
+      "_vue-multiselect.esm-6989bf67.js"
+    ]
+  },
+  "_footer-5421f854.js": {
+    "file": "assets/footer-5421f854.js",
+    "imports": [
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "__plugin-vue_export-helper-c27b6911.js"
     ]
   },
   "_formatter-8fa69f9f.js": {
     "file": "assets/formatter-8fa69f9f.js"
   },
-  "_index-d2a4ed2d.js": {
-    "file": "assets/index-d2a4ed2d.js",
+  "_index-1fd6a129.js": {
+    "file": "assets/index-1fd6a129.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js"
+      "_vee-validate-i18n.esm-1e13155f.js"
+    ]
+  },
+  "_interface-b7ccdac3.js": {
+    "file": "assets/interface-b7ccdac3.js",
+    "imports": [
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_jquery-72641f0b.js"
     ]
   },
   "_isMobile-b3e8a064.js": {
     "file": "assets/isMobile-b3e8a064.js"
   },
-  "_tenant-store-48d15098.js": {
-    "file": "assets/tenant-store-48d15098.js",
+  "_jquery-72641f0b.js": {
+    "file": "assets/jquery-72641f0b.js",
     "imports": [
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_vee-validate-i18n.esm-14720df6.js"
+      "_vee-validate-i18n.esm-1e13155f.js"
     ]
   },
-  "_vee-validate-i18n.esm-14720df6.js": {
-    "file": "assets/vee-validate-i18n.esm-14720df6.js"
-  },
-  "_vue-multiselect.esm-aaf679ef.js": {
-    "file": "assets/vue-multiselect.esm-aaf679ef.js",
+  "_mobilemenu-f6d2a798.js": {
+    "css": [
+      "assets/mobilemenu-a07aeec2.css"
+    ],
+    "file": "assets/mobilemenu-f6d2a798.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js"
     ]
+  },
+  "_tenant-store-2d1db6d0.js": {
+    "file": "assets/tenant-store-2d1db6d0.js",
+    "imports": [
+      "_vue-multiselect.esm-6989bf67.js",
+      "_vee-validate-i18n.esm-1e13155f.js"
+    ]
+  },
+  "_vee-validate-i18n.esm-1e13155f.js": {
+    "file": "assets/vee-validate-i18n.esm-1e13155f.js"
+  },
+  "_vue-multiselect.esm-6989bf67.js": {
+    "file": "assets/vue-multiselect.esm-6989bf67.js",
+    "imports": [
+      "_vee-validate-i18n.esm-1e13155f.js"
+    ]
+  },
+  "mobilemenu.css": {
+    "file": "assets/mobilemenu-a07aeec2.css",
+    "src": "mobilemenu.css"
   },
   "node_modules/@fontsource/poppins/files/poppins-devanagari-400-normal.woff": {
     "file": "assets/poppins-devanagari-400-normal-aa135e25.woff",
@@ -135,10 +169,11 @@
       "resources/js/modules/dashboard/Admin.vue",
       "resources/js/modules/errors/404.vue"
     ],
-    "file": "assets/admin-f281e157.js",
+    "file": "assets/admin-5fff30c5.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_vue-multiselect.esm-aaf679ef.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_jquery-72641f0b.js"
     ],
     "isEntry": true,
     "src": "resources/js/app/admin.js"
@@ -151,16 +186,16 @@
     "css": [
       "assets/auth-29c0ca3e.css"
     ],
-    "file": "assets/auth-80b54ee6.js",
+    "file": "assets/auth-7685a9a8.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_index-d2a4ed2d.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_index-1fd6a129.js"
     ],
     "isEntry": true,
     "src": "resources/js/app/auth.js"
   },
   "resources/js/app/landing.css": {
-    "file": "assets/landing-29fb3cd9.css",
+    "file": "assets/landing-38ca4aa9.css",
     "src": "resources/js/app/landing.css"
   },
   "resources/js/app/landing.js": {
@@ -221,28 +256,29 @@
       "assets/deactive-start-50d3e99f.svg"
     ],
     "css": [
-      "assets/landing-29fb3cd9.css"
+      "assets/landing-38ca4aa9.css"
     ],
     "dynamicImports": [
       "resources/js/modules/landing/parts/Home.vue",
+      "resources/js/modules/tandingan/Index.vue",
       "resources/js/modules/landing/transactions/Index.vue",
       "resources/js/modules/landing/tenant/Index.vue",
       "resources/js/modules/landing/products/Index.vue",
       "resources/js/modules/errors/404.vue"
     ],
-    "file": "assets/landing-39d23b60.js",
+    "file": "assets/landing-ad8b23a3.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_index-d2a4ed2d.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_index-1fd6a129.js"
     ],
     "isEntry": true,
     "src": "resources/js/app/landing.js"
   },
   "resources/js/modules/admin/parts/Footer.vue": {
-    "file": "assets/Footer-9756f84c.js",
+    "file": "assets/Footer-cbc6cd24.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
     "isDynamicEntry": true,
@@ -252,29 +288,31 @@
     "assets": [
       "assets/avatar-1-f00bb589.png"
     ],
-    "file": "assets/Header-801a948b.js",
+    "file": "assets/Header-0f2a2398.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "resources/js/app/admin.js",
-      "_vue-multiselect.esm-aaf679ef.js"
+      "_vue-multiselect.esm-6989bf67.js",
+      "_jquery-72641f0b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/admin/parts/Header.vue"
   },
   "resources/js/modules/dashboard/Admin.css": {
-    "file": "assets/Admin-24a00950.css",
+    "file": "assets/Admin-6806ae76.css",
     "src": "resources/js/modules/dashboard/Admin.css"
   },
   "resources/js/modules/dashboard/Admin.vue": {
     "css": [
-      "assets/Admin-24a00950.css"
+      "assets/Admin-6806ae76.css"
     ],
-    "file": "assets/Admin-cc5fc097.js",
+    "file": "assets/Admin-73a1c1df.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "resources/js/app/admin.js",
       "__plugin-vue_export-helper-c27b6911.js",
-      "_vue-multiselect.esm-aaf679ef.js"
+      "_vue-multiselect.esm-6989bf67.js",
+      "_jquery-72641f0b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/dashboard/Admin.vue"
@@ -287,36 +325,50 @@
     "css": [
       "assets/404-abd6bc52.css"
     ],
-    "file": "assets/404-d8dbb04f.js",
+    "file": "assets/404-35276d5c.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/errors/404.vue"
   },
+  "resources/js/modules/landing/parts/Home.css": {
+    "file": "assets/Home-b33d705e.css",
+    "src": "resources/js/modules/landing/parts/Home.css"
+  },
   "resources/js/modules/landing/parts/Home.vue": {
-    "file": "assets/Home-a54ee798.js",
+    "css": [
+      "assets/Home-b33d705e.css"
+    ],
+    "file": "assets/Home-b6c291d1.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "__plugin-vue_export-helper-c27b6911.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_mobilemenu-f6d2a798.js",
+      "_interface-b7ccdac3.js",
+      "__plugin-vue_export-helper-c27b6911.js",
+      "_footer-5421f854.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_jquery-72641f0b.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/landing/parts/Home.vue"
   },
   "resources/js/modules/landing/products/Index.css": {
-    "file": "assets/Index-af6bb14d.css",
+    "file": "assets/Index-9304962a.css",
     "src": "resources/js/modules/landing/products/Index.css"
   },
   "resources/js/modules/landing/products/Index.vue": {
     "css": [
-      "assets/Index-af6bb14d.css"
+      "assets/Index-9304962a.css"
     ],
-    "file": "assets/Index-552d7743.js",
+    "file": "assets/Index-5bb1e824.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "_isMobile-b3e8a064.js",
-      "_vue-multiselect.esm-aaf679ef.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_mobilemenu-f6d2a798.js",
+      "_footer-5421f854.js",
       "_formatter-8fa69f9f.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
@@ -331,14 +383,15 @@
     "css": [
       "assets/Index-cc435b61.css"
     ],
-    "file": "assets/Index-2f627e96.js",
+    "file": "assets/Index-db372c89.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "_isMobile-b3e8a064.js",
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_tenant-store-48d15098.js",
-      "_Spinner-e54ce62d.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_tenant-store-2d1db6d0.js",
+      "_Spinner-767c0c24.js",
       "resources/js/modules/errors/404.vue",
+      "_mobilemenu-f6d2a798.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
     "isDynamicEntry": true,
@@ -352,11 +405,11 @@
     "css": [
       "assets/Index-bc7868cf.css"
     ],
-    "file": "assets/Index-b0463d8c.js",
+    "file": "assets/Index-34c9bf73.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "_formatter-8fa69f9f.js",
-      "_Spinner-e54ce62d.js"
+      "_Spinner-767c0c24.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/landing/transactions/Index.vue"
@@ -369,12 +422,12 @@
     "css": [
       "assets/Index-802c8dcb.css"
     ],
-    "file": "assets/Detail-7ab096b7.js",
+    "file": "assets/Detail-5220f0e7.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_event-store-9dc99cd9.js",
-      "_Spinner-e54ce62d.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_event-store-74c7850e.js",
+      "_Spinner-767c0c24.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/event/Detail.vue"
@@ -387,103 +440,103 @@
     "css": [
       "assets/Index-802c8dcb.css"
     ],
-    "file": "assets/Index-5056eb32.js",
+    "file": "assets/Index-22845ff6.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_Spinner-e54ce62d.js",
-      "_event-store-9dc99cd9.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_Spinner-767c0c24.js",
+      "_event-store-74c7850e.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/event/Index.vue"
   },
   "resources/js/modules/settings/event/Main.vue": {
-    "file": "assets/Main-04d321f7.js",
+    "file": "assets/Main-52d06ff6.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/event/Main.vue"
   },
   "resources/js/modules/settings/product/Detail.vue": {
-    "file": "assets/Detail-fd144538.js",
+    "file": "assets/Detail-81765582.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_ModalForm-76115dc4.js",
-      "_CropperImage-fffb8212.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_ModalForm-4238184a.js",
+      "_CropperImage-6eb75076.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/product/Detail.vue"
   },
   "resources/js/modules/settings/product/Index.vue": {
-    "file": "assets/Index-cb102343.js",
+    "file": "assets/Index-735b4850.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_tenant-store-48d15098.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_tenant-store-2d1db6d0.js",
       "_formatter-8fa69f9f.js",
-      "_Spinner-e54ce62d.js",
-      "_ModalForm-76115dc4.js",
-      "_CropperImage-fffb8212.js"
+      "_Spinner-767c0c24.js",
+      "_ModalForm-4238184a.js",
+      "_CropperImage-6eb75076.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/product/Index.vue"
   },
   "resources/js/modules/settings/product/Main.vue": {
-    "file": "assets/Main-ed7df881.js",
+    "file": "assets/Main-fb5a4bc7.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/product/Main.vue"
   },
   "resources/js/modules/settings/tenant/Detail.vue": {
-    "file": "assets/Detail-9979b6c1.js",
+    "file": "assets/Detail-c758cb4d.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_tenant-store-48d15098.js",
-      "_IframeModal-505fd910.js",
-      "_ModalForm-6d477577.js",
-      "_CropperImage-fffb8212.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_tenant-store-2d1db6d0.js",
+      "_IframeModal-2abe70b5.js",
+      "_ModalForm-081334f5.js",
+      "_CropperImage-6eb75076.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/tenant/Detail.vue"
   },
   "resources/js/modules/settings/tenant/Index.vue": {
-    "file": "assets/Index-fc178f42.js",
+    "file": "assets/Index-1f8accd6.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_tenant-store-48d15098.js",
-      "_Spinner-e54ce62d.js",
-      "_ModalForm-6d477577.js",
-      "_CropperImage-fffb8212.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_tenant-store-2d1db6d0.js",
+      "_Spinner-767c0c24.js",
+      "_ModalForm-081334f5.js",
+      "_CropperImage-6eb75076.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/tenant/Index.vue"
   },
   "resources/js/modules/settings/tenant/Main.vue": {
-    "file": "assets/Main-a7106e08.js",
+    "file": "assets/Main-6fdfc7d8.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/tenant/Main.vue"
   },
   "resources/js/modules/settings/user/Detail.vue": {
-    "file": "assets/Detail-c38ef233.js",
+    "file": "assets/Detail-0597bd55.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_vue-multiselect.esm-aaf679ef.js",
-      "_tenant-store-48d15098.js",
-      "_IframeModal-505fd910.js",
-      "_ModalForm-6d477577.js",
-      "_CropperImage-fffb8212.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_vue-multiselect.esm-6989bf67.js",
+      "_tenant-store-2d1db6d0.js",
+      "_IframeModal-2abe70b5.js",
+      "_ModalForm-081334f5.js",
+      "_CropperImage-6eb75076.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/user/Detail.vue"
@@ -496,251 +549,324 @@
     "css": [
       "assets/Index-802c8dcb.css"
     ],
-    "file": "assets/Index-dc29df9f.js",
+    "file": "assets/Index-574ccf4f.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
-      "_Spinner-e54ce62d.js"
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_Spinner-767c0c24.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/user/Index.vue"
   },
   "resources/js/modules/settings/user/Main.vue": {
-    "file": "assets/Main-73d2935e.js",
+    "file": "assets/Main-0d00819a.js",
     "imports": [
-      "_vee-validate-i18n.esm-14720df6.js",
+      "_vee-validate-i18n.esm-1e13155f.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/modules/settings/user/Main.vue"
   },
-  "resources/kalles/css/lds-sw.svg": {
-    "file": "assets/lds-sw-5944ae61.svg",
-    "src": "resources/kalles/css/lds-sw.svg"
+  "resources/js/modules/tandingan/Index.css": {
+    "file": "assets/Index-6d47dc5a.css",
+    "src": "resources/js/modules/tandingan/Index.css"
   },
-  "resources/kalles/fonts/fakalles.eot": {
-    "file": "assets/fakalles-e6fee5f8.eot",
-    "src": "resources/kalles/fonts/fakalles.eot"
-  },
-  "resources/kalles/fonts/fakalles.svg": {
-    "file": "assets/fakalles-9b754ebf.svg",
-    "src": "resources/kalles/fonts/fakalles.svg"
-  },
-  "resources/kalles/fonts/fakalles.ttf": {
-    "file": "assets/fakalles-01c04d70.ttf",
-    "src": "resources/kalles/fonts/fakalles.ttf"
-  },
-  "resources/kalles/fonts/fakalles.woff": {
-    "file": "assets/fakalles-b395dc0e.woff",
-    "src": "resources/kalles/fonts/fakalles.woff"
-  },
-  "resources/kalles/fonts/fakalles.woff2": {
-    "file": "assets/fakalles-94fe3aa7.woff2",
-    "src": "resources/kalles/fonts/fakalles.woff2"
-  },
-  "resources/kalles/fonts/iconKalles.svg": {
-    "file": "assets/iconKalles-2283070a.svg",
-    "src": "resources/kalles/fonts/iconKalles.svg"
-  },
-  "resources/kalles/fonts/iconKalles.ttf": {
-    "file": "assets/iconKalles-1b14bddb.ttf",
-    "src": "resources/kalles/fonts/iconKalles.ttf"
-  },
-  "resources/kalles/fonts/iconKalles.woff": {
-    "file": "assets/iconKalles-1aef1642.woff",
-    "src": "resources/kalles/fonts/iconKalles.woff"
-  },
-  "resources/kalles/fonts/la-brands-400.eot": {
-    "file": "assets/la-brands-400-c0e32387.eot",
-    "src": "resources/kalles/fonts/la-brands-400.eot"
-  },
-  "resources/kalles/fonts/la-brands-400.svg": {
-    "file": "assets/la-brands-400-4da18191.svg",
-    "src": "resources/kalles/fonts/la-brands-400.svg"
-  },
-  "resources/kalles/fonts/la-brands-400.ttf": {
-    "file": "assets/la-brands-400-fbc98702.ttf",
-    "src": "resources/kalles/fonts/la-brands-400.ttf"
-  },
-  "resources/kalles/fonts/la-brands-400.woff": {
-    "file": "assets/la-brands-400-14c63377.woff",
-    "src": "resources/kalles/fonts/la-brands-400.woff"
-  },
-  "resources/kalles/fonts/la-brands-400.woff2": {
-    "file": "assets/la-brands-400-ff70c9bc.woff2",
-    "src": "resources/kalles/fonts/la-brands-400.woff2"
-  },
-  "resources/kalles/fonts/la-regular-400.eot": {
-    "file": "assets/la-regular-400-7dc456f0.eot",
-    "src": "resources/kalles/fonts/la-regular-400.eot"
-  },
-  "resources/kalles/fonts/la-regular-400.svg": {
-    "file": "assets/la-regular-400-884ce19c.svg",
-    "src": "resources/kalles/fonts/la-regular-400.svg"
-  },
-  "resources/kalles/fonts/la-regular-400.ttf": {
-    "file": "assets/la-regular-400-4b6ab8d0.ttf",
-    "src": "resources/kalles/fonts/la-regular-400.ttf"
-  },
-  "resources/kalles/fonts/la-regular-400.woff": {
-    "file": "assets/la-regular-400-7711fabc.woff",
-    "src": "resources/kalles/fonts/la-regular-400.woff"
-  },
-  "resources/kalles/fonts/la-regular-400.woff2": {
-    "file": "assets/la-regular-400-51ca2c00.woff2",
-    "src": "resources/kalles/fonts/la-regular-400.woff2"
-  },
-  "resources/kalles/fonts/la-solid-900.eot": {
-    "file": "assets/la-solid-900-8a57f8a9.eot",
-    "src": "resources/kalles/fonts/la-solid-900.eot"
-  },
-  "resources/kalles/fonts/la-solid-900.svg": {
-    "file": "assets/la-solid-900-0ce0cc40.svg",
-    "src": "resources/kalles/fonts/la-solid-900.svg"
-  },
-  "resources/kalles/fonts/la-solid-900.ttf": {
-    "file": "assets/la-solid-900-07ce3559.ttf",
-    "src": "resources/kalles/fonts/la-solid-900.ttf"
-  },
-  "resources/kalles/fonts/la-solid-900.woff": {
-    "file": "assets/la-solid-900-a0d21b2a.woff",
-    "src": "resources/kalles/fonts/la-solid-900.woff"
-  },
-  "resources/kalles/fonts/la-solid-900.woff2": {
-    "file": "assets/la-solid-900-10a68e01.woff2",
-    "src": "resources/kalles/fonts/la-solid-900.woff2"
-  },
-  "resources/kalles/fonts/pe-icon-7-stroke.eot": {
-    "file": "assets/pe-icon-7-stroke-d9896922.eot",
-    "src": "resources/kalles/fonts/pe-icon-7-stroke.eot"
-  },
-  "resources/kalles/fonts/pe-icon-7-stroke.svg": {
-    "file": "assets/pe-icon-7-stroke-c508f5a3.svg",
-    "src": "resources/kalles/fonts/pe-icon-7-stroke.svg"
-  },
-  "resources/kalles/fonts/pe-icon-7-stroke.ttf": {
-    "file": "assets/pe-icon-7-stroke-99620ded.ttf",
-    "src": "resources/kalles/fonts/pe-icon-7-stroke.ttf"
-  },
-  "resources/kalles/fonts/pe-icon-7-stroke.woff": {
-    "file": "assets/pe-icon-7-stroke-6fb42170.woff",
-    "src": "resources/kalles/fonts/pe-icon-7-stroke.woff"
-  },
-  "resources/kalles/images/active-start.svg": {
-    "file": "assets/active-start-3dd9bcbd.svg",
-    "src": "resources/kalles/images/active-start.svg"
-  },
-  "resources/kalles/images/currency_flags.png": {
-    "file": "assets/currency_flags-c0ee6504.png",
-    "src": "resources/kalles/images/currency_flags.png"
-  },
-  "resources/kalles/images/currency_flags_sm.png": {
-    "file": "assets/currency_flags_sm-efb3a029.png",
-    "src": "resources/kalles/images/currency_flags_sm.png"
-  },
-  "resources/kalles/images/deactive-start.svg": {
-    "file": "assets/deactive-start-50d3e99f.svg",
-    "src": "resources/kalles/images/deactive-start.svg"
-  },
-  "resources/kalles/images/default-skin.png": {
-    "file": "assets/default-skin-fd2d3fed.png",
-    "src": "resources/kalles/images/default-skin.png"
-  },
-  "resources/kalles/images/filter_selected.svg": {
-    "file": "assets/filter_selected-cf4f002b.svg",
-    "src": "resources/kalles/images/filter_selected.svg"
-  },
-  "resources/kalles/images/preloader.gif": {
-    "file": "assets/preloader-80d7ed3f.gif",
-    "src": "resources/kalles/images/preloader.gif"
-  },
-  "resources/kalles/images/sold_out.png": {
-    "file": "assets/sold_out-981146b0.png",
-    "src": "resources/kalles/images/sold_out.png"
-  },
-  "resources/kalles/images/svg/aud.svg": {
-    "file": "assets/aud-13873c84.svg",
-    "src": "resources/kalles/images/svg/aud.svg"
-  },
-  "resources/kalles/images/svg/cad.svg": {
-    "file": "assets/cad-0d78c57d.svg",
-    "src": "resources/kalles/images/svg/cad.svg"
-  },
-  "resources/kalles/images/svg/default-skin.svg": {
-    "file": "assets/default-skin-6dc726bc.svg",
-    "src": "resources/kalles/images/svg/default-skin.svg"
-  },
-  "resources/kalles/images/svg/dkk.svg": {
-    "file": "assets/dkk-d15b90ed.svg",
-    "src": "resources/kalles/images/svg/dkk.svg"
-  },
-  "resources/kalles/images/svg/eur.svg": {
-    "file": "assets/eur-cdd1a948.svg",
-    "src": "resources/kalles/images/svg/eur.svg"
-  },
-  "resources/kalles/images/svg/filter_selected.svg": {
-    "file": "assets/filter_selected-cf4f002b.svg",
-    "src": "resources/kalles/images/filter_selected.svg"
-  },
-  "resources/kalles/images/svg/gbp.svg": {
-    "file": "assets/gbp-de46013c.svg",
-    "src": "resources/kalles/images/svg/gbp.svg"
-  },
-  "resources/kalles/images/svg/hkd.svg": {
-    "file": "assets/hkd-6eedf733.svg",
-    "src": "resources/kalles/images/svg/hkd.svg"
-  },
-  "resources/kalles/images/svg/jpy.svg": {
-    "file": "assets/jpy-e47b44fa.svg",
-    "src": "resources/kalles/images/svg/jpy.svg"
-  },
-  "resources/kalles/images/svg/lds-sw.svg": {
-    "file": "assets/lds-sw-5944ae61.svg",
-    "src": "resources/kalles/css/lds-sw.svg"
-  },
-  "resources/kalles/images/svg/lds-swl.svg": {
-    "file": "assets/lds-swl-449b9fbc.svg",
-    "src": "resources/kalles/images/svg/lds-swl.svg"
-  },
-  "resources/kalles/images/svg/next.svg": {
-    "file": "assets/next-d4fa4279.svg",
-    "src": "resources/kalles/images/svg/next.svg"
-  },
-  "resources/kalles/images/svg/nzd.svg": {
-    "file": "assets/nzd-067fcad8.svg",
-    "src": "resources/kalles/images/svg/nzd.svg"
-  },
-  "resources/kalles/images/svg/pause.svg": {
-    "file": "assets/pause-9bfbc7d5.svg",
-    "src": "resources/kalles/images/svg/pause.svg"
-  },
-  "resources/kalles/images/svg/play.svg": {
-    "file": "assets/play-65771c13.svg",
-    "src": "resources/kalles/images/svg/play.svg"
-  },
-  "resources/kalles/images/svg/prev.svg": {
-    "file": "assets/prev-3a9f9953.svg",
-    "src": "resources/kalles/images/svg/prev.svg"
-  },
-  "resources/kalles/images/svg/sgd.svg": {
-    "file": "assets/sgd-5fdb715a.svg",
-    "src": "resources/kalles/images/svg/sgd.svg"
-  },
-  "resources/kalles/images/svg/svg_title.svg": {
-    "file": "assets/svg_title-cbd7b232.svg",
-    "src": "resources/kalles/images/svg/svg_title.svg"
-  },
-  "resources/kalles/images/svg/usd.svg": {
-    "file": "assets/usd-7d3204b8.svg",
-    "src": "resources/kalles/images/svg/usd.svg"
-  },
-  "resources/kalles/images/svg/vnd.svg": {
-    "file": "assets/vnd-90fae192.svg",
-    "src": "resources/kalles/images/svg/vnd.svg"
+  "resources/js/modules/tandingan/Index.vue": {
+    "assets": [
+      "assets/la-brands-400-c0e32387.eot",
+      "assets/la-brands-400-ff70c9bc.woff2",
+      "assets/la-brands-400-14c63377.woff",
+      "assets/la-brands-400-fbc98702.ttf",
+      "assets/la-brands-400-4da18191.svg",
+      "assets/la-regular-400-7dc456f0.eot",
+      "assets/la-regular-400-51ca2c00.woff2",
+      "assets/la-regular-400-7711fabc.woff",
+      "assets/la-regular-400-4b6ab8d0.ttf",
+      "assets/la-regular-400-884ce19c.svg",
+      "assets/la-solid-900-8a57f8a9.eot",
+      "assets/la-solid-900-10a68e01.woff2",
+      "assets/la-solid-900-a0d21b2a.woff",
+      "assets/la-solid-900-07ce3559.ttf",
+      "assets/la-solid-900-0ce0cc40.svg",
+      "assets/iconKalles-1b14bddb.ttf",
+      "assets/iconKalles-1aef1642.woff",
+      "assets/iconKalles-2283070a.svg",
+      "assets/fakalles-e6fee5f8.eot",
+      "assets/fakalles-94fe3aa7.woff2",
+      "assets/fakalles-b395dc0e.woff",
+      "assets/fakalles-01c04d70.ttf",
+      "assets/fakalles-9b754ebf.svg",
+      "assets/pe-icon-7-stroke-d9896922.eot",
+      "assets/pe-icon-7-stroke-6fb42170.woff",
+      "assets/pe-icon-7-stroke-99620ded.ttf",
+      "assets/pe-icon-7-stroke-c508f5a3.svg",
+      "assets/sold_out-981146b0.png",
+      "assets/svg_title-cbd7b232.svg",
+      "assets/lds-sw-5944ae61.svg",
+      "assets/lds-swl-449b9fbc.svg",
+      "assets/filter_selected-cf4f002b.svg",
+      "assets/default-skin-fd2d3fed.png",
+      "assets/default-skin-6dc726bc.svg",
+      "assets/preloader-80d7ed3f.gif",
+      "assets/prev-3a9f9953.svg",
+      "assets/play-65771c13.svg",
+      "assets/next-d4fa4279.svg",
+      "assets/pause-9bfbc7d5.svg",
+      "assets/currency_flags-c0ee6504.png",
+      "assets/currency_flags_sm-efb3a029.png",
+      "assets/vnd-90fae192.svg",
+      "assets/usd-7d3204b8.svg",
+      "assets/aud-13873c84.svg",
+      "assets/gbp-de46013c.svg",
+      "assets/cad-0d78c57d.svg",
+      "assets/dkk-d15b90ed.svg",
+      "assets/eur-cdd1a948.svg",
+      "assets/hkd-6eedf733.svg",
+      "assets/jpy-e47b44fa.svg",
+      "assets/nzd-067fcad8.svg",
+      "assets/sgd-5fdb715a.svg",
+      "assets/active-start-3dd9bcbd.svg",
+      "assets/deactive-start-50d3e99f.svg"
+    ],
+    "css": [
+      "assets/Index-6d47dc5a.css"
+    ],
+    "file": "assets/Index-93f35b4c.js",
+    "imports": [
+      "_vee-validate-i18n.esm-1e13155f.js",
+      "_interface-b7ccdac3.js",
+      "_jquery-72641f0b.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/modules/tandingan/Index.vue"
   },
   "resources/sass/app.scss": {
     "file": "assets/app-c3272edc.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
+  },
+  "theme/kalles/assets/css/lds-sw.svg": {
+    "file": "assets/lds-sw-5944ae61.svg",
+    "src": "theme/kalles/assets/images/svg/lds-sw.svg"
+  },
+  "theme/kalles/assets/fonts/fakalles.eot": {
+    "file": "assets/fakalles-e6fee5f8.eot",
+    "src": "theme/kalles/assets/fonts/fakalles.eot"
+  },
+  "theme/kalles/assets/fonts/fakalles.svg": {
+    "file": "assets/fakalles-9b754ebf.svg",
+    "src": "theme/kalles/assets/fonts/fakalles.svg"
+  },
+  "theme/kalles/assets/fonts/fakalles.ttf": {
+    "file": "assets/fakalles-01c04d70.ttf",
+    "src": "theme/kalles/assets/fonts/fakalles.ttf"
+  },
+  "theme/kalles/assets/fonts/fakalles.woff": {
+    "file": "assets/fakalles-b395dc0e.woff",
+    "src": "theme/kalles/assets/fonts/fakalles.woff"
+  },
+  "theme/kalles/assets/fonts/fakalles.woff2": {
+    "file": "assets/fakalles-94fe3aa7.woff2",
+    "src": "theme/kalles/assets/fonts/fakalles.woff2"
+  },
+  "theme/kalles/assets/fonts/iconKalles.svg": {
+    "file": "assets/iconKalles-2283070a.svg",
+    "src": "theme/kalles/assets/fonts/iconKalles.svg"
+  },
+  "theme/kalles/assets/fonts/iconKalles.ttf": {
+    "file": "assets/iconKalles-1b14bddb.ttf",
+    "src": "theme/kalles/assets/fonts/iconKalles.ttf"
+  },
+  "theme/kalles/assets/fonts/iconKalles.woff": {
+    "file": "assets/iconKalles-1aef1642.woff",
+    "src": "theme/kalles/assets/fonts/iconKalles.woff"
+  },
+  "theme/kalles/assets/fonts/la-brands-400.eot": {
+    "file": "assets/la-brands-400-c0e32387.eot",
+    "src": "theme/kalles/assets/fonts/la-brands-400.eot"
+  },
+  "theme/kalles/assets/fonts/la-brands-400.svg": {
+    "file": "assets/la-brands-400-4da18191.svg",
+    "src": "theme/kalles/assets/fonts/la-brands-400.svg"
+  },
+  "theme/kalles/assets/fonts/la-brands-400.ttf": {
+    "file": "assets/la-brands-400-fbc98702.ttf",
+    "src": "theme/kalles/assets/fonts/la-brands-400.ttf"
+  },
+  "theme/kalles/assets/fonts/la-brands-400.woff": {
+    "file": "assets/la-brands-400-14c63377.woff",
+    "src": "theme/kalles/assets/fonts/la-brands-400.woff"
+  },
+  "theme/kalles/assets/fonts/la-brands-400.woff2": {
+    "file": "assets/la-brands-400-ff70c9bc.woff2",
+    "src": "theme/kalles/assets/fonts/la-brands-400.woff2"
+  },
+  "theme/kalles/assets/fonts/la-regular-400.eot": {
+    "file": "assets/la-regular-400-7dc456f0.eot",
+    "src": "theme/kalles/assets/fonts/la-regular-400.eot"
+  },
+  "theme/kalles/assets/fonts/la-regular-400.svg": {
+    "file": "assets/la-regular-400-884ce19c.svg",
+    "src": "theme/kalles/assets/fonts/la-regular-400.svg"
+  },
+  "theme/kalles/assets/fonts/la-regular-400.ttf": {
+    "file": "assets/la-regular-400-4b6ab8d0.ttf",
+    "src": "theme/kalles/assets/fonts/la-regular-400.ttf"
+  },
+  "theme/kalles/assets/fonts/la-regular-400.woff": {
+    "file": "assets/la-regular-400-7711fabc.woff",
+    "src": "theme/kalles/assets/fonts/la-regular-400.woff"
+  },
+  "theme/kalles/assets/fonts/la-regular-400.woff2": {
+    "file": "assets/la-regular-400-51ca2c00.woff2",
+    "src": "theme/kalles/assets/fonts/la-regular-400.woff2"
+  },
+  "theme/kalles/assets/fonts/la-solid-900.eot": {
+    "file": "assets/la-solid-900-8a57f8a9.eot",
+    "src": "theme/kalles/assets/fonts/la-solid-900.eot"
+  },
+  "theme/kalles/assets/fonts/la-solid-900.svg": {
+    "file": "assets/la-solid-900-0ce0cc40.svg",
+    "src": "theme/kalles/assets/fonts/la-solid-900.svg"
+  },
+  "theme/kalles/assets/fonts/la-solid-900.ttf": {
+    "file": "assets/la-solid-900-07ce3559.ttf",
+    "src": "theme/kalles/assets/fonts/la-solid-900.ttf"
+  },
+  "theme/kalles/assets/fonts/la-solid-900.woff": {
+    "file": "assets/la-solid-900-a0d21b2a.woff",
+    "src": "theme/kalles/assets/fonts/la-solid-900.woff"
+  },
+  "theme/kalles/assets/fonts/la-solid-900.woff2": {
+    "file": "assets/la-solid-900-10a68e01.woff2",
+    "src": "theme/kalles/assets/fonts/la-solid-900.woff2"
+  },
+  "theme/kalles/assets/fonts/pe-icon-7-stroke.eot": {
+    "file": "assets/pe-icon-7-stroke-d9896922.eot",
+    "src": "theme/kalles/assets/fonts/pe-icon-7-stroke.eot"
+  },
+  "theme/kalles/assets/fonts/pe-icon-7-stroke.svg": {
+    "file": "assets/pe-icon-7-stroke-c508f5a3.svg",
+    "src": "theme/kalles/assets/fonts/pe-icon-7-stroke.svg"
+  },
+  "theme/kalles/assets/fonts/pe-icon-7-stroke.ttf": {
+    "file": "assets/pe-icon-7-stroke-99620ded.ttf",
+    "src": "theme/kalles/assets/fonts/pe-icon-7-stroke.ttf"
+  },
+  "theme/kalles/assets/fonts/pe-icon-7-stroke.woff": {
+    "file": "assets/pe-icon-7-stroke-6fb42170.woff",
+    "src": "theme/kalles/assets/fonts/pe-icon-7-stroke.woff"
+  },
+  "theme/kalles/assets/images/active-start.svg": {
+    "file": "assets/active-start-3dd9bcbd.svg",
+    "src": "theme/kalles/assets/images/active-start.svg"
+  },
+  "theme/kalles/assets/images/currency_flags.png": {
+    "file": "assets/currency_flags-c0ee6504.png",
+    "src": "theme/kalles/assets/images/currency_flags.png"
+  },
+  "theme/kalles/assets/images/currency_flags_sm.png": {
+    "file": "assets/currency_flags_sm-efb3a029.png",
+    "src": "theme/kalles/assets/images/currency_flags_sm.png"
+  },
+  "theme/kalles/assets/images/deactive-start.svg": {
+    "file": "assets/deactive-start-50d3e99f.svg",
+    "src": "theme/kalles/assets/images/deactive-start.svg"
+  },
+  "theme/kalles/assets/images/default-skin.png": {
+    "file": "assets/default-skin-fd2d3fed.png",
+    "src": "theme/kalles/assets/images/default-skin.png"
+  },
+  "theme/kalles/assets/images/filter_selected.svg": {
+    "file": "assets/filter_selected-cf4f002b.svg",
+    "src": "theme/kalles/assets/images/filter_selected.svg"
+  },
+  "theme/kalles/assets/images/preloader.gif": {
+    "file": "assets/preloader-80d7ed3f.gif",
+    "src": "theme/kalles/assets/images/preloader.gif"
+  },
+  "theme/kalles/assets/images/sold_out.png": {
+    "file": "assets/sold_out-981146b0.png",
+    "src": "theme/kalles/assets/images/sold_out.png"
+  },
+  "theme/kalles/assets/images/svg/aud.svg": {
+    "file": "assets/aud-13873c84.svg",
+    "src": "theme/kalles/assets/images/svg/aud.svg"
+  },
+  "theme/kalles/assets/images/svg/cad.svg": {
+    "file": "assets/cad-0d78c57d.svg",
+    "src": "theme/kalles/assets/images/svg/cad.svg"
+  },
+  "theme/kalles/assets/images/svg/default-skin.svg": {
+    "file": "assets/default-skin-6dc726bc.svg",
+    "src": "theme/kalles/assets/images/svg/default-skin.svg"
+  },
+  "theme/kalles/assets/images/svg/dkk.svg": {
+    "file": "assets/dkk-d15b90ed.svg",
+    "src": "theme/kalles/assets/images/svg/dkk.svg"
+  },
+  "theme/kalles/assets/images/svg/eur.svg": {
+    "file": "assets/eur-cdd1a948.svg",
+    "src": "theme/kalles/assets/images/svg/eur.svg"
+  },
+  "theme/kalles/assets/images/svg/filter_selected.svg": {
+    "file": "assets/filter_selected-cf4f002b.svg",
+    "src": "theme/kalles/assets/images/filter_selected.svg"
+  },
+  "theme/kalles/assets/images/svg/gbp.svg": {
+    "file": "assets/gbp-de46013c.svg",
+    "src": "theme/kalles/assets/images/svg/gbp.svg"
+  },
+  "theme/kalles/assets/images/svg/hkd.svg": {
+    "file": "assets/hkd-6eedf733.svg",
+    "src": "theme/kalles/assets/images/svg/hkd.svg"
+  },
+  "theme/kalles/assets/images/svg/jpy.svg": {
+    "file": "assets/jpy-e47b44fa.svg",
+    "src": "theme/kalles/assets/images/svg/jpy.svg"
+  },
+  "theme/kalles/assets/images/svg/lds-sw.svg": {
+    "file": "assets/lds-sw-5944ae61.svg",
+    "src": "theme/kalles/assets/images/svg/lds-sw.svg"
+  },
+  "theme/kalles/assets/images/svg/lds-swl.svg": {
+    "file": "assets/lds-swl-449b9fbc.svg",
+    "src": "theme/kalles/assets/images/svg/lds-swl.svg"
+  },
+  "theme/kalles/assets/images/svg/next.svg": {
+    "file": "assets/next-d4fa4279.svg",
+    "src": "theme/kalles/assets/images/svg/next.svg"
+  },
+  "theme/kalles/assets/images/svg/nzd.svg": {
+    "file": "assets/nzd-067fcad8.svg",
+    "src": "theme/kalles/assets/images/svg/nzd.svg"
+  },
+  "theme/kalles/assets/images/svg/pause.svg": {
+    "file": "assets/pause-9bfbc7d5.svg",
+    "src": "theme/kalles/assets/images/svg/pause.svg"
+  },
+  "theme/kalles/assets/images/svg/play.svg": {
+    "file": "assets/play-65771c13.svg",
+    "src": "theme/kalles/assets/images/svg/play.svg"
+  },
+  "theme/kalles/assets/images/svg/prev.svg": {
+    "file": "assets/prev-3a9f9953.svg",
+    "src": "theme/kalles/assets/images/svg/prev.svg"
+  },
+  "theme/kalles/assets/images/svg/sgd.svg": {
+    "file": "assets/sgd-5fdb715a.svg",
+    "src": "theme/kalles/assets/images/svg/sgd.svg"
+  },
+  "theme/kalles/assets/images/svg/svg_title.svg": {
+    "file": "assets/svg_title-cbd7b232.svg",
+    "src": "theme/kalles/assets/images/svg/svg_title.svg"
+  },
+  "theme/kalles/assets/images/svg/usd.svg": {
+    "file": "assets/usd-7d3204b8.svg",
+    "src": "theme/kalles/assets/images/svg/usd.svg"
+  },
+  "theme/kalles/assets/images/svg/vnd.svg": {
+    "file": "assets/vnd-90fae192.svg",
+    "src": "theme/kalles/assets/images/svg/vnd.svg"
   },
   "theme/stisla/assets/img/avatar/avatar-1.png": {
     "file": "assets/avatar-1-f00bb589.png",

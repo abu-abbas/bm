@@ -1,4 +1,4 @@
-<!doctype html>
+{{-- <!doctype html> --}}
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="utf-8">
@@ -53,6 +53,9 @@
       'user' => session('user')
     ]) !!}
   </script>
+  {{-- <script src="{{url('/assets/js/interface.js')}}"></script> --}}
   <script src="{{url('/assets/js/lazysizes.min.js')}}"></script>
+  <script src="{{url('/assets/js/jquery-3.5.1.min.js')}}"></script>
+  <script src="{{url('/assets/js/jquery.hoverIntent.min.js')}}"></script>
 </body>
 </html>

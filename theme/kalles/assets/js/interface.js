@@ -1,5 +1,4 @@
 import '@theme/kalles/assets/js/jquery-3.5.1.min.js'
-import '@theme/kalles/assets/js/jquery.hoverIntent.min.js'
 import Cookies from 'js-cookie';
 // import 'jquery-hoverintent';
 ( function ( $ ) {

@@ -61,7 +61,7 @@ export default defineConfig({
     },
   },
   build: {
-    chunkSizeWarningLimit: 512,
+    chunkSizeWarningLimit: 1024,
     // rollupOptions: {
     //   output: {
     //     entryFileNames: `${destination}/js/modules/app/[name]-[hash].js`,

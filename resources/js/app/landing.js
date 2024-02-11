@@ -33,6 +33,7 @@ import '@theme/kalles/assets/css/photoswipe.css'
 import '@theme/kalles/assets/css/home-default.css'
 import '@theme/kalles/assets/css/single-masonry-theme.css'
 
+// import '@theme/kalles/assets/js/jquery.hoverIntent.min.js'
 import '@theme/kalles/assets/js/interface.js'
 
 configure({ generateMessage: localize({ id }) })
