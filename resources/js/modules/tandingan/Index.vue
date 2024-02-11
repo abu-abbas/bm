@@ -7,10 +7,13 @@ import {
   flickity,
 } from '@/js/modules/tandingan/interface.js'
 
+import BackToTop from '@/js/modules/tandingan/parts/BackToTop.vue'
+
 const themeSetting = useKallesInterface()
 const heroSlider = useFlickity()
 
 onMounted(() => {
+  themeSetting.addClassesToBody()
   themeSetting.initStickyMenu()
   heroSlider.initialize()
 })
@@ -214,7 +217,7 @@ onMounted(() => {
                       class="col-lg-3 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1"
                     >
                       <div class="product-inner pr">
-                        <div class="product-image pr oh lazyload">
+                        <div class="product-image pr oh lazyloaded">
                           <span class="tc nt_labels pa pe_none cw">
                             <span class="onsale nt_label">
                               <span>-9%</span>
@@ -270,7 +273,7 @@ onMounted(() => {
         <!--end tab section-->
 
         <!--bestselling section-->
-        <div class="kalles-section nt_section type_featured_collection tp_se_cdt">
+        <div class="kalles-section nt_section type_featured_collection tp_se_cdt mt-5">
           <div class="kalles-digital__bestselling-section container">
             <div class="wrap_title des_title_1">
               <h3 class="section-title tc pr flex fl_center al_center fs__24 title_1">
@@ -372,7 +375,7 @@ onMounted(() => {
     <!--end mask overlay-->
 
     <!-- login box -->
-    <div id="nt_login_canvas" class="nt_fk_canvas dn lazyload">
+    <!-- <div id="nt_login_canvas" class="nt_fk_canvas dn lazyload">
       <form id="customer_login" class="nt_mini_cart flex column h__100 is_selected">
         <div class="mini_cart_header flex fl_between al_center">
           <div class="h3 widget-title tu fs__16 mg__0">Login</div>
@@ -434,7 +437,7 @@ onMounted(() => {
           </div>
         </div>
       </form>
-    </div>
+    </div> -->
     <!-- end login box -->
 
     <!-- mobile toolbar -->
@@ -491,9 +494,7 @@ onMounted(() => {
     <!-- end mobile menu -->
 
     <!-- back to top button-->
-    <a id="nt_backtop" class="pf br__50 z__100 des_bt1" href="#">
-      <span class="tc br__50 db cw"><i class="pr pegk pe-7s-angle-up"></i></span>
-    </a>
+    <BackToTop />
   </div>
 </template>
 

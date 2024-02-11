@@ -1,19 +1,55 @@
 import { ref } from 'vue'
 import Flickity from 'flickity'
 
-export const $header = ref(null)
-export const flickity = ref({
+const $header = ref(null)
+const flickity = ref({
   ref: null,
   el: null
 })
 
-export function useKallesInterface() {
+const useKallesInterface = () => {
   const body = document.body
   const window_w = window.innerWidth
 
   const check = ref(false)
   const ckSticky = ref(true)
   const headerHeight = ref(0)
+
+  const addClassesToBody = () => {
+    const currentClass = Array.from(body.classList)
+    if (currentClass.length) {
+      body.classList.remove(...currentClass)
+    }
+
+    const newClass = [
+      'lazy_icons',
+      'btnt4_style_2',
+      'zoom_tp_2',
+      'css_scrollbar',
+      'template-index',
+      'js_search_true',
+      'cart_pos_side',
+      'kalles_toolbar_true',
+      'hover_img2',
+      'swatch_style_rounded',
+      'swatch_list_size_small',
+      'label_style_rounded',
+      'wrapper_full_width',
+      'header_sticky_true',
+      'hide_scrolld_true',
+      'des_header_3',
+      'h_banner_true',
+      'top_bar_true',
+      'prs_bordered_grid_1',
+      'search_pos_canvas',
+      'js_search_type',
+      'lazyloaded',
+      'kalles-ready',
+      'h_calc_ready',
+    ]
+
+    body.classList.add(...newClass)
+  }
 
   const init = () => {
     if (!$header.value) return
@@ -108,10 +144,11 @@ export function useKallesInterface() {
 
   return {
     initStickyMenu,
+    addClassesToBody,
   }
 }
 
-export function useFlickity() {
+const useFlickity = () => {
   const initialize = () => {
     if (!flickity.value) return
 
@@ -122,4 +159,11 @@ export function useFlickity() {
   return {
     initialize,
   }
+}
+
+export {
+  $header,
+  flickity,
+  useKallesInterface,
+  useFlickity,
 }
