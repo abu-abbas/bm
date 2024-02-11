@@ -28,7 +28,10 @@
             <a class="js_link_wis" @click="onHandleCartShoppingClick"><span class="iconbtns">Ketertarikan</span></a>
           </li>
           <li v-if="!_settings.user" class="menu-item menu-item-btns menu-item-acount">
-            <button class="push_side" data-id="#nt_login_canvas" @click="_redirectToLogin()"><span class="iconbtns">Login / Register</span></button>
+            <a class="push_side" data-id="#nt_login_canvas" @click="_redirectToLogin()"><span class="iconbtns">Login / Register</span></a>
+          </li>
+          <li v-else else class="menu-item menu-item-btns menu-item-acount">
+            <a class="push_side" data-id="#nt_login_canvas" onclick="doLogout.apply(this, arguments)"><span class="iconbtns">Logout</span></a>
           </li>
           <!-- <li class="menu-item menu-item-btns menu-item-acount">
             <router-link to="/login" class="push_side"><span class="iconbtns">Login / Register</span></router-link>

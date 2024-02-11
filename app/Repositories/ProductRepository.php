@@ -231,7 +231,7 @@ class ProductRepository implements ProductRepositoryInterface
   {
     $error = null;
     $response = null;
-
+    // dd($tenant, $product);
     try {
       $with = [
         'tenant',
@@ -241,12 +241,14 @@ class ProductRepository implements ProductRepositoryInterface
         ->with($with)
         ->where('url', $product)
         ->whereHas('tenant', fn($q) => $q->where('url', $tenant))
-        ->when(
-          auth()->check(),
-          fn($s) => $s->withCount([
-            'hasTransaction' => fn ($s) => $s->where('username', auth()->user()->username)
-          ]))
+        // ->when(
+        //   auth()->check(),
+        //   fn($s) => $s->withCount([
+        //     'hasTransaction' => fn ($s) => $s->where('username', auth()->user()->username)
+        //   ]))
         ->first();
+        // dd($response);
+        // dd(getQueries($response,true));
 
     } catch (\Throwable $th) {
       $error = 'Terjadi kesalah saat mengambil data master product. Silakan hubungi Admin untuk lebih lanjut.';

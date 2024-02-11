@@ -28,7 +28,7 @@
                 </a></div>
               <div class="col-lg-auto col-md-4 col-6 tc tl_lg">
                 <div class=" branding ts__05 lh__1">
-                  <a class="dib" href="index.html">
+                  <a class="dib" href="/">
                     KBM
                   </a>
                 </div>

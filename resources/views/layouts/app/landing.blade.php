@@ -53,5 +53,6 @@
       'user' => session('user')
     ]) !!}
   </script>
+  <script src="{{url('/assets/js/lazysizes.min.js')}}"></script>
 </body>
 </html>

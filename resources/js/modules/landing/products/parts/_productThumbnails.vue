@@ -2,6 +2,7 @@
 const props = defineProps({
   images: Object,
 });
+
 </script>
 <template>
   <div class="col-md-6 col-12 pr product-images img_action_zoom pr_sticky_img kalles_product_thumnb_slide">

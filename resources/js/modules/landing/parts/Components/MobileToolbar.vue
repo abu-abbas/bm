@@ -28,10 +28,14 @@
           <span class="kalles_toolbar_label">Ketertarikan</span>
         </a>
       </div>
-      <div v-if="!_settings.user" class="type_toolbar_account kalles_toolbar_item">
-        <a class="push_side" data-id="#nt_login_canvas" @click="_redirectToLogin()">
+      <div class="type_toolbar_account kalles_toolbar_item">
+        <a v-if="!_settings.user" class="push_side" data-id="#nt_login_canvas" @click="_redirectToLogin()">
           <span class="toolbar_icon"></span>
           <span class="kalles_toolbar_label">Login</span>
+        </a>
+        <a v-else class="push_side" data-id="#nt_login_canvas" onclick="doLogout.apply(this, arguments)">
+          <span class="toolbar_icon"></span>
+          <span class="kalles_toolbar_label">Logout</span>
         </a>
       </div>
     </div>

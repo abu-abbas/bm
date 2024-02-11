@@ -10,7 +10,6 @@ import Footer from '@/js/modules/landing/parts/Components/Footer.vue'
 import breadcrumb from '@/js/modules/landing/products/parts/_breadcrumb.vue'
 import productThumbnails from '@/js/modules/landing/products/parts/_productThumbnails.vue'
 import productInfo from '@/js/modules/landing/products/parts/_productInfo.vue'
-import '@theme/kalles/assets/js/flickity.pkgd.min.js'
 
 const redirectTo = (page) => window.location = page
 const routeParams = useRoute();

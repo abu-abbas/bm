@@ -1,14 +1,11 @@
 <script setup>
-  import Navbar from './Components/Navbar.vue'
-  import MainSlider from './Components/MainSlider.vue'
-  import Category from './Components/Category.vue'
-  import Footer from './Components/Footer.vue'
-  import MobileMenu from './Components/MobileMenu.vue'
-  import MobileToolbar from './Components/MobileToolbar.vue'
+  import Navbar from '@/js/modules/landing/parts/Components/navbar.vue'
+  import MainSlider from '@/js/modules/landing/parts/Components/mainslider.vue'
+  import Category from '@/js/modules/landing/parts/Components/category.vue'
+  import MobileToolbar from '@/js/modules/landing/parts/Components/mobiletoolbar.vue'
+  import MobileMenu from '@/js/modules/landing/parts/Components/mobilemenu.vue'
+  import Footer from '@/js/modules/landing/parts/Components/footer.vue'
 
-  import '@theme/kalles/assets/js/flickity.pkgd.min.js'
-  // import '@theme/kalles/assets/js/photoswipe.min.js'
-  // import '@theme/kalles/assets/js/photoswipe-ui-default.min.js'
 
 </script>
 

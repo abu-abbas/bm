@@ -1,6 +1,40 @@
 <script setup>
+  import { _ } from '@/js/utils/common.js'
+  import { ref, onMounted, onUnmounted } from 'vue'
+  import Flickity from 'flickity'
+  import { useInterface } from '@/js/modules/tandingan/interface.js'
 
+  // import 'lazysizes';
+  // import a plugin
+  // import 'lazysizes/plugins/parent-fit/ls.parent-fit';
+
+  const kellesInterface = useInterface()
+
+  const flickity = ref({
+    ref: null,
+    el: null
+  })
+
+  const initializeFlickity = () => {
+    const flickAttr = JSON.parse(flickity.value.ref?.dataset?.flickity || {})
+    flickity.value.el = new Flickity(flickity.value.ref, flickAttr)
+  }
+
+  const onHandleWindowResize = _.debounce(function (e) {
+    console.log({ onHandleWindowResize: e })
+    kellesInterface.init()
+  }, 250)
+
+  onMounted(() => {
+    window.addEventListener('resize', onHandleWindowResize)
+    initializeFlickity()
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', onHandleWindowResize)
+  })
 </script>
+
 <template>
   <div class="kalles-medical__main-slide kalles-section nt_section type_slideshow type_carousel">
     <div class="kalles-medical__main-slide-inside nt_full se_height_cus_h nt_first">
@@ -12,12 +46,12 @@
             <div class="js_full_ht4 img_slider_block dek_img_slide">
               <div
                 class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_tran_ef pa l__0 t__0 r__0 b__0"
-                data-bgset="http://bm.test/assets/images/bg-bm.jpg"></div>
+                data-bgset="assets/images/bg-bm.jpg"></div>
             </div>
             <div class="js_full_ht4 img_slider_block mb_img_slide">
               <div
                 class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_tran_ef pa l__0 t__0 r__0 b__0"
-                data-bgset="http://bm.test/assets/images/bg-bm.jpg"></div>
+                data-bgset="assets/images/bg-bm.jpg"></div>
             </div>
             <div class="caption-wrap caption-w-1 pe_none z_100 tl_md tl">
               <div class="pa_txts caption textw-100">
