@@ -1,34 +1,18 @@
 <script setup>
-import { _ } from '@/js/utils/common.js'
-import { ref, onMounted, onUnmounted } from 'vue'
-import Flickity from 'flickity'
-import { useInterface } from '@/js/modules/tandingan/interface.js'
+import { onMounted } from 'vue'
+import {
+  useKallesInterface,
+  useFlickity,
+  $header,
+  flickity,
+} from '@/js/modules/tandingan/interface.js'
 
-const kellesInterface = useInterface()
-
-const flickity = ref({
-  ref: null,
-  el: null
-})
-
-const initializeFlickity = () => {
-  const flickAttr = JSON.parse(flickity.value.ref?.dataset?.flickity || {})
-  flickity.value.el = new Flickity(flickity.value.ref, flickAttr)
-}
-
-const onHandleWindowResize = _.debounce(function (e) {
-  console.log({ onHandleWindowResize: e })
-
-  kellesInterface.init()
-}, 250)
+const themeSetting = useKallesInterface()
+const heroSlider = useFlickity()
 
 onMounted(() => {
-  window.addEventListener('resize', onHandleWindowResize)
-  initializeFlickity()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', onHandleWindowResize)
+  themeSetting.initStickyMenu()
+  heroSlider.initialize()
 })
 </script>
 
@@ -36,7 +20,7 @@ onUnmounted(() => {
   <div class="tandingan-wrapper">
     <div id="nt_wrapper">
       <!-- header -->
-      <header id="ntheader" class="ntheader header_3 h_icon_iccl">
+      <header ref="$header" id="ntheader" class="ntheader header_3 h_icon_iccl">
         <div class="ntheader_wrapper pr z_200">
           <div id="kalles-section-header_3" class="kalles-section sp_header_mid">
             <div class="header__mid">
