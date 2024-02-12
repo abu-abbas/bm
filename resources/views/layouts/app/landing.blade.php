@@ -7,6 +7,7 @@
 
   <!-- Call App Mode on ios devices -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="shortcut icon" href="{{ URL::asset('favicon-kbm.ico') }}" type="image/x-icon">
 
   <!-- Remove Tap Highlight on Windows Phone IE -->
   <meta name="msapplication-tap-highlight" content="no">
