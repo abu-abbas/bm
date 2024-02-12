@@ -76,7 +76,16 @@ class TenantRepository implements TenantRepositoryInterface
 
       $query = $this->tenant
         ->with(['singleMedia', 'products'])
-        ->when($request->search, fn ($q, $searchText) => $q->searchByColumn($searchText, $filtered));
+        ->when($request->search, fn ($q, $searchText) => $q->searchByColumn($searchText, $filtered))
+        ->when(
+          $request->event,
+          fn ($q, $eventId) =>
+            $q->whereHas(
+              'events',
+              fn ($s) =>
+                $s->where('key_1', $eventId)
+            )
+        );
 
       $response = $request->fetch_first
         ? $query->first()

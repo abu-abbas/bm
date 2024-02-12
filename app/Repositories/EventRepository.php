@@ -3,11 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Event;
-use App\Repositories\Contracts\EventRepositoryInterface;
-use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Repositories\Contracts\EventRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\{Request, UploadedFile};
+use Illuminate\Support\Facades\DB;
 
 class EventRepository implements EventRepositoryInterface
 {
@@ -24,9 +24,7 @@ class EventRepository implements EventRepositoryInterface
 
     try {
       $perPage = $request->limit ?? $this->event->getPerPage();
-
       $query = $this->event->orderBy('updated_at', 'desc');
-
       $response = $request->fetch_first
         ? $query->first()
         : $query->paginate($perPage);
@@ -136,5 +134,38 @@ class EventRepository implements EventRepositoryInterface
   public function fill(Model $eloquentModel, array $attributes): Model
   {
     return $eloquentModel->fill($attributes);
+  }
+
+  /**
+   * Get active or last event
+   *
+   * @param \Illuminate\Http\Request $eloquentModel
+   * @return array <response, error>
+   */
+  public function activeOrLastEvent(Request $request)
+  {
+    $error = null;
+    $response = null;
+
+    try {
+      $activeEvent = $this->event->isActive()->select(['events.*', DB::raw("'active' as flag")]);
+      $lastEvent = $this->event->orderByDesc('finish_at')->select(['events.*', DB::raw("'last' as flag")])->limit(1);
+
+      if ($activeEvent->count() > 0) {
+        $response = $activeEvent->get();
+      } else {
+        $response =  $lastEvent->get();
+      }
+    } catch (\Throwable $th) {
+      $error = 'Terjadi kesalahan pada server. Silakan hubungi Admin';
+      Log::error($error, [
+        'payload' => $request->toArray(),
+        'error' => [
+          'message' => $th->getMessage()
+        ]
+      ]);
+    }
+
+    return [$response, $error];
   }
 }

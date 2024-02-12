@@ -24,8 +24,10 @@ class EventResource extends JsonResource
       'start_at' => $this->start_at,
       'finish_at' => $this->finish_at,
       'location' => $this->location,
-      'publish' => $this->publish
+      'publish' => $this->publish,
+      'flag' => $this?->flag,
     ];
+
     return $data;
   }
 }

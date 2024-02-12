@@ -223,7 +223,7 @@ class TenantController extends Controller
     $top = ceil((PDF::getPageHeight() - $size) / 2) + 10;
     $left = ceil((PDF::getPageWidth() - $size) / 2);
     // $url = config('app.url') . 'vendor-page?id=' . encrypt_params($tenant->id);
-    $url = config('app.url') . $tenant->url;
+    $url = config('app.url') . 't/' . $tenant->url;
     PDF::Write2DBarcode($url , 'QRCODE,L', $left, $top, $size, $size, $style, 'N');
 
     // set footer text

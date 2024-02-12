@@ -2,12 +2,20 @@
 
 namespace App\Repositories\Contracts;
 
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\{Request, UploadedFile};
 
 
 interface EventRepositoryInterface
 {
+  /**
+   * Get active or last event
+   *
+   * @param \Illuminate\Http\Request $eloquentModel
+   * @return array <response, error>
+   */
+  public function activeOrLastEvent(Request $request);
+
   /**
    * Get list data a complaint of model and persist them to the database
    *

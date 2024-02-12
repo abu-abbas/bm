@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
-
+use Illuminate\Support\Facades\DB;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\{HasMedia, InteractsWithMedia};
@@ -46,6 +46,36 @@ class Event extends Model implements HasMedia
   }
 
   /**
+   * Scope a query only publish
+   *
+   * @param \Illuminate\Database\Eloquent\Builder $query
+   * @return void
+   */
+  public function scopeIsPublish(Builder $query): void
+  {
+    $query->where('events.publish', 1);
+  }
+
+  /**
+   * Scope a query only active
+   *
+   * @param \Illuminate\Database\Eloquent\Builder $query
+   * @return void
+   */
+  public function scopeIsActive(Builder $query): void
+  {
+    $query
+      ->where('events.publish', 1)
+      ->whereBetween(
+        DB::raw('trunc(sysdate)'),
+        [
+          DB::raw('trunc(events.start_at)'),
+          DB::raw('trunc(events.finish_at)')
+        ]
+      );
+  }
+
+  /**
    * Scope a query by given url
    *
    * @param \Illuminate\Database\Eloquent\Builder $query
@@ -54,9 +84,9 @@ class Event extends Model implements HasMedia
    */
   public function scopeByUrl(Builder $query, $url): void
   {
-    $query->where('url', $url);
+    $query->where('events.url', $url);
   }
-  
+
   public function tenants()
   {
     return $this->belongsToMany(Tenant::class, 'pivots', 'key_1', 'key_2')->where('pivots.type_of_pivot', 'tenant_event');
