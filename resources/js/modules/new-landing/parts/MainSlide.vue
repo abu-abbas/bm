@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useFlickity, flickity } from '@/js/modules/tandingan/interface.js'
+import { useFlickity, flickity } from '@/js/modules/new-landing/parts/useFlickity.js'
 
 const heroSlider = useFlickity()
 onMounted(() => heroSlider.initialize())
@@ -12,7 +12,6 @@ onMounted(() => heroSlider.initialize())
       <div
         :ref="el => flickity.ref = el"
         class="fade_flick_1 slideshow row no-gutters equal_nt nt_slider js_carousel prev_next_0 btn_owl_1 dot_owl_2 dot_color_1 btn_vi_2"
-        data-flickity='{ "fade":0,"cellAlign": "center","imagesLoaded": 0,"lazyLoad": 0,"freeScroll": 0,"wrapAround": true,"autoPlay" : 0,"pauseAutoPlayOnHover" : true, "rightToLeft": false, "prevNextButtons": false,"pageDots": true, "contain" : 1,"adaptiveHeight" : 1,"dragThreshold" : 5,"percentPosition": 1 }'
       >
         <div class="kalles-digital__slide-banner__layout-01 col-12 slideshow__slide">
           <div class="oh pr nt_img_txt bg-transparent">

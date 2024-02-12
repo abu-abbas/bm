@@ -1,12 +1,7 @@
 import { ref } from 'vue'
-import Flickity from 'flickity'
 
 const $header = ref(null)
 const $mask = ref(null)
-const flickity = ref({
-  ref: null,
-  el: null
-})
 const mobileNav = ref({
   open: null,
   close: null,
@@ -170,24 +165,9 @@ const useKallesInterface = () => {
   }
 }
 
-const useFlickity = () => {
-  const initialize = () => {
-    if (!flickity.value) return
-
-    const flickAttr = JSON.parse(flickity.value.ref?.dataset?.flickity || {})
-    flickity.value.el = new Flickity(flickity.value.ref, flickAttr)
-  }
-
-  return {
-    initialize,
-  }
-}
-
 export {
   $mask,
   $header,
-  flickity,
   mobileNav,
   useKallesInterface,
-  useFlickity,
 }
