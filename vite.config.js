@@ -30,6 +30,7 @@ export default defineConfig({
       input: [
         // styles
         'resources/sass/app.scss',
+        'resources/sass/landing.app.scss',
 
         // scripts
         'resources/js/app/landing.js',

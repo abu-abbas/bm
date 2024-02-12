@@ -22,7 +22,7 @@ const router = createRouter({
       path: '',
       name: 'landing.home',
       components: {
-        default: () => import('@/js/modules/landing/parts/Home.vue'),
+        default: () => import('@/js/modules/new-landing/Home.vue'),
       },
       meta: {
         auth: false,

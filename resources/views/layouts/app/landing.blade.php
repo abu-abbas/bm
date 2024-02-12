@@ -19,7 +19,7 @@
 
   <!-- Scripts -->
   @vite([
-    'resources/sass/app.scss',
+    'resources/sass/landing.app.scss',
 
     'resources/js/app/landing.js',
   ])
@@ -53,9 +53,5 @@
       'user' => session('user')
     ]) !!}
   </script>
-  {{-- <script src="{{url('/assets/js/interface.js')}}"></script> --}}
-  <script src="{{url('/assets/js/lazysizes.min.js')}}"></script>
-  <script src="{{url('/assets/js/jquery-3.5.1.min.js')}}"></script>
-  <script src="{{url('/assets/js/jquery.hoverIntent.min.js')}}"></script>
 </body>
 </html>

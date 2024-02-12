@@ -1,0 +1,24 @@
+// Fonts
+@import '@fontsource/poppins';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+@import '@theme/kalles/assets/css/font-icon.min.css';
+@import '@theme/kalles/assets/css/reset.css';
+@import '@theme/kalles/assets/css/defined.css';
+@import '@theme/kalles/assets/css/base.css';
+@import '@theme/kalles/assets/css/style.css';
+@import '@theme/kalles/assets/css/home-digital.css';
+
+$font-family-sans-serif: Poppins, sans-serif;
+$font-size-base: 0.875rem;
+
+body {
+  font-family: $font-family-sans-serif !important;
+  font-size: $font-size-base;
+}
+
+.pr_lazy_img {
+  height: fit-content !important;
+}
