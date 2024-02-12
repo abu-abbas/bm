@@ -27,6 +27,11 @@ const props = defineProps({
     required: true,
     default: () => {}
   },
+  class: {
+    type: [String, Object, Array],
+    required: false,
+    default: 'btn btn-lg btn-primary'
+  }
 })
 
 const emits = defineEmits(['update:product'])
@@ -240,7 +245,7 @@ onMounted(() => {
 <template>
   <div class="checkout-wrapper">
     <button
-      class="btn btn-lg btn-primary"
+      :class="[ props.class ]"
       @click="onHandleClick"
     >
 

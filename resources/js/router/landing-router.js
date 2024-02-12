@@ -22,18 +22,7 @@ const router = createRouter({
       path: '',
       name: 'landing.home',
       components: {
-        default: () => import('@/js/modules/new-landing/Home.vue'),
-      },
-      meta: {
-        auth: false,
-        access: true,
-      },
-    },
-    {
-      path: '/tandingan',
-      name: 'landing.home.tandingan',
-      components: {
-        default: () => import('@/js/modules/tandingan/Index.vue'),
+        default: () => import('@/js/modules/new-landing/home/Index.vue'),
       },
       meta: {
         auth: false,
@@ -52,11 +41,11 @@ const router = createRouter({
       },
     },
     {
-      path: '/:slug',
+      path: '/tenant/:slug',
       name: 'tenant.home',
       props: true,
       components: {
-        default: () => import('@/js/modules/landing/tenant/Index.vue'),
+        default: () => import('@/js/modules/new-landing/tenant/Index.vue'),
       },
       meta: {
         auth: false,
@@ -64,11 +53,11 @@ const router = createRouter({
       },
     },
     {
-      path: '/:tenantSlug/:productSlug',
+      path: '/tenant/:tenantSlug/product/:productSlug',
       name: 'tenant.product',
       props: true,
       components: {
-        default: () => import('@/js/modules/landing/products/Index.vue'),
+        default: () => import('@/js/modules/new-landing/product/Index.vue'),
       },
       meta: {
         auth: false,

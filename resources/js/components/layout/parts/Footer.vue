@@ -13,3 +13,8 @@
     </div>
   </footer>
 </template>
+<style lang="scss">
+#nt_footer {
+
+}
+</style>

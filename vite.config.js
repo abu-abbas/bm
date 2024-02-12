@@ -59,6 +59,8 @@ export default defineConfig({
       'vue-tippy': 'vue-tippy/dist/vue-tippy.esm.js',
       'buffer': 'rollup-plugin-node-polyfills/polyfills/buffer-es6',
       '@theme': `${normalizePath(path.resolve(__dirname, 'theme/'))}`,
+      '@modules': `${normalizePath(path.resolve(__dirname, 'resources/js/modules/'))}`,
+      '@components': `${normalizePath(path.resolve(__dirname, 'resources/js/components/'))}`,
     },
   },
   build: {

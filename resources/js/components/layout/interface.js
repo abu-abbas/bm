@@ -151,11 +151,11 @@ const useKallesInterface = () => {
 
     const method = open ? 'add' : 'remove'
 
-    mobileNav.value.open.classList[method]('act_current')
-    html.classList[method]('hside_opened')
-    body.classList[method]('pside_opened')
-    mobileNav.value.menu.classList[method]('act_opened')
-    $mask.value.classList[method]('mask_opened')
+    mobileNav.value.open?.classList[method]('act_current')
+    html?.classList[method]('hside_opened')
+    body?.classList[method]('pside_opened')
+    mobileNav.value.menu?.classList[method]('act_opened')
+    $mask.value?.classList[method]('mask_opened')
   }
 
   return {

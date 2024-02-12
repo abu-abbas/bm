@@ -1,11 +1,11 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useKallesInterface, $mask } from '@/js/components/layout/interface.js'
+import { useKallesInterface, $mask } from '@components/layout/interface.js'
 import '@theme/kalles/assets/js/lazysizes.min.js'
 
-import Footer from '@/js/components/layout/parts/Footer.vue'
-import HeaderNav from '@/js/components/layout/parts/Header.vue'
-import BackToTop from '@/js/components/layout/parts/BackToTop.vue'
+import Footer from '@components/layout/parts/Footer.vue'
+import HeaderNav from '@components/layout/parts/Header.vue'
+import BackToTop from '@components/layout/parts/BackToTop.vue'
 
 const themeSetting = useKallesInterface()
 onMounted(() => themeSetting.addClassesToBody())
@@ -29,4 +29,6 @@ onMounted(() => themeSetting.addClassesToBody())
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '@theme/kalles/assets/css/home-digital.css';
+</style>

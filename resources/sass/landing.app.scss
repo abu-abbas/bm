@@ -9,7 +9,17 @@
 @import '@theme/kalles/assets/css/defined.css';
 @import '@theme/kalles/assets/css/base.css';
 @import '@theme/kalles/assets/css/style.css';
-@import '@theme/kalles/assets/css/home-digital.css';
+
+// vue-multiselect
+@import 'vue-multiselect/dist/vue-multiselect.css';
+@import 'multiselect';
+
+// custom
+@import 'custom/modal.scss';
+@import 'custom/bordered_table.scss';
+@import 'custom/spinner';
+
+@import 'vue_transition';
 
 $font-family-sans-serif: Poppins, sans-serif;
 $font-size-base: 0.875rem;

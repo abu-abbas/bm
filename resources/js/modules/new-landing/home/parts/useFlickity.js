@@ -28,12 +28,20 @@ const useFlickity = () => {
   const initialize = (settings = {}) => {
     if (!flickity.value) return
 
-    const flickitySettings = Object.assign(defaultSettings, settings)
+    const flickitySettings = settings == {} ? defaultSettings : settings
     flickity.value.el = new Flickity(flickity.value.ref, flickitySettings)
+  }
+
+  const initializeCustomRef = (ref, el, settings = {}) => {
+    if (!ref) return
+
+    const flickitySettings = settings == {} ? defaultSettings : settings
+    el = new Flickity(ref, flickitySettings)
   }
 
   return {
     initialize,
+    initializeCustomRef,
   }
 }
 

@@ -1,8 +1,10 @@
 import { useFontAwesome } from '@/js/composable/useFontAwesome'
 
 import {
+  faHome,
   faPlus,
   faSearch,
+  faUserAlt,
   faArrowLeft,
   faCartShopping,
   faArrowRightToBracket,
@@ -17,6 +19,8 @@ const { addLibrary, FontAwesomeIcon } = useFontAwesome()
 
 export function registeredFontAwesome(Vue) {
   addLibrary(
+    faHome,
+    faUserAlt,
     faPlus,
     faImage,
     faSearch,

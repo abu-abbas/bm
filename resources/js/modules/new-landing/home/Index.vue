@@ -1,6 +1,6 @@
 <script setup>
 import MainLayout from '@/js/components/layout/Index.vue'
-import Slider from '@/js/modules/new-landing/parts/MainSlide.vue'
+import Slider from '@modules/new-landing/home/parts/MainSlide.vue'
 import image11 from '@theme/kalles/assets/images/home-digital/pr-10.jpg'
 </script>
 

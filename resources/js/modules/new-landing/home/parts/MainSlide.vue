@@ -1,6 +1,9 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useFlickity, flickity } from '@/js/modules/new-landing/parts/useFlickity.js'
+import { useFlickity, flickity } from '@modules/new-landing/home/parts/useFlickity.js'
+
+import MainSlide from '@theme/kalles/assets/images/home-digital/main-slide.jpg'
+import MobileSlide from '@theme/kalles/assets/images/home-digital/mobile-slide.jpg'
 
 const heroSlider = useFlickity()
 onMounted(() => heroSlider.initialize())
@@ -18,13 +21,13 @@ onMounted(() => heroSlider.initialize())
             <div class="js_full_ht4 img_slider_block dek_img_slide">
               <div
                 class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_tran_ef pa l__0 t__0 r__0 b__0"
-                data-bgset="assets/images/home-digital/main-slide.jpg"
+                :data-bgset="MainSlide"
               ></div>
             </div>
             <div class="js_full_ht4 img_slider_block mb_img_slide">
               <div
                 class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_tran_ef pa l__0 t__0 r__0 b__0"
-                data-bgset="assets/images/home-digital/mobile-slide.jpg"
+                :data-bgset="MobileSlide"
               ></div>
             </div>
             <div class="caption-wrap caption-w-1 pe_none z_100 tl_md tc">
@@ -56,13 +59,13 @@ onMounted(() => heroSlider.initialize())
             <div class="js_full_ht4 img_slider_block dek_img_slide">
               <div
                 class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_tran_ef pa l__0 t__0 r__0 b__0"
-                data-bgset="assets/images/home-digital/main-slide.jpg"
+                :data-bgset="MainSlide"
               ></div>
             </div>
             <div class="js_full_ht4 img_slider_block mb_img_slide">
               <div
                 class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_tran_ef pa l__0 t__0 r__0 b__0"
-                data-bgset="assets/images/home-digital/mobile-slide.jpg"
+                :data-bgset="MobileSlide"
               ></div>
             </div>
             <div class="caption-wrap caption-w-1 pe_none z_100 tl_md tc">
