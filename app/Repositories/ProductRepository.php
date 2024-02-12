@@ -237,18 +237,17 @@ class ProductRepository implements ProductRepositoryInterface
         'tenant',
         'media' => fn ($q) => $q->where('collection_name', 'product.logo'),
       ];
+
       $response = $this->product
         ->with($with)
         ->where('url', $product)
         ->whereHas('tenant', fn($q) => $q->where('url', $tenant))
-        // ->when(
-        //   auth()->check(),
-        //   fn($s) => $s->withCount([
-        //     'hasTransaction' => fn ($s) => $s->where('username', auth()->user()->username)
-        //   ]))
+        ->when(
+          auth()->check(),
+          fn($s) => $s->withCount([
+            'hasTransaction' => fn ($s) => $s->where('username', auth()->user()->username)
+          ]))
         ->first();
-        // dd($response);
-        // dd(getQueries($response,true));
 
     } catch (\Throwable $th) {
       $error = 'Terjadi kesalah saat mengambil data master product. Silakan hubungi Admin untuk lebih lanjut.';

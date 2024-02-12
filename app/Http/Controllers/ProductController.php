@@ -6,7 +6,6 @@ use PDF;
 use Illuminate\Support\Str;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
-use App\Models\Product;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use Illuminate\Http\{JsonResponse, Request};
 use App\Repositories\Contracts\ProductRepositoryInterface;
@@ -85,7 +84,7 @@ class ProductController extends Controller
     [$response, $error] = $this->product->saveOrEdit($product);
 
     $productModel = $this->product->findBySlug(Str::slug($request->name));
-    
+
     $productModel->category()->sync($categoryId);
 
     if (!is_null($error)) {
