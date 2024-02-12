@@ -30,11 +30,10 @@ export function useTenant(slug) {
         found.value = true
       })
       .catch(() => found.value = false)
-      .finally(() => setTimeout(() => loading.value = false, 500))
+      .finally(() => setTimeout(() => loading.value = false, 100))
   }
 
   const onHandleSelectedProduct = (productSlug) => {
-    // console.log({ slug, productSlug })
     router.push({ name: 'tenant.product', params: { tenantSlug: slug, productSlug } })
   }
 

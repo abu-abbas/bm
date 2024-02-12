@@ -51,7 +51,8 @@
       'current_date' => Str::now('Y-m-d'),
       'home' => route('home'),
       'validateCaptcha' => config('app.env') === 'production',
-      'user' => session('user')
+      'user' => session('user'),
+      'events' => $events,
     ]) !!}
   </script>
 </body>

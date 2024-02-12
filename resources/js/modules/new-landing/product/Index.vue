@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, toRef } from 'vue'
 import { _settings, _redirectToLogin } from '@/js/utils/common.js'
 import { useFlickity } from '@modules/new-landing/home/parts/useFlickity.js'
 
@@ -7,6 +7,18 @@ import MainLayout from '@/js/components/layout/Index.vue'
 import Image11 from '@theme/kalles/assets/images/single-product/simple-product/full-size-01.jpg'
 import Checkout from '@modules/landing/checkout/Index.vue'
 
+const props = defineProps({
+  tenantSlug: {
+    type: String,
+    required: true,
+  },
+  productSlug: {
+    type: String,
+    required: true,
+  },
+})
+const localTenantSlug = toRef(props, 'tenantSlug')
+const localProductSlug = toRef(props, 'productSlug')
 const product = useFlickity()
 const flickity = ref({
   product: {
@@ -43,6 +55,8 @@ onMounted(() => {
 
 <template>
   <MainLayout>
+    {{ localTenantSlug }}
+    {{ localProductSlug }}
     <div class="sp-single sp-single-1 des_pr_layout_1 mb__60">
       <div class="bgbl pt__20 pb__20 lh__1">
         <div class="container">
@@ -103,7 +117,10 @@ onMounted(() => {
                     <div id="callBackVariant_ppr">
                       <div class="nt_cart_form variations_form variations_form_ppr">
                         <div class="variations_button in_flex column w__100 buy_qv_false">
-                          <div class="flex wrap">
+                          <div
+                            v-if="_settings?.events[0]?.flag == 'active'"
+                            class="flex wrap"
+                          >
                             <button
                               v-if="!_settings.user"
                               type="button"
@@ -120,7 +137,23 @@ onMounted(() => {
                             <Checkout
                               v-else
                               class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block"
+                              tenant-slug=""
+                              product-slug=""
+                              product
                             />
+                          </div>
+                          <div
+                            v-else
+                            class="flex wrap"
+                          >
+                            <button
+                              type="button"
+                              class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block disabled bg-secondary"
+                            >
+                              <span class="txt_add ">
+                                Event sudah berakhir
+                              </span>
+                            </button>
                           </div>
                         </div>
                       </div>

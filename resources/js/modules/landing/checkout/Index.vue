@@ -9,7 +9,7 @@ import { _, _http, _route, _settings, _redirectToLogin, _alert, _confirm } from 
 
 // component
 import BottomSheet from '@/js/components/BottomSheet.vue'
-import Select from '@/js/components/budget/Select.vue';
+import Select from '@/js/components/budget/Select.vue'
 
 const props = defineProps({
   tenantSlug: {

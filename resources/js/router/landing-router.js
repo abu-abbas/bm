@@ -41,7 +41,7 @@ const router = createRouter({
       },
     },
     {
-      path: '/tenant/:slug',
+      path: '/t/:slug',
       name: 'tenant.home',
       props: true,
       components: {
@@ -53,7 +53,7 @@ const router = createRouter({
       },
     },
     {
-      path: '/tenant/:tenantSlug/product/:productSlug',
+      path: '/t/:tenantSlug/p/:productSlug',
       name: 'tenant.product',
       props: true,
       components: {
