@@ -2,13 +2,20 @@ import { ref } from 'vue'
 import Flickity from 'flickity'
 
 const $header = ref(null)
+const $mask = ref(null)
 const flickity = ref({
   ref: null,
   el: null
 })
+const mobileNav = ref({
+  open: null,
+  close: null,
+  menu: null
+})
 
 const useKallesInterface = () => {
   const body = document.body
+  const html = document.documentElement
   const window_w = window.innerWidth
 
   const check = ref(false)
@@ -70,8 +77,8 @@ const useKallesInterface = () => {
 
   const initStickyMenu = () => {
     const isHideOnScroll = ref(body.classList.contains('hide_scrolld_true'))
-    const prevScrollpos = ref(window.scrollY)
-    const offset = ref(headerHeight.value)
+    let prevScrollpos = window.scrollY
+    let offset = headerHeight.value
 
     if (
       body.classList.contains('header_sticky_false')
@@ -90,31 +97,32 @@ const useKallesInterface = () => {
         if (!$header.value) return
         if (ckSticky.value) return
 
-        let currentScroll = ref(window.scrollY)
-        offset.value = headerHeight.value
+        let currentScroll = window.scrollY
+        offset = headerHeight.value
 
-        if (currentScroll.value > offset.value) {
+        if (currentScroll > offset) {
           stickAddclass()
         } else {
           stickRemoveClass()
         }
 
         if (isHideOnScroll.value) {
-          const currentScrollPos = ref(window.scrollY)
+          let currentScrollPos = window.scrollY
+
           if (
-            prevScrollpos.value > currentScrollPos.value
-            && currentScroll.value > offset.value
+            prevScrollpos > currentScrollPos
+            && currentScroll > offset
           ) {
             $header.value.classList.add('h_scroll_up')
             $header.value.classList.remove('h_scroll_down')
-          } else if (currentScroll.value <= offset.value) {
+          } else if (currentScroll <= offset) {
             $header.value.classList.remove('h_scroll_down', 'h_scroll_up')
           } else {
             $header.value.classList.add('h_scroll_down')
             $header.value.classList.remove('h_scroll_up')
           }
 
-          prevScrollpos.value = currentScrollPos.value;
+          prevScrollpos = currentScrollPos
         }
       }
     )
@@ -142,9 +150,23 @@ const useKallesInterface = () => {
     $header.value.classList.remove('ani_none', 'trs_stuck')
   }
 
+  const sideMenu = (open = true) => {
+    if (!mobileNav.value.menu) return
+    if (!mobileNav.value.open) return
+
+    const method = open ? 'add' : 'remove'
+
+    mobileNav.value.open.classList[method]('act_current')
+    html.classList[method]('hside_opened')
+    body.classList[method]('pside_opened')
+    mobileNav.value.menu.classList[method]('act_opened')
+    $mask.value.classList[method]('mask_opened')
+  }
+
   return {
     initStickyMenu,
     addClassesToBody,
+    sideMenu,
   }
 }
 
@@ -162,8 +184,10 @@ const useFlickity = () => {
 }
 
 export {
+  $mask,
   $header,
   flickity,
+  mobileNav,
   useKallesInterface,
   useFlickity,
 }
