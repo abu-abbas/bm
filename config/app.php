@@ -58,6 +58,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL'),
+    'landing_product_limit' => env('LANDING_PRODUCT_LIMIT', 4),
 
     /*
     |--------------------------------------------------------------------------

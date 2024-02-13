@@ -75,4 +75,13 @@ interface ProductRepositoryInterface
    * @return array
    */
   public function singelProduct($tenant, $product) : array;
+
+  /**
+   * Get top 10 product which relate active or last event
+   *
+   * @param string|int $eventId
+   * @param int $limit
+   * @return array <response, error>
+   */
+  public function newestByEventId($eventId, $limit = 4);
 }

@@ -191,6 +191,7 @@ const onHandleSubmitButton = async () => {
       _route('backend.transaction.store'),
       {
         product: props.productSlug,
+        eventId: _settings?.events[0]?.flag == 'active' ? _settings.events[0].id : null,
         ...formRef.value.getValues()
       },
     )

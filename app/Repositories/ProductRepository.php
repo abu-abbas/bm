@@ -261,4 +261,49 @@ class ProductRepository implements ProductRepositoryInterface
 
     return [$response, $error];
   }
+
+  /**
+   * Get top 10 product which relate active or last event
+   *
+   * @param string|int $eventId
+   * @param int $limit
+   * @return array <response, error>
+   */
+  public function newestByEventId($eventId, $limit = 4)
+  {
+    $error = null;
+    $response = null;
+
+    try {
+      $products = $this->product
+        ->whereHas(
+          'tenant.events',
+          fn ($q) => $q->where('key_1', $eventId)
+        )
+        ->when(
+          auth()->check(),
+          fn ($s) => $s->withCount([
+            'hasTransaction' => fn ($s)
+              => $s->where('username', auth()->user()->username)->where('event_id', session('eventId'))
+          ])
+        )
+        ->orderByDesc('id');
+
+      $response['product_count'] = $products->count();
+      $response['products'] = $products->when($limit > 0, fn($q) => $q->limit($limit))->get();
+    } catch (\Throwable $th) {
+      $error = 'Terjadi kesalahan pada server saat mengambil data produk';
+      Log::error($error, [
+        'payload' => [
+          'eventId' => $eventId,
+          'method' => 'ProductRepository::newestByEventId'
+        ],
+        'error' => [
+          'message' => $th->getMessage()
+        ]
+      ]);
+    }
+
+    return [$response, $error];
+  }
 }

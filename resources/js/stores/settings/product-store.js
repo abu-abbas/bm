@@ -3,17 +3,22 @@ import { defineStore } from 'pinia'
 export const useProductStore = defineStore('product-store', {
   state: () => {
     return {
-      items: {}
+      items: []
     }
   },
 
   getters: {
-    getSelectedByUrl: state => url => state.items[url] || false
+    getSelectedByTenantAndUrl: state => (tenantSlug, url) => state.items.find(i => i.slug == url && i.tenant_slug == tenantSlug)
   },
 
   actions: {
-    setItemByUrl(url, payload) {
-      this.items[url] = payload
+    setItem(payload) {
+      const idx = this.items.findIndex(i => i.slug == payload.slug)
+      if (idx === -1) {
+        this.items.push(payload)
+      } else {
+        this.items[idx] = payload
+      }
     },
   }
 })

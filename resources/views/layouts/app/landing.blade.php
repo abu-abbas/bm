@@ -53,6 +53,8 @@
       'validateCaptcha' => config('app.env') === 'production',
       'user' => session('user'),
       'events' => $events,
+      'products' => $products,
+      'product_count' => $products_count,
     ]) !!}
   </script>
 </body>

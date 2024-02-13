@@ -17,9 +17,8 @@ onMounted(() => themeSetting.initStickyMenu())
               <div class="col-md-4 col-3 dn_lg">
                 <a
                   :ref="el => mobileNav.open = el"
-                  href="#"
                   data-id="#nt_menu_canvas"
-                  class="push_side push-menu-btn lh__1 flex al_center"
+                  class="push_side push-menu-btn lh__1 flex al_center pointer"
                   @click="themeSetting.sideMenu(open = true)"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" viewBox="0 0 30 16">
@@ -32,7 +31,7 @@ onMounted(() => themeSetting.initStickyMenu())
               <div class="col-lg-2 col-md-4 col-6 tc tl_lg">
                 <div class="branding ts__05 lh__1">
                   <a
-                    class="dib"
+                    class="dib pointer"
                     @click="$router.push({ name: 'landing.home' })"
                   >
                     <img
@@ -150,7 +149,7 @@ onMounted(() => themeSetting.initStickyMenu())
   <div id="kalles-section-toolbar_mobile" class="kalles-section">
     <div class="kalles_toolbar kalles_toolbar_label_true ntpf r__0 l__0 b__0 flex fl_between al_center">
       <div class="type_toolbar_shop kalles_toolbar_item">
-        <a href="shop-filter-options.html">
+        <a class="pointer" @click="$router.push({ name: 'landing.home' })">
           <FontAwesomeIcon :icon="['fas', 'home']" size="lg"/>
           <span class="kalles_toolbar_label">Home</span>
         </a>

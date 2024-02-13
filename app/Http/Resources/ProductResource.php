@@ -16,6 +16,8 @@ class ProductResource extends JsonResource
   public function toArray(Request $request): array
   {
     $tenant = $this->tenant;
+    $hasTransaction = $this->has_transaction_count;
+
     $data = [
       'slug' => $this->url,
       'tenant_id' => $this->tenant_id,
@@ -29,8 +31,8 @@ class ProductResource extends JsonResource
       'price' => $this->price,
       'condition' => $this->condition,
       'images' => [],
-      'landing_url' => sprintf('%s%s/%s', config('app.url'), $tenant?->url, $this->url),
-      'has_transaction' => $this->has_transaction_count > 0,
+      'landing_url' => sprintf('%st/%s/p/%s', config('app.url'), $tenant?->url, $this->url),
+      'has_transaction' => $hasTransaction && $hasTransaction > 0,
     ];
 
     foreach ($this->media as $media) {

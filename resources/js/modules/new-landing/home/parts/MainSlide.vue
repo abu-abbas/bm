@@ -48,9 +48,9 @@ onMounted(() => heroSlider.initialize())
                   <div class="kalles-digital__slide-banner__br-02 slt4_space"></div>
                   <a
                     class="kalles-digital__slide-banner__btn slt4_btn button pe_auto round_true btn_icon_false"
-                    href="shop-filter-options.html"
+                    href="#"
                   >
-                    Explore Now
+                    Eksplorasi sekarang
                   </a>
                 </div>
               </div>

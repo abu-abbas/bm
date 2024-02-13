@@ -1,11 +1,15 @@
 <script setup>
 import { ref, onMounted, toRef } from 'vue'
+
+import { formatCurrency } from '@/js/utils/formatter.js'
 import { _settings, _redirectToLogin } from '@/js/utils/common.js'
+import { useProduct } from '@modules/new-landing/product/useProduct.js'
 import { useFlickity } from '@modules/new-landing/home/parts/useFlickity.js'
 
-import MainLayout from '@/js/components/layout/Index.vue'
-import Image11 from '@theme/kalles/assets/images/single-product/simple-product/full-size-01.jpg'
+// import NotFound from '@modules/errors/404.vue'
+import MainLayout from '@components/layout/Index.vue'
 import Checkout from '@modules/landing/checkout/Index.vue'
+import Image11 from '@theme/kalles/assets/images/single-product/simple-product/full-size-01.jpg'
 
 const props = defineProps({
   tenantSlug: {
@@ -19,7 +23,7 @@ const props = defineProps({
 })
 const localTenantSlug = toRef(props, 'tenantSlug')
 const localProductSlug = toRef(props, 'productSlug')
-const product = useFlickity()
+const productSlide = useFlickity()
 const flickity = ref({
   product: {
     ref: null,
@@ -44,8 +48,10 @@ const settings = {
   },
 }
 
+const { product, backToTenant } = useProduct(localTenantSlug.value, localProductSlug.value)
+
 onMounted(() => {
-  product.initializeCustomRef(
+  productSlide.initializeCustomRef(
     flickity.value.product.ref,
     flickity.value.product.el,
     settings.product
@@ -55,25 +61,22 @@ onMounted(() => {
 
 <template>
   <MainLayout>
-    {{ localTenantSlug }}
-    {{ localProductSlug }}
     <div class="sp-single sp-single-1 des_pr_layout_1 mb__60">
       <div class="bgbl pt__20 pb__20 lh__1">
         <div class="container">
           <div class="row al_center">
             <div class="col">
               <nav class="sp-breadcrumb">
-                <a href="/">Home</a>
+                <a class="pointer text-info" @click="$router.push({ name: 'landing.home' })">Home</a>
                 <i class="facl facl-angle-right"></i>
-                <a href="#">PT Gamma Persada Solusindo</a>
+                <a class="pointer text-info" @click="backToTenant">{{ product?.data?.tenant_name }}</a>
                 <i class="facl facl-angle-right"></i>
-                Asus PC
+                {{ product?.data?.product_name }}
               </nav>
             </div>
           </div>
         </div>
       </div>
-
       <div class="container container_cat cat_default">
         <div class="row product mt__40">
           <div class="col-md-12 col-12 thumb_left">
@@ -86,17 +89,17 @@ onMounted(() => {
                       class="p-thumb p-thumb_ppr images sp-pr-gallery equal_nt nt_contain ratio_imgtrue position_8 nt_slider pr_carousel"
                     >
                       <div
-                        v-for="i in 5"
-                        :key="i"
-                        :class="`img_ptw p_ptw p-item sp-pr-gallery__img w__100 nt_bg_lz lazyload padding-top__127_66 media_id_${i.toString().padStart(3, '0')}`"
-                        :data-mdid="i.toString().padStart(3, '0')"
+                        v-for="(image, idx) in product?.data?.images"
+                        :key="idx"
+                        :class="`img_ptw p_ptw p-item sp-pr-gallery__img w__100 nt_bg_lz lazyload padding-top__127_66 media_id_${(idx + 1).toString().padStart(3, '0')}`"
+                        :data-mdid="(idx + 1).toString().padStart(3, '0')"
                         data-height="1440"
                         data-width="1128"
                         data-ratio="0.7833333333333333"
                         data-mdtype="image"
-                        :data-src="Image11"
-                        :data-bgset="Image11"
-                        data-cap="Blush Beanie - color pink , size S"
+                        :data-src="image || Image11"
+                        :data-bgset="image || Image11"
+                        :data-cap="product?.data?.product_name"
                       >
                       </div>
                     </div>
@@ -106,12 +109,12 @@ onMounted(() => {
 
               <div class="col-md-6 col-12 product-infors pr_sticky_su">
                 <div class="kalles-section-pr_summary kalles-section summary entry-summary mt__30">
-                  <h1 class="product_title entry-title fs__16">Cream women pants</h1>
+                  <h1 class="product_title entry-title fs__16">{{ product?.data?.product_name }}</h1>
                   <div class="flex wrap fl_between al_center price-review">
-                    <p id="price_ppr" class="price_range">$35.00</p>
+                    <p id="price_ppr" class="price_range">{{ formatCurrency(product?.data?.price) }}</p>
                   </div>
                   <div class="pr_short_des">
-                    <p class="mg__0">Go kalles this summer with this vintage navy and white striped v-neck t-shirt from the Nike. Perfect for pairing with denim and white kicks for a stylish kalles vibe.</p>
+                    <p class="mg__0">{{ product?.data?.description }}</p>
                   </div>
                   <div class="btn-atc atc-slide btn_des_1 btn_txt_3">
                     <div id="callBackVariant_ppr">
@@ -126,7 +129,7 @@ onMounted(() => {
                               type="button"
                               data-time="6000"
                               data-ani="shake"
-                              class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block"
+                              class="single_add_to_cart_button button truncate round_true w__100 mt__20 order-4 d-inline-block"
                               @click="_redirectToLogin"
                             >
                               <span class="txt_add ">
@@ -136,10 +139,10 @@ onMounted(() => {
                             </button>
                             <Checkout
                               v-else
-                              class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block"
-                              tenant-slug=""
-                              product-slug=""
-                              product
+                              class="single_add_to_cart_button button truncate round_true w__100 mt__20 order-4 d-inline-block"
+                              :tenant-slug="localTenantSlug"
+                              :product-slug="localProductSlug"
+                              :product="product.data"
                             />
                           </div>
                           <div
@@ -148,7 +151,7 @@ onMounted(() => {
                           >
                             <button
                               type="button"
-                              class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block disabled bg-secondary"
+                              class="single_add_to_cart_button button truncate round_true w__100 mt__20 order-4 d-inline-block disabled bg-secondary"
                             >
                               <span class="txt_add ">
                                 Event sudah berakhir
@@ -172,8 +175,22 @@ onMounted(() => {
 <style lang="scss">
 @import '@theme/kalles/assets/css/home-default.css';
 
+.img_ptw {
+  &.p_ptw {
+    &.p-item {
+      &.sp-pr-gallery__img {
+        background-size: cover;
+      }
+    }
+  }
+}
+
 .mb-xxl {
   margin-bottom: 10rem;
+}
+
+.round_true {
+  border-radius: 40px;
 }
 </style>
 

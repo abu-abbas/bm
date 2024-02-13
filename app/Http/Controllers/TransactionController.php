@@ -51,7 +51,7 @@ class TransactionController extends Controller
 
     $transaction = $this->makeTransaction($request, $product);
 
-    [$response, $error] = $this->transaction->addVoi($transaction);
+    [, $error] = $this->transaction->addVoi($transaction);
     if (!is_null($error)) {
       return response()->json([
         'status' => 'error',
@@ -71,7 +71,7 @@ class TransactionController extends Controller
 
     return $this->transaction->make([
       'trx_date' => now(),
-      'event_id' => null,
+      'event_id' => $request->eventId,
       'product_id' => $product->id,
       'username' => $username,
       'value_of_interest' => $request->voi,
