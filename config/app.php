@@ -58,6 +58,10 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL'),
+    'prefix' => [
+        'landing' => env('LANDING_PREFIX', ''),
+        'admin' => env('ADMIN_PREFIX', 'admin'),
+    ],
     'landing_product_limit' => env('LANDING_PRODUCT_LIMIT', 4),
 
     /*

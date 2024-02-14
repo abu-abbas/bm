@@ -11,7 +11,7 @@ import userRouter from '@/js/router/modules/user-router'
 import eventRouter from '@/js/router/modules/event-router'
 
 const router = createRouter({
-  history: createWebHistory('admin'),
+  history: createWebHistory(_settings.prefix),
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition)
       return savedPosition

@@ -44,6 +44,7 @@
 
   <script type="application/json" data-settings-selector="settings-json">
     {!! json_encode([
+      'prefix' => config('app.prefix.landing'),
       'locale' => app()->getLocale(),
       'timezone' => config('app.timezone'),
       'appname' => config('app.name'),

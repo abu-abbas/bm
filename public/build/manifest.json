@@ -174,7 +174,7 @@
       "resources/js/modules/dashboard/Admin.vue",
       "resources/js/modules/errors/404.vue"
     ],
-    "file": "assets/admin-8205fd4a.js",
+    "file": "assets/admin-8f3303f2.js",
     "imports": [
       "_vee-validate-i18n.esm-0c3fc239.js",
       "_vue-multiselect.esm-4795f2c0.js",
@@ -207,7 +207,7 @@
       "resources/js/modules/new-landing/product/Index.vue",
       "resources/js/modules/errors/404.vue"
     ],
-    "file": "assets/landing-5bab5ec4.js",
+    "file": "assets/landing-72485010.js",
     "imports": [
       "_vee-validate-i18n.esm-0c3fc239.js",
       "_vue-multiselect.esm-4795f2c0.js",
@@ -229,7 +229,7 @@
     "assets": [
       "assets/avatar-1-f00bb589.png"
     ],
-    "file": "assets/Header-cd26bb22.js",
+    "file": "assets/Header-7416d414.js",
     "imports": [
       "_vee-validate-i18n.esm-0c3fc239.js",
       "resources/js/app/admin.js",
@@ -247,7 +247,7 @@
     "css": [
       "assets/Admin-6806ae76.css"
     ],
-    "file": "assets/Admin-6c4b57c7.js",
+    "file": "assets/Admin-9cd84af1.js",
     "imports": [
       "_vee-validate-i18n.esm-0c3fc239.js",
       "resources/js/app/admin.js",
@@ -312,7 +312,7 @@
     "src": "resources/js/modules/new-landing/home/Index.vue"
   },
   "resources/js/modules/new-landing/product/Index.css": {
-    "file": "assets/Index-63f0e329.css",
+    "file": "assets/Index-fa062b63.css",
     "src": "resources/js/modules/new-landing/product/Index.css"
   },
   "resources/js/modules/new-landing/product/Index.vue": {
@@ -320,9 +320,9 @@
       "assets/full-size-01-f97970ff.jpg"
     ],
     "css": [
-      "assets/Index-63f0e329.css"
+      "assets/Index-fa062b63.css"
     ],
-    "file": "assets/Index-ae8a663f.js",
+    "file": "assets/Index-f3bca6fd.js",
     "imports": [
       "_vee-validate-i18n.esm-0c3fc239.js",
       "_formatter-8fa69f9f.js",
@@ -522,7 +522,7 @@
     "src": "resources/sass/app.scss"
   },
   "resources/sass/landing.app.scss": {
-    "file": "assets/landing.app-c1cb75a3.css",
+    "file": "assets/landing.app-9ba40e7d.css",
     "isEntry": true,
     "src": "resources/sass/landing.app.scss"
   },

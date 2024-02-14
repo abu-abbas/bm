@@ -184,13 +184,5 @@ onMounted(() => {
     }
   }
 }
-
-.mb-xxl {
-  margin-bottom: 10rem;
-}
-
-.round_true {
-  border-radius: 40px;
-}
 </style>
 
