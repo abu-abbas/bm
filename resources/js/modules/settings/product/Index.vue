@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useTenantStore } from '@/js/stores/settings/tenant-store.js'
+import { useProductStore } from '@/js/stores/settings/product-store.js'
 
 // helper
 import { formatCurrency } from '@/js/utils/formatter.js'
@@ -13,7 +13,7 @@ import ModalForm from '@/js/modules/settings/product/parts/ModalForm.vue'
 
 const refTable = ref(null)
 const router = useRouter()
-const tenantStore = useTenantStore()
+const productStore = useProductStore()
 const modalVisible = ref(false)
 const table = ref({
   busy: false,
@@ -157,7 +157,7 @@ const onHandleDeleted = item => {
 }
 
 const onHandleEdit = item => {
-  tenantStore.setItemByUrl(item.slug, item)
+  productStore.setItem(item)
   router.push({ name: 'settings.product.detail', params: { slug: item.slug } })
 }
 </script>

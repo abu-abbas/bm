@@ -1,0 +1,1 @@
+import{Y as n}from"./vue-multiselect.esm-0a551888.js";const u=n("product-store",{state:()=>({items:[]}),getters:{getSelectedByUrl:t=>e=>t.items.find(s=>s.slug==e),getSelectedByTenantAndUrl:t=>(e,s)=>t.items.find(i=>i.slug==s&&i.tenant_slug==e)},actions:{setItem(t){const e=this.items.findIndex(s=>s.slug==t.slug);e===-1?this.items.push(t):this.items[e]=t}}});export{u};

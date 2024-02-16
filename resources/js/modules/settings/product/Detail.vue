@@ -36,7 +36,7 @@ const fetchProduct = () => {
         }
       )
     )
-      .then(res => productStore.setItemByUrl(getSlug.value, res.data?.data))
+      .then(res => productStore.setItem(res.data?.data))
       .catch(error => {
         _alert.fire({
           title: 'Terjadi Kesalahan',
@@ -51,7 +51,7 @@ const fetchProduct = () => {
               backToMain()
           })
       })
-      .finally(() => unwatch())
+      // .finally(() => unwatch())
   }
 
 
@@ -64,11 +64,11 @@ const onHandleEdit = () => {
 }
 
 const onHandleSubmit = (value) => {
-  productStore.setItemByUrl(getSlug.value, value)
+  productStore.setItem(value)
   fetchProduct()
 }
 
-const unwatch = watchEffect(
+watchEffect(
   () => {
     if (!localProduct.value)
       fetchProduct()
@@ -86,7 +86,7 @@ const unwatch = watchEffect(
     <div class="row">
       <div class="col-12">
         <div class="d-flex align-items-start flex-wrap flex-sm-nowrap">
-          <div v-for="(image, index) in localProduct.images" :key="index" class="mr-3">
+          <div v-for="(image, index) in localProduct?.images" :key="index" class="mr-3">
             <img
               :src="image"
               :alt="`Logo ${localProduct.product_name}`"
@@ -96,9 +96,9 @@ const unwatch = watchEffect(
             >
           </div>
           <div class="flex-1 ml-0 ml-sm-3 d-flex flex-column">
-            <div>{{ localProduct.description }}</div>
+            <div>{{ localProduct?.description }}</div>
             <div class="fw-500">
-              {{ localProduct.tenant_name }}
+              {{ localProduct?.tenant_name }}
             </div>
           </div>
         </div>

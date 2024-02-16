@@ -109,3 +109,13 @@ import image11 from '@theme/kalles/assets/images/home-digital/pr-10.jpg'
     </div>
   </MainLayout>
 </template>
+
+<style lang="scss">
+.home-wrapper {
+  .pa_txts {
+    top: 11% !important;
+    left: 0% !important;
+    transform: translate(10%,-11%) !important;
+  }
+}
+</style>

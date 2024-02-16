@@ -4,9 +4,6 @@ import laravel from 'laravel-vite-plugin'
 import postcssNesting from 'postcss-nesting'
 import eslintPlugin from 'vite-plugin-eslint'
 import { defineConfig, normalizePath } from 'vite'
-// import { toKebab } from './resources/js/utils/convert-case.js'
-
-// const destination = 'assets/compiled'
 
 export default defineConfig({
   css: {
@@ -65,40 +62,5 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1024,
-    // rollupOptions: {
-    //   output: {
-    //     entryFileNames: `${destination}/js/modules/app/[name]-[hash].js`,
-    //     chunkFileNames: ({ isDynamicEntry, name, facadeModuleId, moduleIds, type }) => {
-    //       if (isDynamicEntry) {
-    //         const prefix = `${facadeModuleId}`.split('/')
-    //         return `${destination}/js/modules/${type}/${prefix[prefix.length - 2]}/${toKebab(name)}-[hash].js`
-    //       }
-
-    //       const isVendor = moduleIds.some((id) => id.includes('node_modules'))
-    //       return `${destination}/js/${isVendor ? 'vendor' : 'modules/resource'}/[name]-[hash].js`
-    //     },
-    //     assetFileNames: (assetInfo) => {
-    //       const extname = assetInfo.name.split('.')[1]
-    //       let folder = extname ? `${extname}/` : ''
-
-    //       // Put fonts into fonts folder
-    //       if (['woff', 'woff2', 'ttf', 'eot'].includes(extname)) folder = 'fonts/'
-
-    //       // put images into images folder
-    //       if (['png', 'jpg', 'jpeg', 'svg', 'webp'].includes(extname)) folder = 'images/'
-
-    //       return `${destination}/${folder}[name]-[hash][extname]`
-    //     },
-    //     manualChunks: {
-    //       'bootstrap-utils': ['bootstrap'],
-    //       'bootstrap-vue-utils': ['bootstrap-vue'],
-    //       'jquery-utils': ['@popperjs/core', 'popper.js', 'jquery'],
-    //       'common-utils': ['axios', 'moment', 'lodash', 'sweetalert2', 'ziggy-js', 'hashids', 'maska', 'tippy.js', 'ismobilejs'],
-    //       'images-utils': ['cropperjs', 'compressorjs'],
-    //       'vue-utils': ['vue', 'vue-router', 'pinia', '@vue/compat'],
-    //       'vue-plugins-utils': ['@vee-validate/i18n', '@vee-validate/rules', '@vee-validate/yup', 'vee-validate', 'vue-multiselect', 'vue-slimscroll', 'vue-tippy', 'vue-cropperjs'],
-    //     },
-    //   },
-    // },
   },
 })
