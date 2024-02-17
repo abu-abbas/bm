@@ -1,0 +1,1 @@
+import{j as e,e as r,fx as t,fy as c,b as s}from"./vee-validate-i18n.esm-8795b5a9.js";import{_ as a}from"./_plugin-vue_export-helper-c27b6911.js";const _={};function i(m,f){const o=e("section-header"),n=e("router-view");return s(),r(c,null,[t(o,{title:"Master Event"}),t(n)],64)}const d=a(_,[["render",i]]);export{d as default};

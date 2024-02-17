@@ -50,7 +50,8 @@ if (_settings && _settings.user) {
 
 const _redirectToLogin = () => {
   const current = window.location
-  window.location = `/login?intended=${encodeURIComponent(current.pathname)}`
+  const hasIntended = current.pathname == '/kbm/' ? '' : `?intended=${encodeURIComponent(current.pathname)}`
+  window.location =  `${ current.origin }/kbm/login${hasIntended}`
 }
 
 export { _, _moment, _http, _route, _alert, _confirm, _settings, _encrypt, _decrypt, _initialName, _redirectToLogin }

@@ -166,7 +166,8 @@ class UserRepository implements UserRepositoryInterface
         'perangkat_daerah' => $dataPegawai?->perangkat_daerah ?? null,
         'email' => $dataPegawai?->email ?? null,
         'sipkd' => $dataPegawai?->kode_unit_sipkd ?? null,
-        'permissions' => []
+        'is_etpp' => $user->is_etpp,
+        'permissions' => $this->permissions(),
       ]
     ]);
   }
@@ -225,7 +226,6 @@ class UserRepository implements UserRepositoryInterface
       ])
       ->where('q1.nrk', $nrk)
       ->first();
-    // dd(getQueries($query));
     return $query;
   }
 
@@ -286,5 +286,12 @@ class UserRepository implements UserRepositoryInterface
     }
 
     return [$response, $error];
+  }
+
+  public function permissions(): mixed
+  {
+    $user = auth()->user()->load('roles.permissions');
+    $permission = $user->roles->flatMap(fn ($q) => $q->permissions->pluck('name'))->unique();
+    return $permission;
   }
 }

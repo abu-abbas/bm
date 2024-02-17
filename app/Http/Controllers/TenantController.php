@@ -50,6 +50,9 @@ class TenantController extends Controller
       'url' => Str::slug($request->name),
       'short_location' => $request->short_location,
       'description' => $request->description,
+      'pic_nama' => $request->pic,
+      'pic_jabatan' => $request->jabatan,
+      'pic_kontak' => $request->hp,
       'created_by' => auth()->user()->username,
     ]);
 
@@ -120,6 +123,9 @@ class TenantController extends Controller
       'name' => $request->name,
       'short_location' => $request->short_location,
       'description' => $request->description,
+      'pic_nama' => $request->pic,
+      'pic_jabatan' => $request->jabatan,
+      'pic_kontak' => $request->hp,
       'updated_by' => auth()->user()->username,
     ]);
 

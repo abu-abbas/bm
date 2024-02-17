@@ -106,7 +106,7 @@ const chartOptions = ref({
       />
     </div>
     <div class="p-3 vh-50">
-      <v-chart
+      <VChart
         class="chart"
         :option="chartOptions"
         autoresize />

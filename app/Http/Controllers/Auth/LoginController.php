@@ -175,9 +175,9 @@ class LoginController extends Controller
       return $response;
     }
 
-    $redirect = '/';
+    $redirect = '/kbm';
     if ($request->user_etpp) {
-      $redirect = !Str::contains($request->intended, 'admin') ? ($request->intended ?? '/') : '/';
+      $redirect = !Str::contains($request->intended, 'admin') ? ($request->intended ?? '/kbm') : '/kbm';
     } else {
       $redirect = $request->intended ?? 'admin';
     }

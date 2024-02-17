@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -26,7 +25,19 @@ class EventResource extends JsonResource
       'location' => $this->location,
       'publish' => $this->publish,
       'flag' => $this?->flag,
+      'media' => [
+        'desktop' => null,
+        'mobile' => null,
+      ],
     ];
+
+    if ($media = $this->getMedia('event.ilustrasi.desktop')->first()) {
+      $data['media']['desktop'] = route('backend.inline.download', ['media' => $media]);
+    }
+
+    if ($media = $this->getMedia('event.ilustrasi.mobile')->first()) {
+      $data['media']['mobile'] = route('backend.inline.download', ['media' => $media]);
+    }
 
     return $data;
   }

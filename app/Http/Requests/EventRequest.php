@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rules\File;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EventRequest extends FormRequest
@@ -21,6 +22,21 @@ class EventRequest extends FormRequest
    */
   public function rules(): array
   {
+    if (request()->routeIs('backend.event.upload')) {
+      $allowedMimes = [
+        'image/gif',
+        'image/jpg',
+        'image/jpeg',
+        'image/png',
+        'image/tiff',
+        'image/webp',
+      ];
+
+      return [
+        'image' => ['required', File::types($allowedMimes)->max(5000)],
+        'media' => ['required'],
+      ];
+    }
 
     if (request('_method') == 'delete') {
       return ['id' => 'required'];
@@ -69,6 +85,11 @@ class EventRequest extends FormRequest
       'location.required' => 'Lokasi diperlukan',
       'location.min' => 'Lokasi minimal mengandung :min karakter',
       'location.max' => 'Lokasi maksimal mengandung :max karakter',
+
+      'media.required' => 'Media event dibutuhkan',
+      'images.required' => 'Ilustrasi event dibutuhkan',
+      'images.max' => 'Ilustrasi event harus lebih kecil dari :max KB',
+      'images.mimes' => 'Format ilustrasi event harus :mimes',
     ];
   }
 

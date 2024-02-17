@@ -34,7 +34,12 @@ const props = defineProps({
     type: [String, null],
     required: false,
     default: null
-  }
+  },
+  aspecRatio: {
+    type: Number,
+    required: false,
+    default: () => 1 / 1
+  },
 })
 const emits = defineEmits(['update:modelValue', 'update:urlObject', 'cropping'])
 
@@ -81,6 +86,8 @@ const doEmits = () => {
   emits('update:urlObject', cropper.value.output)
   emits('cropping', { file: cropper.value.file, urlObject: cropper.value.output })
 }
+
+defineExpose({ removeImage: onHandleRemoveImage })
 </script>
 
 <template>
@@ -97,7 +104,12 @@ const doEmits = () => {
       </a>
     </div>
 
-    <CropperImage v-model:visible="cropper.visible" :image-url="cropper.input" @after-cropping="onHandleCropping" />
+    <CropperImage
+      v-model:visible="cropper.visible"
+      :image-url="cropper.input"
+      :aspec-ratio="props.aspecRatio"
+      @after-cropping="onHandleCropping"
+    />
 
     <div v-if="props.errorMessage" class="fs-nano text-danger">
       {{ props.errorMessage }}

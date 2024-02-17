@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\{Builder, Model, SoftDeletes};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\MediaLibrary\{HasMedia, InteractsWithMedia};
@@ -55,8 +56,8 @@ class Product extends Model implements HasMedia
     $query->where('url', $url);
   }
 
-  public function category()
+  public function categories() : BelongsToMany
   {
-    return $this->belongsToMany(Category::class, 'pivots', 'key_1', 'key_2')->where('pivots.type_of_pivot', 'product_category');
+    return $this->belongsToMany(Category::class, 'pivots', 'key_1', 'key_2');
   }
 }

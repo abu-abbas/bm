@@ -8,6 +8,7 @@ export const useProductStore = defineStore('product-store', {
   },
 
   getters: {
+    getSelectedByUrl: state => url => state.items.find(i => i.slug == url),
     getSelectedByTenantAndUrl: state => (tenantSlug, url) => state.items.find(i => i.slug == url && i.tenant_slug == tenantSlug)
   },
 

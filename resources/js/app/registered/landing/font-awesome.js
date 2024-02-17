@@ -4,6 +4,7 @@ import {
   faHome,
   faPlus,
   faSearch,
+  faQrcode,
   faUserAlt,
   faArrowLeft,
   faCartShopping,
@@ -20,10 +21,11 @@ const { addLibrary, FontAwesomeIcon } = useFontAwesome()
 export function registeredFontAwesome(Vue) {
   addLibrary(
     faHome,
-    faUserAlt,
     faPlus,
     faImage,
+    faQrcode,
     faSearch,
+    faUserAlt,
     faArrowLeft,
     faCartShopping,
     faArrowRightToBracket,

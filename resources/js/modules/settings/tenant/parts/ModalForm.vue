@@ -1,4 +1,5 @@
 <script setup>
+import { vMaska } from "maska"
 import { ref, computed, nextTick } from 'vue'
 import { Field, Form as VeeForm } from 'vee-validate'
 import { _http, _route, _alert, _confirm } from '@/js/utils/common'
@@ -41,6 +42,9 @@ const onHandleShown = () => nextTick(() => {
     formRef.value.setFieldValue('name', localData.value.name)
     formRef.value.setFieldValue('short_location', localData.value.short_location)
     formRef.value.setFieldValue('description', localData.value.description)
+    formRef.value.setFieldValue('pic', localData.value.pic)
+    formRef.value.setFieldValue('jabatan', localData.value.jabatan)
+    formRef.value.setFieldValue('hp', localData.value.hp)
     showPreviewImage.value = true
   }
 })
@@ -240,6 +244,79 @@ const handleSubmit = (values, { resetForm }) => {
                   v-bind="field"
                   :error-message="errorMessage"
                 />
+              </Field>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="pic" class="col-sm-3 col-form-label">
+              Nama PIC
+            </label>
+            <div class="col-sm-9">
+              <Field
+                v-slot="{ field, errorMessage }"
+                label="Nama PIC"
+                name="pic"
+                rules="max:200"
+              >
+                <input
+                  id="pic"
+                  v-bind="field"
+                  type="text"
+                  class="form-control"
+                  placeholder="Masukkan nama pic"
+                >
+                <div v-if="errorMessage" class="form-text text-danger fs-nano">
+                  {{ errorMessage }}
+                </div>
+              </Field>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="jabatan" class="col-sm-3 col-form-label">
+              Jabatan
+            </label>
+            <div class="col-sm-9">
+              <Field
+                v-slot="{ field, errorMessage }"
+                label="Jabatan"
+                name="jabatan"
+                rules="max:200"
+              >
+                <input
+                  id="jabatan"
+                  v-bind="field"
+                  type="text"
+                  class="form-control"
+                  placeholder="Masukkan nama jabatan"
+                >
+                <div v-if="errorMessage" class="form-text text-danger fs-nano">
+                  {{ errorMessage }}
+                </div>
+              </Field>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="hp" class="col-sm-3 col-form-label">
+              No HP
+            </label>
+            <div class="col-sm-9">
+              <Field
+                v-slot="{ field, errorMessage }"
+                label="No HP"
+                name="hp"
+              >
+                <input
+                  id="hp"
+                  v-bind="field"
+                  v-maska data-maska="08## #### #### ####"
+                  type="text"
+                  class="form-control"
+                  placeholder="Masukkan no hp"
+                >
+                <div v-if="errorMessage" class="form-text text-danger fs-nano">
+                  {{ errorMessage }}
+                </div>
               </Field>
             </div>
           </div>

@@ -37,24 +37,13 @@ const nameInput = ref(null)
 const formRef = ref(null)
 const showPreviewImage = ref(false)
 const optionsTenant = ref([]);
-const optionsCategory = ref([]); 
+const optionsCategory = ref([]);
 const selectedTenant = ref(null);
-const optionsCondition = ref([
-  { text: 'Baru', value: '0' },
-  { text: 'Bekas', value: '1' }
-]);
-const selectedCondition = ref(null);
 const selectedCategory = ref([])
-// method
 
 const fetchDataFromAPI = async () => {
   try {
-    const response = await _http.get(
-      _route(
-        'backend.tenant.get',{}
-        )
-        )
-    .then(res => res);
+    const response = await _http.get(_route('backend.tenant.get')).then(res => res)
     const data = await response.data.data;
     // Create an array of options with the 'text' property
     const optionData = data.map(item => ({
@@ -90,15 +79,17 @@ const fetchDataCategoriesFromAPI = async () => {
 
 const onHandleShown = () => nextTick(() => {
   if (localData.value) {
-    console.log(localData.value);
-    selectedCondition.value = {value: localData.value.condition, text: localData.value.condition == 0 ? 'Baru' : 'Bekas'}
+    // console.log(localData.value);
+    // selectedCondition.value = {value: localData.value.condition, text: localData.value.condition == 0 ? 'Baru' : 'Bekas'}
     selectedTenant.value = {value: localData.value.tenant_id, text: localData.value.tenant_name}
+    selectedCategory.value = localData.value?.categories
     formRef.value.setFieldValue('name', localData.value.product_name)
     formRef.value.setFieldValue('description', localData.value.description)
     formRef.value.setFieldValue('min_qty', localData.value.minimum_qty)
     formRef.value.setFieldValue('min_unit', localData.value.minimum_unit)
     formRef.value.setFieldValue('price', localData.value.price)
     formRef.value.setFieldValue('tkdn', localData.value.tkdn_value)
+    formRef.value.setFieldValue('ecatalogue', localData.value.ecatalogue)
     showPreviewImage.value = true
   }
 })
@@ -181,7 +172,7 @@ const handleSubmit = (values, { resetForm }) => {
         resetForm()
         fetchDataCategoriesFromAPI()
         selectedCategory.value = []
-        selectedCondition.value = []
+        // selectedCondition.value = []
         selectedTenant.value = []
         emits('submit', value.data?.data)
         onHandleHide()
@@ -209,6 +200,7 @@ const handleSubmit = (values, { resetForm }) => {
             <div class="col-sm-9">
               <Field
                 v-slot="{ field, errorMessage }"
+                v-model="selectedTenant"
                 label="Nama tenant"
                 name="tenant"
                 rules="required"
@@ -262,6 +254,7 @@ const handleSubmit = (values, { resetForm }) => {
             <div class="col-sm-9">
               <Field
                 v-slot="{ field, errorMessage }"
+                v-model="selectedCategory"
                 label="Kategori barang"
                 name="category"
                 rules="required|min:3|max:200"
@@ -344,7 +337,7 @@ const handleSubmit = (values, { resetForm }) => {
 
           <div class="form-group row">
             <label for="min_unit" class="col-sm-3 col-form-label">
-              Minimum Unit
+              Satuan
             </label>
             <div class="col-sm-9">
               <Field
@@ -375,7 +368,7 @@ const handleSubmit = (values, { resetForm }) => {
                 v-slot="{ field, errorMessage }"
                 label="Nilai TKDN"
                 name="tkdn"
-                rules="required|numeric"
+                rules="required"
               >
                 <input
                   id="tkdn"
@@ -416,26 +409,21 @@ const handleSubmit = (values, { resetForm }) => {
           </div>
 
           <div class="form-group row">
-            <label for="condition" class="col-sm-3 col-form-label">
-              Kondisi
+            <label for="ecatalogue" class="col-sm-3 col-form-label">
+              Link e-Katalog
             </label>
             <div class="col-sm-9">
               <Field
                 v-slot="{ field, errorMessage }"
-                label="Kondisi"
-                name="condition"
-                rules="required"
+                label="Link e-Katalog"
+                name="ecatalogue"
               >
-                <vue-multiselect
-                  v-model="selectedCondition"
-                  :options="optionsCondition"
-                  :close-on-select="true"
-                  :clear-on-select="false"
-                  placeholder="Pilih kondisi"
+                <input
+                  id="ecatalogue"
                   v-bind="field"
-                  label="text"
-                  track-by="text">
-                </vue-multiselect>
+                  class="form-control"
+                  placeholder="Masukkan link e-katalog"
+                >
                 <div v-if="errorMessage" class="form-text text-danger fs-nano">
                   {{ errorMessage }}
                 </div>

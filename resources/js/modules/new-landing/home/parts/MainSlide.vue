@@ -27,13 +27,13 @@ onMounted(() => heroSlider.initialize())
             <div class="js_full_ht4 img_slider_block dek_img_slide">
               <div
                 class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_tran_ef pa l__0 t__0 r__0 b__0"
-                :data-bgset="MainSlide"
+                :data-bgset="event.media.desktop || MainSlide"
               ></div>
             </div>
             <div class="js_full_ht4 img_slider_block mb_img_slide">
               <div
                 class="bg_rp_norepeat bg_sz_cover lazyload item__position center center img_tran_ef pa l__0 t__0 r__0 b__0"
-                :data-bgset="MobileSlide"
+                :data-bgset="event.media.mobile || MobileSlide"
               ></div>
             </div>
             <div class="caption-wrap caption-w-1 pe_none z_100 tl_md tc">
@@ -62,3 +62,77 @@ onMounted(() => heroSlider.initialize())
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.pa_txts {
+  &.caption {
+    .slt4_html {
+      h3 {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.kalles-digital {
+  &__slide-banner {
+    &__title {
+      padding: 0 1rem;
+      font-size: 16px;
+      font-weight: 500;
+      color: #222222;
+    }
+
+    &__sup-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #222222;
+    }
+
+    &__layout-01 {
+      .pa_txts {
+        top: 11%;
+        left: 0%;
+        transform: translate(-0%, -0%) !important;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .pa_txts {
+    &.caption {
+      .slt4_html {
+        h3 {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .kalles-digital {
+    &__slide-banner {
+      &__title {
+        padding: 0;
+        font-size: 18px;
+        font-weight: 500;
+        color: #222222;
+      }
+
+      &__sup-title {
+        font-size: 55px;
+      }
+
+      &__layout-01 {
+        .pa_txts {
+          top: 33%;
+          width: auto;
+          left: 0%;
+          transform: translate(-0%, -21%) !important;
+          right: auto;
+        }
+      }
+    }
+  }
+}
+</style>

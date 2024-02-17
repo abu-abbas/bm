@@ -1,8 +1,9 @@
 import '@/js/bootstrap.js'
 import { createPinia } from 'pinia'
 import Vue, { createApp } from 'vue'
-import MainApp from '@/js/modules/landing/Index.vue'
+import { VueQrcodeReader } from 'vue-qrcode-reader'
 import router from '@/js/router/landing-router.js'
+import MainApp from '@/js/modules/landing/Index.vue'
 import { configureCompat } from '@/js/compat-config.js'
 import RegisteredBootstrapVue from '@/js/app/registered/landing/bootstrap-vue.js'
 import { registeredFontAwesome } from '@/js/app/registered/landing/font-awesome.js'
@@ -20,12 +21,14 @@ setLocale('id')
 
 configureCompat(Vue)
 registeredFontAwesome(Vue)
+
 Vue.use(RegisteredBootstrapVue)
 Vue.component('VueMultiselect', VueMultiselect)
 
 const pinia = createPinia()
 
 createApp(MainApp)
+  .use(VueQrcodeReader)
   .use(router)
   .use(pinia)
   .mount('#app')

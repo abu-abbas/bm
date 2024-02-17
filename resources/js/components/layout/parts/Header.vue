@@ -1,9 +1,19 @@
 <script setup>
-import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { computed, onMounted } from 'vue'
 import { _settings, _redirectToLogin } from '@/js/utils/common.js'
 import { useKallesInterface, $header, mobileNav } from '@components/layout/interface.js'
 
+const router = useRouter()
 const themeSetting = useKallesInterface()
+const hasAccessAdminPage = computed(() => _settings?.user?.can(_settings?.access_admin_page))
+const goToAdminOrKetertarikan = () => {
+  if (hasAccessAdminPage.value) {
+    window.location = `${window.location.href}admin`
+  }
+
+  router.push({ name: 'landing.transaction' })
+}
 onMounted(() => themeSetting.initStickyMenu())
 </script>
 
@@ -35,19 +45,19 @@ onMounted(() => themeSetting.initStickyMenu())
                     @click="$router.push({ name: 'landing.home' })"
                   >
                     <img
-                      class="w__95 logo_normal dn db_lg"
-                      src="@theme/logo-kbm.svg"
-                      alt="Kalles html template"
+                      class="w__300 logo_normal dn db_lg"
+                      src="@/images/logo_ppkukm.png"
+                      alt="Dinas PPKUKM Pemprov DKI Jakarta"
                     />
                     <img
-                      class="w__100 logo_sticky dn"
-                      src="@theme/logo-kbm.svg"
-                      alt="Kalles html template"
+                      class="w__300 logo_sticky dn"
+                      src="@/images/logo_ppkukm.png"
+                      alt="Dinas PPKUKM Pemprov DKI Jakarta"
                     />
                     <img
-                      class="w__100 logo_mobile dn_lg"
-                      src="@theme/logo-kbm.svg"
-                      alt="Kalles html template"
+                      class="w__300 logo_mobile dn_lg"
+                      src="@/images/logo_ppkukm.png"
+                      alt="Dinas PPKUKM Pemprov DKI Jakarta"
                     />
                   </a>
                 </div>
@@ -60,9 +70,9 @@ onMounted(() => themeSetting.initStickyMenu())
                   <a
                     v-if="_settings.user"
                     class="icon_like cb chp pr dn db_md js_link_wis pointer"
-                    @click="$router.push({ name: 'landing.transaction' })"
+                    @click="goToAdminOrKetertarikan"
                   >
-                    Ketertarikan
+                    {{ _settings.user.can(_settings.access_admin_page) ? 'Admin' : 'Ketertarikan' }}
                   </a>
                   <div class="my-account ts__05 pr dn db_md">
                     <a
@@ -114,10 +124,10 @@ onMounted(() => themeSetting.initStickyMenu())
           >
             <a
               class="js_link_wis"
-              @click="$router.push({ name: 'landing.transaction' })"
+              @click="goToAdminOrKetertarikan"
             >
               <FontAwesomeIcon :icon="['fas', 'cart-shopping']" size="xl"/>
-              <span class="ml-2">Ketertarikan</span>
+              <span class="ml-2">{{ _settings.user.can(_settings.access_admin_page) ? 'Admin' : 'Ketertarikan' }}</span>
             </a>
           </li>
 
@@ -156,14 +166,28 @@ onMounted(() => themeSetting.initStickyMenu())
       </div>
       <div
         v-if="_settings.user"
+        class="type_toolbar_wis kalles_toolbar_item"
+      >
+        <a
+          class="js_link_wis"
+          @click="$router.push({ name: 'landing.scanner' })"
+        >
+          <FontAwesomeIcon :icon="['fas', 'qrcode']" size="lg"/>
+          <span class="kalles_toolbar_label">Scan</span>
+        </a>
+      </div>
+      <div
+        v-if="_settings.user"
         class="type_toolbar_wish kalles_toolbar_item"
       >
         <a
           class="js_link_wis"
-          @click="$router.push({ name: 'landing.transaction' })"
+          @click="goToAdminOrKetertarikan"
         >
           <FontAwesomeIcon :icon="['fas', 'cart-shopping']" size="lg"/>
-          <span class="kalles_toolbar_label">Ketertarikan</span>
+          <span class="kalles_toolbar_label">
+            {{ _settings.user.can(_settings.access_admin_page) ? 'Admin' : 'Ketertarikan' }}
+          </span>
         </a>
       </div>
       <div class="type_toolbar_account kalles_toolbar_item">

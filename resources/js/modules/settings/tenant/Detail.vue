@@ -92,7 +92,12 @@ const unwatch = watchEffect(
       <div class="col-12">
         <div class="d-flex align-items-start flex-wrap flex-sm-nowrap">
           <img :src="localTenant?.logo?.thumb" :alt="`Logo ${ localTenant?.name }`">
-          <div class="flex-1 ml-0 ml-sm-3">{{ localTenant?.description }}</div>
+          <div class="flex-1 ml-0 ml-sm-3">
+            <div class="d-flex flex-column">
+              <div class="nama-tenant">{{ localTenant?.description }}</div>
+              <div class="pic">Nara Hubung: <strong>{{ localTenant?.pic }} - {{ localTenant?.jabatan }}</strong>, Hp. {{ localTenant?.hp }}</div>
+            </div>
+          </div>
         </div>
 
         <div class="action d-flex align-items-center mt-3">

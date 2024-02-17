@@ -30,6 +30,17 @@ const router = createRouter({
       },
     },
     {
+      path: '/scanner',
+      name: 'landing.scanner',
+      components: {
+        default: () => import('@/js/modules/new-landing/scanner/Index.vue'),
+      },
+      meta: {
+        auth: true,
+        access: true,
+      },
+    },
+    {
       path: '/transaction',
       name: 'landing.transaction',
       components: {

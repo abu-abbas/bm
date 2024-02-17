@@ -16,6 +16,7 @@ Route::group([
     Route::post('/', [EventController::class, 'store'])->name('store');
     Route::put('/', [EventController::class, 'edit'])->name('edit');
     Route::delete('/', [EventController::class, 'drop'])->name('drop');
+    Route::post('{eventId}/unggah-illustrasi', [EventController::class, 'illustrasi'])->name('upload');
   });
   Route::group([
     'prefix' => 'pivot',

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
 use Illuminate\Support\Str;
 use App\Http\Requests\EventRequest;
 use App\Http\Resources\EventResource;
@@ -134,6 +133,25 @@ class EventController extends Controller
     return response()->json([
       'status' => 'success',
       'message' => 'Data berhasil dihapus',
+    ]);
+  }
+
+  public function illustrasi(EventRequest $request, $eventId)
+  {
+    $event = $this->event->findById($eventId);
+    [, $error] = $this->event->uploadFile($request->media, $event, $request->file('image'));
+    if (!is_null($error)) {
+      return response()->json([
+        'status' => 'error',
+        'message' => $error
+      ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    $event = $event->load(['singleMedia' => fn ($q) => $q->where('collection_name', 'event.ilustrasi.' . $request->media)]);
+    return response()->json([
+      'status' => 'success',
+      'message' => 'Ilustrasi berhasil disimpan',
+      'data' => route('backend.inline.download', ['media' => $event->singleMedia]),
     ]);
   }
 }

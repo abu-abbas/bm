@@ -56,6 +56,7 @@
       'events' => $events,
       'products' => $products,
       'product_count' => $products_count,
+      'access_admin_page' => config('app.access_admin_page'),
     ]) !!}
   </script>
 </body>

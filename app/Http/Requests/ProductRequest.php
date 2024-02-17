@@ -41,9 +41,10 @@ class ProductRequest extends FormRequest
       'description' => ['required', 'max:2000'],
       'min_qty' => ['required', 'min:1', 'max:11'],
       'min_unit' => ['required', 'min:1', 'max:11'],
-      'tkdn' => ['required', 'numeric'],
+      'tkdn' => ['required'],
       'price' => ['required', 'min:1', 'max:200'],
-      'condition' => ['required'],
+      'ecatalogue' => ['max:255'],
+      // 'condition' => ['required'],
       'pict.*' => ['required', File::types($allowedMimes)->max(5000)],
     ];
 
@@ -91,7 +92,8 @@ class ProductRequest extends FormRequest
       'price.min' => 'Harga minimal mengandung :min karakter',
       'price.max' => 'Harga maksimal mengandung :max karakter',
 
-      'condition.required' => 'Kondisi diperlukan',
+      // 'condition.required' => 'Kondisi diperlukan',
+      'ecatalogue.max' => 'Link e-Katalog maksimal mengandung :max karakter',
 
       'files.required' => 'files diperlukan',
       'files.max' => 'files harus lebih kecil dari :max KB',

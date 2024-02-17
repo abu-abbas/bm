@@ -109,3 +109,5 @@ import image11 from '@theme/kalles/assets/images/home-digital/pr-10.jpg'
     </div>
   </MainLayout>
 </template>
+
+<style lang="scss"></style>

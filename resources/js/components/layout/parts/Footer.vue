@@ -5,7 +5,7 @@
         <div class="container pr tc">
           <div class="row">
             <div class="col-lg-6 col-md-12 col-12 col_1">
-              Copyright © 2024 <span class="cp">KBM</span> all rights reserved. Powered by <a href="#">Momoy Sumomoy</a>
+              Copyright © 2024 <span class="cp">KBM</span> all rights reserved. Powered by <a href="https://disppkukm.jakarta.go.id/">PPKUKM</a>
             </div>
           </div>
         </div>
@@ -13,8 +13,4 @@
     </div>
   </footer>
 </template>
-<style lang="scss">
-#nt_footer {
-
-}
-</style>
+<style lang="scss"></style>

@@ -2,9 +2,8 @@
 
 namespace App\Repositories\Contracts;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Http\{Request, UploadedFile};
 
 interface EventRepositoryInterface
 {
@@ -36,7 +35,7 @@ interface EventRepositoryInterface
    * Find Event By ID
    *
    * @param \Illuminate\Http\Request $eloquentModel
-   * @return array <response, error>
+   * @return Model|null
    */
   public function findById($id): Model|null;
 
@@ -73,4 +72,15 @@ interface EventRepositoryInterface
    * @return \Illuminate\Database\Eloquent\Model
    */
   public function fill(Model $eloquentModel, array $attributes): Model;
+
+  /**
+   * Upload illustration for event
+   *
+   * @param string $media
+   * @param \Illuminate\Database\Eloquent\Model $eloquentModel
+   * @param \Illuminate\Http\UploadedFile $file
+   * @param boolean $deleteIfExist
+   * @return array [response, error]
+   */
+  public function uploadFile($media, Model $eloquentModel, UploadedFile $file, $deleteIfExist = true): array;
 }

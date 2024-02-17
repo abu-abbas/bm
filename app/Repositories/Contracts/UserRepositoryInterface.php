@@ -66,12 +66,12 @@ interface UserRepositoryInterface
    */
 
   public function updateOrCreateAdmin(Model $eloquentModel): array;
-  
-   /**
+
+  /**
    * Find User By Username
    *
    * @param \Illuminate\Http\Request $eloquentModel
-   * @return array <response, error>
+   * @return Model $eloquestModel
    */
   public function findByUsername($username): Model|null;
 
@@ -82,4 +82,7 @@ interface UserRepositoryInterface
    * @return array [response, error]
    */
   public function drop(Model $eloquestModel) : array;
+
+
+  public function permissions() : mixed;
 }

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
-use Illuminate\Support\Str;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\{JsonResponse, Request};

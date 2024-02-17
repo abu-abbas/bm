@@ -17,7 +17,7 @@ const props = defineProps({
   aspecRatio: {
     type: Number,
     required: false,
-    default: () => 1 / 1
+    default: () => 16 / 9
   },
   autoCropArea: {
     type: Number,
@@ -68,7 +68,7 @@ const onHandleCrop = () => {
           ref="cropTarget"
           class="img-fluid"
           :src="props.imageUrl"
-          :aspect-ratio="1"
+          :aspect-ratio="props.aspecRatio"
           :auto-crop-area="props.autoCropArea"
         >
         </VueCropper>

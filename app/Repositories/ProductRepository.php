@@ -77,6 +77,7 @@ class ProductRepository implements ProductRepositoryInterface
       $query = $this->product
         ->with([
           'tenant',
+          'categories' => fn ($q) => $q->where('pivots.type_of_pivot', 'category_product'),
           'media' => fn($q) => $q->where('collection_name', 'product.logo')
         ])
         ->when($request->search, function ($q, $searchText) use ($filtered) {

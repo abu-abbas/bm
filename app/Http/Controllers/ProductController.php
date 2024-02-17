@@ -76,7 +76,8 @@ class ProductController extends Controller
       'minimum_unit' => $request->min_unit,
       'tkdn_value' => $request->tkdn,
       'price' => $request->price,
-      'condition' => $request->condition['value'],
+      'condition' => 1, // $request->condition['value'],
+      'ecatalogue' => $request->ecatalogue,
       'created_by' => auth()->user()->username,
       'url' => Str::slug($request->name),
     ]);
@@ -85,7 +86,7 @@ class ProductController extends Controller
 
     $productModel = $this->product->findBySlug(Str::slug($request->name));
 
-    $productModel->category()->sync($categoryId);
+    $productModel?->categories()->sync($categoryId);
 
     if (!is_null($error)) {
       return response()->json([
@@ -125,14 +126,14 @@ class ProductController extends Controller
       ], JsonResponse::HTTP_EXPECTATION_FAILED);
     }
 
-    if (!$product->category()) {
+    if (!$product->categories()) {
       return response()->json([
         'status' => 'error',
         'message' => 'Kategori tidak ditemukan untuk produk ini.'
       ], JsonResponse::HTTP_EXPECTATION_FAILED);
     }
 
-    $product->category()->detach();
+    $product->categories()->detach();
 
     [, $error] = $this->product->drop($product);
     if (!is_null($error)) {
@@ -167,6 +168,7 @@ class ProductController extends Controller
       'minimum_unit' => $request->min_unit,
       'tkdn_value' => $request->tkdn,
       'price' => $request->price,
+      'ecatalogue' => $request->ecatalogue,
     ]);
 
     [$response, $error] = $this->product->saveOrEdit($product, 'edit');
@@ -183,92 +185,6 @@ class ProductController extends Controller
       'message' => "Data berhasil {$message}",
       'data' => new ProductResource($response)
     ]);
-  }
-
-  public function qrcode($slug)
-  {
-    $product = $this->product->findBySlug($slug);
-
-    // set document information
-    PDF::SetCreator('Bussiness Matching Apps');
-    PDF::SetAuthor('Bussiness Matching Apps');
-    PDF::SetTitle($product->name);
-    PDF::SetSubject($slug);
-    PDF::SetKeywords('bussiness matching, jakarta');
-
-    // disable header and footer
-    PDF::setPrintHeader(false);
-    PDF::setPrintFooter(false);
-
-    // set margins
-    PDF::SetMargins(10, 0, 10, 0);
-
-    // set auto page breaks
-    PDF::SetAutoPageBreak(true, 0);
-
-    // PDF::SetTitle($slug);
-    PDF::AddPage('P', 'B5', true);
-
-    // background footer
-    PDF::Polygon(
-      [
-        0,
-        PDF::getPageHeight() - 25,
-        PDF::getPageWidth(),
-        PDF::getPageHeight() - 25,
-        PDF::getPageWidth(),
-        PDF::getPageHeight(),
-        0,
-        PDF::getPageHeight(),
-      ],
-      'F',
-      [],
-      [183, 4, 4]
-    );
-
-    $img_file = storage_path('app/public/logo-dki-thumb.png');
-    PDF::Image($img_file, 15, 15, 16, 18, '', '', '', false, 300, '', false, false, 0);
-
-    $img_file = storage_path('app/public/jakpreneur.png');
-    PDF::Image($img_file, (PDF::getPageWidth() - 45), 13, 35, 23, '', '', '', false, 300, '', false, false, 0);
-
-    PDF::SetFont('Helvetica', 'B', 16);
-    PDF::Text(35, 16, 'Bussines');
-    PDF::Text(35, 22, 'Matching');
-
-    PDF::SetFont('Helvetica', 'B', 20);
-    PDF::SetXY(10, 60);
-    PDF::MultiCell(0, 0, $product->name, 0, 'C');
-
-    PDF::SetFont('Helvetica', 'B', 14);
-    PDF::SetTextColor(170, 173, 177);
-    PDF::SetXY(10, 73);
-    PDF::Cell(0, 0, $product->short_location, 0, 0, 'C', 0, '', 1, false, 'C', 'C');
-
-    // set qrcode
-    $style = [
-      'border' => 0,
-      'padding' => 1,
-      'fgcolor' => [0, 0, 0],
-      'bgcolor' => [255, 255, 255],
-      'module_width' => 1,
-      'module_height' => 1,
-    ];
-    $size = 100;
-    $top = ceil((PDF::getPageHeight() - $size) / 2) + 10;
-    $left = ceil((PDF::getPageWidth() - $size) / 2);
-    $url = config('app.url') . 'vendor-page?id=' . encrypt_params($product->id);
-    PDF::Write2DBarcode($url , 'QRCODE,L', $left, $top, $size, $size, $style, 'N');
-
-    // set footer text
-    PDF::SetFontSize(8);
-    PDF::SetTextColor(255, 255, 255);
-
-    $user = encrypt_params(auth()->user()->id);
-    PDF::Text(10, (PDF::getPageHeight() - 15), "Dicetak oleh: {$user}");
-    PDF::Text(10, (PDF::getPageHeight() - 12), "Versi Cetak 1.0.00");
-
-    PDF::Output("{$slug}-bmqrcode.pdf", 'I');
   }
 
   public function getProduct($tenant,$product){

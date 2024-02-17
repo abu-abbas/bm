@@ -3,11 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Event;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use App\Repositories\Contracts\EventRepositoryInterface;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\{Request, UploadedFile};
+use App\Repositories\Contracts\EventRepositoryInterface;
 
 class EventRepository implements EventRepositoryInterface
 {
@@ -163,6 +164,69 @@ class EventRepository implements EventRepositoryInterface
         'error' => [
           'message' => $th->getMessage()
         ]
+      ]);
+    }
+
+    return [$response, $error];
+  }
+
+  /**
+   * Upload illustration for event
+   *
+   * @param string $media
+   * @param \Illuminate\Database\Eloquent\Model $eloquentModel
+   * @param \Illuminate\Http\UploadedFile $file
+   * @param boolean $deleteIfExist
+   * @return array [response, error]
+   */
+  public function uploadFile($media, Model $eloquentModel, UploadedFile $file, $deleteIfExist = true): array
+  {
+    $error = null;
+    $response = null;
+
+    try {
+      $filename = $file->hashName();
+      $ext = strtolower(".{$file->getClientOriginalExtension()}");
+      $mediaCollectionName = sprintf('event.ilustrasi.%s', $media)  ;
+
+      $asSlug = Str::slug($file->getClientOriginalName());
+      $safeName = Str::substr($asSlug, 0, (strlen($asSlug) - strlen($file->getClientOriginalExtension())));
+
+      if ($deleteIfExist) {
+        $hasFile = $eloquentModel->getMedia($mediaCollectionName);
+        if ($file && $hasFile->count()) {
+          $hasFile->each(fn ($file) => $file->forceDelete());
+        }
+      }
+
+      $eloquentModel
+        ->addMedia($file)
+        ->usingName($safeName . $ext)
+        ->usingFileName($filename)
+        ->toMediaCollection($mediaCollectionName);
+
+      $response = $eloquentModel->refresh();
+    } catch (\Throwable $th) {
+      $token = encrypt_params(strtotime(now()));
+      $error = "Terjadi kesalahan saat unggah ilustrasi event. Silakan hubungi Admin dan tunjukkan token error berikut ini: {$token}";
+      $payload = [
+        'token_error' => $token,
+        'event_req'  => $eloquentModel->toArray(),
+      ];
+
+      if ($file) {
+        $payload['file'] = [
+          'name' => $file->getClientOriginalName(),
+          'ext' => $file->getClientOriginalExtension(),
+          'mime_type' => $file->getClientMimeType(),
+          'path_name' => $file->getPathname(),
+          'size' => $file->getSize(),
+        ];
+      }
+
+      Log::error('Error saat upload logo', [
+        'payload' => $payload,
+        'error' => ['message' => $th->getMessage()]
       ]);
     }
 

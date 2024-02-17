@@ -30,10 +30,15 @@ class ProductResource extends JsonResource
       'tkdn_value' => $this->tkdn_value,
       'price' => $this->price,
       'condition' => $this->condition,
+      'ecatalogue' => $this->ecatalogue,
       'images' => [],
       'landing_url' => sprintf('%st/%s/p/%s', config('app.url'), $tenant?->url, $this->url),
       'has_transaction' => $hasTransaction && $hasTransaction > 0,
     ];
+
+    if ($categories = $this->categories) {
+      $data['categories'] = CategoryResources::collection($categories);
+    }
 
     foreach ($this->media as $media) {
       $data['images'][] = route('backend.inline.download', ['media' => $media]);

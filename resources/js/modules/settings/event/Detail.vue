@@ -4,8 +4,10 @@ import { useRouter } from 'vue-router'
 import { toRef, ref, watchEffect } from 'vue'
 import { _http, _route, _alert, _confirm } from '@/js/utils/common.js'
 import { useEventStore } from '@/js/stores/settings/event-store.js'
-import ModalForm from '@/js/modules/settings/event/parts/ModalFormLinkTenant.vue'
+
 import Spinner from '@/js/components/Spinner.vue'
+import ImageUploader from '@/js/components/UploadingImageTenant.vue'
+import ModalForm from '@/js/modules/settings/event/parts/ModalFormLinkTenant.vue'
 
 const props = defineProps({
   slug: {
@@ -15,6 +17,12 @@ const props = defineProps({
 })
 
 const refTable = ref(null)
+const illustration = ref({
+  desktop: null,
+  mobile: null,
+  desktopReplace: false,
+  mobileReplace: false,
+})
 const router = useRouter()
 const localEvent = ref(null)
 const localTenantEvent = ref(null)
@@ -116,24 +124,24 @@ const fetchEvent = async () => {
         unwatch()
         eventId.value = localEvent.value.id
       })
-    }
-    
-    
-    localEvent.value = getSelectedByUrl.value(getSlug.value)
-  }
-  
-  const onHandleAdd = () => {
-    tenantEvent.value = localTenantEvent.value ?? localEvent.value
-    eventId.value = localTenantEvent.value?.id ?? localEvent.value?.id
-    modalVisible.value = true
-  }
-  
-  const onHandleSubmit = (value) => {
-    eventStore.setItemByUrl(getSlug.value, value)
-    refTable.value.refresh()
   }
 
-  const onHandleDeleted = item => {
+
+  localEvent.value = getSelectedByUrl.value(getSlug.value)
+}
+
+const onHandleAdd = () => {
+  tenantEvent.value = localTenantEvent.value ?? localEvent.value
+  eventId.value = localTenantEvent.value?.id ?? localEvent.value?.id
+  modalVisible.value = true
+}
+
+const onHandleSubmit = (value) => {
+  eventStore.setItemByUrl(getSlug.value, value)
+  refTable.value.refresh()
+}
+
+const onHandleDeleted = item => {
   _confirm(
     {
       title: 'Hapus Tenant',
@@ -183,15 +191,83 @@ const fetchEvent = async () => {
       refTable.value.refresh()
     })
 }
-  
-  const unwatch = watchEffect(
-    () => {
-      if (!localEvent.value) {
-        fetchEvent()
-      }
-    }
+
+const onHandleCropping = ({ file, media }) => {
+  if (!file) return
+
+  const mappedMedia = {
+    desktop: 'Desktop/PC',
+    mobile: 'Mobile',
+  }
+
+  _confirm(
+    {
+      title: 'Unggah Gambar',
+      text: `Apakah Anda yakin untuk mengunggah gambar untuk ${ mappedMedia[media] }?`,
+      icon: 'question',
+    },
+    () => _http.post(
+      _route('backend.event.upload', { eventId: eventId.value }),
+      { image: file, media: media },
+      { headers: { 'Content-Type': 'multipart/form-data' } }
     )
-  </script>
+      .then(res => res)
+      .catch(error => {
+        let code = error.response.status
+        let message = error.response.data.message
+
+        if ([409, 417, 500].includes(code)) {
+          _alert.showValidationMessage(`${message}`)
+          return
+        }
+
+        if (code == '422') {
+          const errors = error.response.data.errors
+          message = Object.keys(errors).map(key => {
+            return Array.isArray(errors[key])
+              ? errors[key].join(', ')
+              : errors[key]
+          }).join(', ')
+
+          _alert.showValidationMessage(`${message}`)
+          return
+        }
+      })
+  )
+    .then(res => {
+      if (
+        res.isDismissed
+        && res.dismiss == 'cancel'
+      ) {
+        illustration.value[media].removeImage()
+
+        if (illustration.value[`${media}Replace`])
+          illustration.value[`${media}Replace`] = false
+      }
+
+      if (
+        res.isConfirmed
+        && res?.value?.data?.data
+      ) {
+        _alert.fire({
+          title: 'Unggah Gambar',
+          text: res?.value?.data?.message,
+          icon: res?.value?.data?.status,
+        })
+      }
+    })
+}
+
+const onHandleRemoveImage = (media) => illustration.value[`${media}Replace`] = true
+
+const unwatch = watchEffect(
+  () => {
+    if (!localEvent.value) {
+      fetchEvent()
+    }
+  }
+)
+</script>
 
 <template>
   <div class="section-body">
@@ -202,7 +278,7 @@ const fetchEvent = async () => {
     <p class="section-lead">{{ localEvent?.event_subheader }}</p>
 
     <el-tabs type="border-card">
-      <el-tab-pane label="Peserta Event">
+      <el-tab-pane label="Peserta">
         <div class="action-wrapper d-flex mb-3 flex-wrap align-items-center justify-content-between">
           <div class="left-section">
             <button
@@ -315,6 +391,60 @@ const fetchEvent = async () => {
         </div>
 
         <ModalForm v-model:visible="modalVisible" :init-data="initData" :tenant-event="tenantEvent" :event-id="eventId" :is-edit="false" @submit="onHandleSubmit" />
+      </el-tab-pane>
+      <el-tab-pane label="Ilustrasi">
+        <div class="d-flex">
+          <div class="desktop-version mr-4">
+            <strong>Desktop/PC</strong>
+
+            <div
+              v-if="localEvent?.media?.desktop && !illustration.desktopReplace"
+              class="preview-wrapper"
+            >
+              <img
+                :src="localEvent?.media?.desktop"
+                :alt="localEvent?.event_name"
+                class="image-preview"
+              >
+              <a href="javascript:void(0)" @click="onHandleRemoveImage('desktop')">
+                <FontAwesomeIcon :icon="['fas', 'trash-alt']"/>
+              </a>
+            </div>
+
+            <ImageUploader
+              v-else
+              :ref="el => illustration.desktop = el"
+              max-size="1"
+              :aspec-ratio="1950/585"
+              @cropping="({ file, urlObject }) => onHandleCropping({ file, urlObject, media: 'desktop' })"
+            />
+          </div>
+          <div class="mobile-version">
+            <strong>Mobile</strong>
+
+            <div
+              v-if="localEvent?.media?.mobile && !illustration.mobileReplace"
+              class="preview-wrapper"
+            >
+              <img
+                :src="localEvent?.media?.mobile"
+                :alt="localEvent?.event_name"
+                class="image-preview"
+              >
+              <a href="javascript:void(0)" @click="onHandleRemoveImage('mobile')">
+                <FontAwesomeIcon :icon="['fas', 'trash-alt']"/>
+              </a>
+            </div>
+
+            <ImageUploader
+              v-else
+              :ref="el => illustration.mobile = el"
+              max-size="1"
+              :aspec-ratio="720/960"
+              @cropping="({ file, urlObject }) => onHandleCropping({ file, urlObject, media: 'mobile' })"
+            />
+          </div>
+        </div>
       </el-tab-pane>
     </el-tabs>
 

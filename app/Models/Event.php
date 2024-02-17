@@ -91,4 +91,12 @@ class Event extends Model implements HasMedia
   {
     return $this->belongsToMany(Tenant::class, 'pivots', 'key_1', 'key_2')->where('pivots.type_of_pivot', 'tenant_event');
   }
+
+  /**
+   * Get the user's max id logo.
+   */
+  public function singleMedia()
+  {
+    return $this->media()->one()->ofMany('id', 'max');
+  }
 }
