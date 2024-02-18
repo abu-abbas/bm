@@ -22,6 +22,7 @@ class TransactionResources extends JsonResource
       'fmt_short' => $this->trx_date->translatedFormat('d M Y'),
     ];
 
+    $data['trx_date_raw'] = $this->trx_date;
     $data['nilai_ketertarikan'] = $this->value_of_interest;
 
     $data['akun'] = [

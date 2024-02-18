@@ -73,9 +73,13 @@ class TenantRepository implements TenantRepositoryInterface
       $perPage = $request->limit ?? $this->tenant->getPerPage();
       $selectedColumns = explode(',', $request->columns);
       $filtered = collect($this->mappedColumn)->reject(fn ($v, $k) => !in_array($k, $selectedColumns))->values();
+      $withRelations = ['singleMedia'];
+      if (!$request->no_product) {
+        array_push($withRelations, 'products');
+      }
 
       $query = $this->tenant
-        ->with(['singleMedia', 'products'])
+        ->with($withRelations)
         ->when($request->search, fn ($q, $searchText) => $q->searchByColumn($searchText, $filtered))
         ->when(
           $request->event,

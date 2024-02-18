@@ -115,10 +115,11 @@ watch(
         >
           <span></span>
         </div>
-        <div class="static-title">
+        <div class="static-title d-flex flex-column">
           <slot name="fixed-header">
             <h2>Fixed Header</h2>
           </slot>
+          <slot name="fixed-content"></slot>
         </div>
       </div>
       <div class="body">

@@ -85,4 +85,12 @@ interface UserRepositoryInterface
 
 
   public function permissions() : mixed;
+
+  /**
+   * Get pegawai data via services
+   *
+   * @param string $nrk
+   * @return array [response, error]
+   */
+  public function pegawaiDataViaService($nrk);
 }

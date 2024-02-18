@@ -50,8 +50,9 @@ class TransactionController extends Controller
     }
 
     $transaction = $this->makeTransaction($request, $product);
+    $snapshot = $this->makeSnapshot($product);
 
-    [, $error] = $this->transaction->addVoi($transaction);
+    [,$error] = $this->transaction->addVoi($transaction, $snapshot);
     if (!is_null($error)) {
       return response()->json([
         'status' => 'error',
@@ -86,18 +87,45 @@ class TransactionController extends Controller
       'perangkat_daerah' => session('user.perangkat_daerah'),
       'email' => session('user.email'),
       'sipkd' => session('user.sipkd'),
-      'c_giat' => $request->kegiatan['kode_kegiatan'],
-      'n_giat' => $request->kegiatan['nama_kegiatan'],
-      'i_rsk_no' => decrypt_params($request->rsk['kode_rsk']),
-      'n_rsk' => $request->rsk['nama_rsk'],
-      'i_idrskbas' => decrypt_params($request->akun['id_rskbas']),
-      'c_akun' => $request->akun['kode_akun'],
-      'n_akun' => $request->akun['nama_akun'],
-      'v_dpa_rsk' => $request->akun['dpa_rsk'],
-      'v_tapd_rsk' => $request->akun['tapd_rsk'],
-      'n_sumberdana' => $request->akun['sumber_dana'],
+      'c_giat' => $request->anggaran['kode_kegiatan'],
+      'n_giat' => $request->anggaran['nama_kegiatan'],
+      'c_subgiat' => $request->anggaran['kode_subkegiatan'],
+      'n_subgiat' => $request->anggaran['nama_subkegiatan'],
+      'i_rsk_no' => $request->anggaran['no_rsk'],
+      'n_rsk' => $request->anggaran['nama_rsk'],
+      'i_idrskbas' => decrypt_params($request->anggaran['slug']),
+      'c_akun' => $request->anggaran['kode_akun'],
+      'n_akun' => $request->anggaran['nama_akun'],
+      'v_dpa_rsk' => $request->anggaran['dpa_rsk'],
+      'v_tapd_rsk' => $request->anggaran['tapd_rsk'],
+      'n_sumberdana' => $request->anggaran['sumber_dana'],
+      'product_qty' => $request->qty,
+      'product_total' => $request->qty * $product->price,
+      'tenant_id' => $product->tenant_id,
       'created_by' => $username,
       'created_at' => now(),
     ]);
+  }
+
+  protected function makeSnapshot($product)
+  {
+    $snapshot = $this->transaction->make([
+      'tenant_id' => $product->tenant_id,
+      'name' => $product->name,
+      'description' => $product->description,
+      'minimum_qty' => $product->minimum_qty,
+      'minimum_unit' => $product->minimum_unit,
+      'tkdn_value' => $product->tkdn_value,
+      'price' => $product->price,
+      'condition' => $product->condition,
+      'ecatalogue' => $product->ecatalogue,
+      'created_by' => $product->created_by,
+      'created_at' => $product->created_at,
+      'updated_by' => $product->updated_by,
+      'updated_at' => $product->updated_at,
+      'url' => $product->url,
+    ], 'snapshot');
+
+    return $snapshot;
   }
 }

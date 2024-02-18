@@ -64,6 +64,29 @@ return [
     ],
     'landing_product_limit' => env('LANDING_PRODUCT_LIMIT', 4),
     'access_admin_page' => env('ACCESS_ADMIN_PAGE', 'access_admin_page'),
+    'use_pegawai_api' => env('USE_PEGAWAI_API', false),
+    'use_etpp_auth_api' => env('USE_ETPP_AUTH_API', false),
+    'http_request' => [
+        'options' => [
+            'use_proxy' => env('USE_PROXY', false),
+            'http_proxy' => env('HTTP_PROXY', 'https://10.15.3.21:80'),
+            'service_verify' => env('SERVICE_VERIFY', false),
+        ],
+        'api' => [
+            'pegdppkukm' => [
+                'endpoint' => env('PEGDPPKUKM_API_ENDPOINT'),
+                'xgateway' => env('PEGDPPKUKM_API_XGATEWAY'),
+                'username' => env('PEGDPPKUKM_API_USERNAME'),
+                'password' => env('PEGDPPKUKM_API_PASSWORD'),
+            ],
+            'etpp_auth' => [
+                'endpoint' => env('ETPP_AUTH_API_ENDPOINT'),
+                'xgateway' => env('ETPP_AUTH_API_XGATEWAY'),
+                'username' => env('ETPP_AUTH_API_USERNAME'),
+                'password' => env('ETPP_AUTH_API_PASSWORD'),
+            ]
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------

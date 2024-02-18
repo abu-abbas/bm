@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use App\Rules\{CheckCaptcha, CheckUserEtpp};
 use Illuminate\Http\{JsonResponse, Request};
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Services\EtppAuthService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -211,9 +212,13 @@ class LoginController extends Controller
       array_push($rules['username'], 'digits:6');
       $request->validate($rules, ['username.digits' => 'NRK harus terdiri dari 6 angka.']);
 
-      [$response, $error] = $this->user->retrieveByCredentials($request->{$this->username}, $request->password);
-      $userEtpp = $response;
-      array_push($rules['password'], new CheckUserEtpp($response, $error));
+      if (config('app.use_etpp_auth_api')) {
+        $userEtpp = $this->usedApi($request->{$this->username}, $request->password);
+      } else {
+        [$response, $error] = $this->user->retrieveByCredentials($request->{$this->username}, $request->password);
+        $userEtpp = $response;
+        array_push($rules['password'], new CheckUserEtpp($response, $error));
+      }
     }
 
     $needValidate = [
@@ -241,5 +246,28 @@ class LoginController extends Controller
   protected function authenticated(Request $request, $user)
   {
     $this->user->loginHistory($request, $user);
+  }
+
+  protected function usedApi($username, $password)
+  {
+    $service = new EtppAuthService();
+    [$response,] = $service->validateToLogin($username, $password);
+    if ($response == -1)
+      throw new \Exception('User e-TPP tidak ditemukan. Silakan periksa kembali NRK yang diinput');
+
+    if ($response == 0)
+      throw new \Exception('Password yang Anda masukkan tidak sesuai');
+
+    [$dataPegawai, $error] = $this->user->pegawaiDataViaService($username);
+    if (!is_null($error)) {
+      throw new \Exception($error);
+    }
+
+    $userEtpp = $this->user->make([
+      'username' => $username,
+      'name' => $dataPegawai->nama,
+    ]);
+
+    return $userEtpp;
   }
 }

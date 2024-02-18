@@ -9,6 +9,7 @@ use \Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\{DB, Log};
 use Illuminate\Contracts\Auth\Authenticatable;
 use App\Repositories\Contracts\UserRepositoryInterface;
+use App\Services\PegawaiService;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -94,9 +95,9 @@ class UserRepository implements UserRepositoryInterface
 
     try {
       $response = $this->user->updateOrCreate(
-        ['username' => $eloquentModel->v_userid],
+        ['username' => $eloquentModel->v_userid ?? $eloquentModel->username],
         [
-          'name' => $eloquentModel->v_username,
+          'name' => $eloquentModel->v_username ?? $eloquentModel->name,
           'password' => bcrypt(request('password')) ?? $eloquentModel->v_userpass,
           'email_verified_at' => now(),
           'is_etpp' => 1,
@@ -112,6 +113,7 @@ class UserRepository implements UserRepositoryInterface
 
     return [$response, $error];
   }
+
   public function updateOrCreateAdmin(Model $eloquentModel): array
   {
     $error = null;
@@ -149,7 +151,13 @@ class UserRepository implements UserRepositoryInterface
   {
     $dataPegawai = null;
     if ($user->is_etpp) {
-      $dataPegawai = $this->getPegawaiData($user->username);
+      if (config('app.use_pegawai_api')) {
+        [$dataPegawai, $error] = $this->pegawaiDataViaService($user->username);
+        if (!is_null($error))
+          throw new \Exception('Error saat pengecekan data pegawai via service');
+      } else {
+        $dataPegawai = $this->getPegawaiData($user->username);
+      }
     }
 
     session([
@@ -165,11 +173,31 @@ class UserRepository implements UserRepositoryInterface
         'kode_pd' => $dataPegawai?->kode_pd ?? null,
         'perangkat_daerah' => $dataPegawai?->perangkat_daerah ?? null,
         'email' => $dataPegawai?->email ?? null,
-        'sipkd' => $dataPegawai?->kode_unit_sipkd ?? null,
+        'sipkd' => $dataPegawai?->kode_unit_sipkd ?? $dataPegawai?->sipkd,
         'is_etpp' => $user->is_etpp,
         'permissions' => $this->permissions(),
       ]
     ]);
+  }
+
+  /**
+   * Get pegawai data via services
+   *
+   * @param string $nrk
+   * @return array [response, error]
+   */
+  public function pegawaiDataViaService($nrk)
+  {
+    $error = null;
+    $response = null;
+
+    $services = new PegawaiService();
+    [$response, $error] = $services->findByNrk($nrk);
+    if (is_null($error) && !is_null($response)) {
+      $response = json_decode(json_encode(array_change_key_case($response)));
+    }
+
+    return [$response, $error];
   }
 
   protected function getPegawaiData($nrk)
@@ -177,35 +205,33 @@ class UserRepository implements UserRepositoryInterface
     $query = DB::query()
       ->fromSub(
         fn ($q1) =>
-          $q1
-            ->from(DB::raw('pers_pegawai1@simpeg p'))
-            ->joinSub(
-              fn ($t1) =>
-                $t1->from(DB::raw('vw_jabatan_all@simpeg tab'))
-                  ->select([
-                    'tab.*',
-                    DB::raw('row_number () over (partition by tab.nrk order by tab.tmt desc) as rown')
-                  ])
-                ,
-              't',
-              fn ($js) =>$js->on('t.nrk', '=', 'p.nrk')->on('t.rown', 1)
-            )
-            ->leftJoin(
-              DB::raw('pers_peran_tbl@simpeg per'),
-              fn($lj) => $lj->on('t.kolok', '=', 'per.kolok')->on('t.koper', '=', 'per.koper')
-            )
+        $q1
+          ->from(DB::raw('pers_pegawai1@simpeg p'))
+          ->joinSub(
+            fn ($t1) =>
+            $t1->from(DB::raw('vw_jabatan_all@simpeg tab'))
             ->select([
-              't.nrk',
-              'p.nama',
-              'p.nip18 as nip',
-              't.nalok as lokasi_kerja',
-              DB::raw('case when t.koper is not null then per.koper else t.kojab end kojab'),
-              DB::raw('case when t.koper is not null then per.napers else t.najab end jabatan'),
-              DB::raw('case when t.koper is not null then per.kolok else t.kolok end kolok'),
-              DB::raw("case when t.spmu = 'c031' then 'c030' when t.spmu = 'c041' then 'c040' else t.spmu end spmu")
-            ])
-          ,
-          'q1'
+              'tab.*',
+              DB::raw('row_number () over (partition by tab.nrk order by tab.tmt desc) as rown')
+            ]),
+            't',
+            fn ($js) => $js->on('t.nrk', '=', 'p.nrk')->on('t.rown', 1)
+          )
+          ->leftJoin(
+            DB::raw('pers_peran_tbl@simpeg per'),
+            fn ($lj) => $lj->on('t.kolok', '=', 'per.kolok')->on('t.koper', '=', 'per.koper')
+          )
+          ->select([
+            't.nrk',
+            'p.nama',
+            'p.nip18 as nip',
+            't.nalok as lokasi_kerja',
+            DB::raw('case when t.koper is not null then per.koper else t.kojab end kojab'),
+            DB::raw('case when t.koper is not null then per.napers else t.najab end jabatan'),
+            DB::raw('case when t.koper is not null then per.kolok else t.kolok end kolok'),
+            DB::raw("case when t.spmu = 'c031' then 'c030' when t.spmu = 'c041' then 'c040' else t.spmu end spmu")
+          ]),
+        'q1'
       )
       ->join(DB::raw('pers_tabel_spmu@simpeg s'), 'q1.spmu', '=', 's.kode_spm')
       ->leftJoin(DB::raw('pers_pegawai2@simpeg p2'), 'q1.nrk', '=', 'p2.nrk')
@@ -226,6 +252,7 @@ class UserRepository implements UserRepositoryInterface
       ])
       ->where('q1.nrk', $nrk)
       ->first();
+
     return $query;
   }
 

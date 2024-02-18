@@ -11,6 +11,13 @@ class Transaction extends Model
   use HasFactory, SoftDeletes;
 
   /**
+   * The connection name for the model.
+   *
+   * @var string|null
+   */
+  protected $connection = 'oracle';
+
+  /**
    * The attributes that should be cast.
    *
    * @var array

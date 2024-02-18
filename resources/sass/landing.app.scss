@@ -30,6 +30,14 @@ body {
   font-size: $font-size-base;
 }
 
+.fw-bold {
+  font-weight: bold;
+}
+
+.fw-bolder {
+  font-weight: bolder;
+}
+
 .pr_lazy_img {
   height: fit-content !important;
 }
@@ -45,4 +53,20 @@ body {
 .round_true {
   border-radius: 40px;
   line-height: 2;
+}
+
+.fs-lg {
+  font-size: 1rem !important;
+}
+
+.fs-md {
+  font-size: $font-size-base !important;
+}
+
+.fs-sm {
+  font-size: .725rem !important;
+}
+
+.fs-nano {
+  font-size: .625rem !important;
 }

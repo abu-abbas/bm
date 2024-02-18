@@ -99,7 +99,6 @@ watchEffect(
             <div>{{ localProduct?.description }}</div>
             <div class="fw-500">
               {{ localProduct?.tenant_name }}
-<<<<<<< HEAD
             </div>
             <div
               v-if="localProduct?.categories?.length"
@@ -112,8 +111,6 @@ watchEffect(
               >
                 {{ category.name }}
               </span>
-=======
->>>>>>> 61c0bcd947ba744a4305aadb1dffd5f9e368ae76
             </div>
           </div>
         </div>

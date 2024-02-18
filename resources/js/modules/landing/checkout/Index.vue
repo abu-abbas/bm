@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { defineRule, Field, Form as VeeForm } from 'vee-validate'
 
 // helper
@@ -8,8 +8,9 @@ import { formatCurrency } from '@/js/utils/formatter.js'
 import { _, _http, _route, _settings, _redirectToLogin, _alert, _confirm } from '@/js/utils/common.js'
 
 // component
-import BottomSheet from '@/js/components/BottomSheet.vue'
-import Select from '@/js/components/budget/Select.vue'
+// import Select from '@components/budget/Select.vue'
+import BottomSheet from '@components/BottomSheet.vue'
+import ItemFormat from '@modules/landing/checkout/parts/Format.vue'
 
 const props = defineProps({
   tenantSlug: {
@@ -42,47 +43,27 @@ const local = computed(() => {
     tenantSlug: props.tenantSlug,
     productSlug: props.productSlug,
     product: props.product,
+    selisih: budget.value.selected?.balance - nilaiKetertarikan.value || 0
   }
 })
 
-const showBottomSheet = ref(false)
-const formRef = ref(null)
-const refRsk = ref(null)
-const refAkun = ref(null)
+const qty = ref(1)
 const refVoi = ref(null)
+const formRef = ref(null)
 const nilaiKetertarikan = ref(0)
 const hasTransaction = ref(false)
-
+const showBottomSheet = ref(false)
 const budget = ref({
-  kegiatan: {
-    options: [],
-    selected: null,
-    props: {
-      trackBy: 'kode_kegiatan',
-      label: 'nama_kegiatan',
-      placeholder: 'Pilih kegiatan'
-    },
-    loading: false,
-  },
-  rsk: {
-    options: [],
-    selected: null,
-    props: {
-      trackBy: 'nama_rsk',
-      label: 'nama_rsk',
-      placeholder: 'Pilih rsk'
-    },
-    loading: false,
-  },
-  akun: {
-    options: [],
-    selected: null,
-    props: {
-      trackBy: 'id_rskbas',
-      label: 'nama_akun',
-      placeholder: 'Pilih akun'
-    },
-    loading: false,
+  options: [],
+  selected: null,
+  loading: false,
+  props: {
+    trackBy: 'slug',
+    label: 'nama_akun',
+    placeholder: 'Pilih Anggaran',
+    selectLabel: '',
+    selectedLabel: '',
+    deselectLabel: '',
   },
 })
 
@@ -100,81 +81,36 @@ const onHandleClick = () => {
   showBottomSheet.value = true
 }
 
-const fetchBudget = (type = 'kegiatan', value = null, addons = null) => {
-  budget.value[type].loading = true
-  _http.get(_route('backend.budget.get', { type, value, addons }))
-    .then(res => budget.value[type].options = [...res.data.data])
-    .catch(() => budget.value[type].options = [])
-    .finally(() => budget.value[type].loading = false)
-}
+const fetchBudget = _.debounce(function (search = null, force = false) {
+  if (!search && !force) return
+
+  budget.value.loading = true
+  _http.get(_route('backend.budget.all', { search: search?.toLowerCase() }))
+    .then(res => budget.value.options = res.data.data)
+    .catch(() => budget.value.options = [])
+    .finally(() => budget.value.loading = false)
+}, 500)
 
 const onHandleKeyupNilaiKetertarikan = _.debounce((e) => {
   const allowedChar = '0123456789.'
-  const mapped = [...e.target.value].filter(v => allowedChar.includes(v)).join('')
+  const cleanInput = `${e.target.value}`.split(',').shift()
+  const mapped = [...cleanInput].filter(v => allowedChar.includes(v)).join('')
   e.target.value = mapped
 
   const current = parseFloat(e.target.value.split('.').join('') || 0)
-  const dpa_rsk = parseFloat(budget.value.akun.selected.dpa_rsk || 0)
-
-  if (current < 0) {
-    nilaiKetertarikan.value = 0
-    e.target.value = 0
-    return
-  }
-
-  if (current > dpa_rsk) {
-    nilaiKetertarikan.value = dpa_rsk
-    e.target.value = dpa_rsk.toLocaleString('id-ID', { style: 'decimal' })
-    return
-  }
 
   nilaiKetertarikan.value = current
-  e.target.value = current.toLocaleString('id-ID', { style: 'decimal' })
-}, 500)
+  e.target.value = formatCurrency(current)
+}, 1000)
 
 defineRule('voi_value', (value, [target]) => {
   if (value == 0) return 'Nilai ketertarikan tidak boleh 0'
 
-  if (value <= parseFloat(target?.dpa_rsk))
-    return true
-
-  return `Nilai ketertarikan maksimal ${parseFloat(target?.dpa_rsk)?.toLocaleString('id-ID', { style: 'decimal' })}`
+  console.log({ target })
+  return true
 })
 
-const onHandleAkunSelect = () => setTimeout(() => refVoi.value.focus(), 250)
-
-watch(
-  [
-    () => budget.value.kegiatan.selected,
-    () => budget.value.rsk.selected,
-  ],
-  (
-    [
-      newKegiatanSelected,
-      newRskSelected,
-    ],
-    [
-      oldKegiatanSelected,
-      oldRskSelected,
-    ]
-  ) => {
-    if (newKegiatanSelected && JSON.stringify(oldKegiatanSelected) != JSON.stringify(newKegiatanSelected)) {
-      budget.value.rsk.selected = null
-      budget.value.akun.selected = null
-      refRsk.value?.removeSelected()
-      refAkun.value?.removeSelected()
-
-      fetchBudget('rsk', newKegiatanSelected.kode_kegiatan)
-    }
-
-    if (newRskSelected && JSON.stringify(newRskSelected) != JSON.stringify(oldRskSelected)) {
-      budget.value.akun.selected = null
-      refAkun.value?.removeSelected()
-
-      fetchBudget('akun', budget.value.kegiatan.selected.kode_kegiatan, newRskSelected.kode_rsk)
-    }
-  }
-)
+// const onHandleAkunSelect = () => setTimeout(() => refVoi.value.focus(), 250)
 
 const onHandleSubmitButton = async () => {
   const { valid } = await formRef.value.validate()
@@ -192,7 +128,7 @@ const onHandleSubmitButton = async () => {
       {
         product: props.productSlug,
         eventId: _settings?.events[0]?.flag == 'active' ? _settings.events[0].id : null,
-        ...formRef.value.getValues()
+        ...formRef.value.getValues(),
       },
     )
       .then(res => res)
@@ -233,12 +169,14 @@ const onHandleSubmitButton = async () => {
         emits('update:product', { ...local.value.product, has_transaction: true })
         hasTransaction.value = true
         showBottomSheet.value = false
+
+        router.push({ name: 'landing.transaction' })
       }
     })
 }
 
 onMounted(() => {
-  fetchBudget()
+  fetchBudget(null, true)
   hasTransaction.value = local.value?.product?.has_transaction
 })
 </script>
@@ -260,37 +198,59 @@ onMounted(() => {
     </button>
     <BottomSheet v-model:visible="showBottomSheet">
       <template #fixed-header><h2>Ajukan ketertarikan</h2></template>
+      <template #fixed-content>
+        <div class="media mb-2">
+          <img class="image-wrapper mr-3" :src="local?.product?.images[0]" :alt="local?.product?.name">
+          <div class="media-body">
+            <strong class="fs-sm product-name">{{ local?.product?.product_name }}</strong>
+            <strong class="fs-sm">{{ formatCurrency(local?.product?.price || 0) }}</strong>
+            <div class="fs-nano product-desc">{{ local?.product?.description }}</div>
+            <strong class="fs-sm mt-2">{{ local?.product?.tenant_name }}</strong>
+          </div>
+        </div>
+      </template>
 
       <VeeForm ref="formRef" v-slot="{ errors }">
-        <div class="form-group mt-4">
-          <label class="form-label text-muted">Kegiatan</label>
+        <div class="form-group">
+          <label class="form-label text-muted">Anggaran</label>
           <Field
             v-slot="{ errorMessage }"
-            v-model="budget.kegiatan.selected"
-            label="Kegiatan"
-            name="kegiatan"
+            v-model="budget.selected"
+            label="Anggaran"
+            name="anggaran"
             rules="required"
           >
-            <Select
-              v-model:selected="budget.kegiatan.selected"
-              :options="budget.kegiatan.options"
-              :multiselect-options="budget.kegiatan.props"
-              :loading="budget.kegiatan.loading"
+            <vue-multiselect
+              v-model="budget.selected"
+              v-bind="budget.props"
+              track-by="slug"
+              select-label=""
+              selected-label=""
+              deselect-label=""
+              label="nama_akun"
+              open-direction="bottom"
+              class="dropdown-custom"
+              placeholder="Pilih Anggaran"
+              :internal-search="false"
+              :clear-on-select="false"
+              :hide-selected="false"
+              :max-height="500"
+              :option-height="250"
+              :options="budget.options"
+              :loading="budget.loading"
+              @search-change="fetchBudget"
             >
+              <template #noResult>Data tidak ditemukan</template>
+              <template #noOptions>Tidak ada data</template>
+
               <template #option="optionProps">
-                <div class="d-flex flex-column">
-                  <strong class="text-sm text-muted">{{ optionProps.option.kode_kegiatan }}</strong>
-                  <span>{{ optionProps.option.nama_kegiatan }}</span>
-                </div>
+                <ItemFormat :item="optionProps.option" />
               </template>
 
               <template #singleLabel="optionProps">
-                <div class="d-flex flex-column">
-                  <strong class="text-sm text-muted fw-500">{{ optionProps.option.kode_kegiatan }}</strong>
-                  <span>{{ optionProps.option.nama_kegiatan }}</span>
-                </div>
+                <ItemFormat :item="optionProps.option" only-account />
               </template>
-            </Select>
+            </vue-multiselect>
 
             <div
               v-if="errorMessage"
@@ -301,23 +261,29 @@ onMounted(() => {
           </Field>
         </div>
 
-        <div v-if="budget.kegiatan.selected" class="form-group">
-          <label class="form-label text-muted">RSK</label>
+        <div v-if="budget.selected" class="form-group">
+          <label class="form-label text-muted">Kuantitas</label>
           <Field
             v-slot="{ errorMessage }"
-            v-model="budget.rsk.selected"
-            label="RSK"
-            name="rsk"
-            rules="required"
+            v-model="qty"
+            label="Kuantitas"
+            name="qty"
+            rules="required|min_value:1"
           >
-            <Select
-              ref="refRsk"
-              v-model:selected="budget.rsk.selected"
-              :options="budget.rsk.options"
-              :multiselect-options="budget.rsk.props"
-              :loading="budget.rsk.loading"
-            >
-            </Select>
+            <div class="input-group">
+              <div class="input-group-prepend" @click="qty--">
+                <span class="input-group-text">-</span>
+              </div>
+              <input
+                v-model="qty"
+                type="text"
+                class="form-control text-right custom-form-control font-bold"
+              >
+              <div class="input-group-append" @click="qty++">
+                <span class="input-group-text">+</span>
+              </div>
+            </div>
+
             <div
               v-if="errorMessage"
               class="text-danger fs-sm mt-2"
@@ -327,64 +293,21 @@ onMounted(() => {
           </Field>
         </div>
 
-        <div v-if="budget.rsk.selected" class="form-group">
-          <label class="form-label text-muted">Akun</label>
-          <Field
-            v-slot="{ errorMessage }"
-            v-model="budget.akun.selected"
-            label="Akun"
-            name="akun"
-            rules="required"
-          >
-            <Select
-              ref="refAkun"
-              v-model:selected="budget.akun.selected"
-              :options="budget.akun.options"
-              :multiselect-options="budget.akun.props"
-              :loading="budget.akun.loading"
-              @select="onHandleAkunSelect"
-            >
-              <template #option="optionProps">
-                <div class="d-flex flex-column">
-                  <strong class="text-sm text-muted">{{ optionProps.option.kode_akun }}</strong>
-                  <span>{{ optionProps.option.nama_akun }}</span>
-                  <div class="d-flex align-items-center mt-2">
-                    <strong class="text-sm fw-500">PAGU Anggaran:
-                      {{ formatCurrency(parseFloat(optionProps.option.dpa_rsk || 0)) }}
-                    </strong>
-                  </div>
-                </div>
-              </template>
-
-              <template #singleLabel="optionProps">
-                <div class="d-flex flex-column">
-                  <strong class="text-sm text-muted fw-500">{{ optionProps.option.kode_akun }}</strong>
-                  <span>{{ optionProps.option.nama_akun }}</span>
-                  <div class="d-flex align-items-center mt-2">
-                    <strong class="text-sm fw-500">PAGU Anggaran:
-                      {{ formatCurrency(parseFloat(optionProps.option.dpa_rsk || 0)) }}
-                    </strong>
-                  </div>
-                </div>
-              </template>
-            </Select>
-            <div
-              v-if="errorMessage"
-              class="text-danger fs-sm mt-2"
-            >
-              {{ errorMessage }}
-            </div>
-          </Field>
+        <div v-if="budget.selected" class="form-group">
+          <label class="form-label text-muted">Nilai Penawaran</label>
+          <div class="form-control custom-form-control text-right font-bold input-readonly text-muted">
+            {{ formatCurrency(qty * local.product?.price) }}
+          </div>
         </div>
 
-        <div v-if="budget.akun.selected" class="form-group">
+        <div v-if="budget.selected" class="form-group">
           <label class="form-label text-muted">Nilai Ketertarikan</label>
           <Field
             v-slot="{ errorMessage }"
             v-model="nilaiKetertarikan"
             label="Nilai Ketertarikan"
             name="voi"
-            rules="required|voi_value:@akun"
+            rules="required"
           >
             <input
               ref="refVoi"
@@ -399,6 +322,9 @@ onMounted(() => {
               {{ errorMessage }}
             </div>
           </Field>
+          <div v-if="nilaiKetertarikan" class="fs-sm text-muted mt-1 text-right">
+            Selisih Nilai Anggaran {{ formatCurrency(local?.selisih) }}
+          </div>
         </div>
 
         <button
@@ -412,20 +338,176 @@ onMounted(() => {
           Simpan
         </button>
       </VeeForm>
+      <div class="space-helper"></div>
     </BottomSheet>
   </div>
 </template>
 
 <style lang="scss">
+$baseFontSize: .825rem;
+
+.multiselect {
+  &.dropdown-custom {
+    &.multiselect--active {
+      .multiselect__tags {
+        border-bottom-left-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+      }
+
+      .multiselect__select {
+        &::before {
+          top: 75%;
+        }
+      }
+    }
+
+    .multiselect__placeholder {
+      padding-top: 8px;
+      font-size: $baseFontSize;
+      margin-left: 5px;
+    }
+
+    .multiselect__tags {
+      min-height: 38px;
+      border-color: #f1ebfa;
+      background: #f7f2ff;
+
+      .multiselect__input,
+      .multiselect__single {
+        font-size: $baseFontSize;
+        background: #f7f2ff;
+        margin-top: 6px;
+        border: 0;
+      }
+
+      .multiselect__input {
+        height: fit-content;
+      }
+
+      .multiselect__spinner {
+        background: #f7f2ff;
+      }
+    }
+
+    .multiselect__select {
+      &::before {
+        top: 70%;
+      }
+    }
+
+    .multiselect__content-wrapper {
+      background: #fff;
+      margin-top: .325rem;
+      border-top: 1px solid #e8e8e8;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+
+      // fit width option
+      .multiselect__content {
+        width: 100%;
+
+        .multiselect__element {
+          &:nth-child(odd) {
+            background: #f7f2ff;
+          }
+
+          &:nth-child(even) {
+            background: #f1e9fd;
+          }
+
+          .multiselect__option {
+            white-space: normal;
+          }
+        }
+      }
+
+      .multiselect__option {
+        font-size: $baseFontSize;
+
+        &.multiselect__option--highlight,
+        &.multiselect__option--selected {
+          color: unset;
+        }
+
+        &.multiselect__option--selected {
+          background: var(--light);
+        }
+      }
+
+
+      &::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #cacaca;
+        border-radius: 5px;
+      }
+    }
+  }
+}
+
+.input-group {
+  input {
+    &.custom-form-control {
+      border-radius: 0 !important;
+    }
+  }
+}
+
 .custom-form-control {
   border-color: #f1ebfa;
   background: #f7f2ff;
+  border-radius: 5px !important;
+
+  &:focus {
+    border-color: none !important;
+  }
 }
 
 .font-bold {
   font-weight: 700 !important;
   color: var(--dark);
 }
-</style>
 
+.input-readonly {
+  font-size: 13px;
+  outline: 0;
+  padding: 10 15px;
+  height: 40px;
+  line-height: 18px;
+  transition: border-color .5s;
+  box-shadow: none;
+}
+
+.fs-sm {
+  font-size: .725rem;
+}
+
+.image-wrapper {
+  width: 72px;
+  height: 72px;
+}
+
+.product-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.product-desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.space-helper {
+  height: 200px;
+}
+</style>
 

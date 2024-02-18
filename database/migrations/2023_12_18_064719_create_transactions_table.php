@@ -31,7 +31,7 @@ return new class extends Migration
       $table->string('sipkd', 10);
       $table->unsignedBigInteger('i_rsk_no');
       $table->unsignedBigInteger('i_idrskbas');
-      $table->string('c_giat', 14);
+      $table->string('c_giat', 200);
       $table->string('n_giat', 1500);
       $table->string('n_rsk', 400);
       $table->string('c_akun', 25);

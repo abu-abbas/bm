@@ -26,7 +26,8 @@ interface TransactionRepositoryInterface
    * Add value of interest
    *
    * @param \Illuminate\Database\Eloquent\Model $model
+   * @param \Illuminate\Database\Eloquent\Model $snapshot
    * @return array [response, error]
    */
-  public function addVoi(Model $model) : array;
+  public function addVoi(Model $model, Model $snapshot) : array;
 }

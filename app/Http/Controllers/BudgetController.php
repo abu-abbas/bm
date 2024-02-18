@@ -27,4 +27,14 @@ class BudgetController extends Controller
     return BudgetResources::collection($budget)
       ->additional(['success' => true]);
   }
+
+  public function all(Request $request)
+  {
+    $request->merge(['all_in_one' => true]);
+    $search = strtolower($request->search);
+    $budget = $this->budget->all($search);
+
+    return BudgetResources::collection($budget)
+      ->additional(['success' => true]);
+  }
 }

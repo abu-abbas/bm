@@ -13,12 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//   return view('welcome');
-// });
-
-// Auth::routes();
-
 include_route_files(__DIR__ . '/modules/');
 
 Route::get('/{vue_capture?}', [App\Http\Controllers\GuestController::class, 'landing'])

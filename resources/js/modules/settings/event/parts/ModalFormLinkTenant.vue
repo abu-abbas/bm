@@ -49,18 +49,18 @@ const fetchDataTenantFromAPI = async () => {
   try {
     const response = await _http.get(
       _route(
-        'backend.tenant.get', {}
+        'backend.tenant.get', { limit: 1000, no_product: true }
       )
     )
       .then(res => res);
     const data = await response.data.data;
-    
+
     const optionData = data.map(item => ({
-      text: item.name, 
-      value: item.id, 
+      text: item.name,
+      value: item.id,
     }));
 
-    optionsTenant.value = optionData; 
+    optionsTenant.value = optionData;
   } catch (error) {
     console.error('Error fetching data from the API:', error);
   }
@@ -123,10 +123,10 @@ const handleSubmit = (values, { resetForm }) => {
       })
   )
     .then(({ value, isConfirmed, isDismissed }) => {
-      
+
       if (isDismissed) return false
 
-      
+
       if (isConfirmed && value.data.status == 'success') {
         _alert.fire({
           title: 'Tambah tenant',

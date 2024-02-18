@@ -43,7 +43,7 @@ const selectedCategory = ref([])
 
 const fetchDataFromAPI = async () => {
   try {
-    const response = await _http.get(_route('backend.tenant.get')).then(res => res)
+    const response = await _http.get(_route('backend.tenant.get', { limit: 1000, no_product: true })).then(res => res)
     const data = await response.data.data;
     // Create an array of options with the 'text' property
     const optionData = data.map(item => ({
@@ -59,23 +59,18 @@ const fetchDataFromAPI = async () => {
 
 const fetchDataCategoriesFromAPI = async () => {
   try {
-    const response = await _http.get(
-      _route(
-        'backend.category.get',{}
-        )
-        )
-    .then(res => res);
-    const data = await response.data.data;
+    const response = await _http.get(_route('backend.category.get', { limit: 1000 })).then(res => res)
+    const data = await response.data.data
     const optionData = data.map(item => ({
       label: item.name,
       value: item.url,
-    }));
+    }))
 
     optionsCategory.value = optionData;
   } catch (error) {
-    console.error('Error fetching data from the API:', error);
+    console.error('Error fetching data from the API:', error)
   }
-};
+}
 
 const onHandleShown = () => nextTick(() => {
   if (localData.value) {

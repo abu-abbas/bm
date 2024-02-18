@@ -31,7 +31,7 @@ class TenantResource extends JsonResource
         'thumb' => null,
         'original' => null,
       ],
-      'products' => ProductResource::collection($this->products),
+      'products' => $request->no_product ? [] : ProductResource::collection($this->products),
     ];
 
     if (Str::contains($request->url(), 'admin', true)) {
